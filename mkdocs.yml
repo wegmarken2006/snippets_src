@@ -1,0 +1,13 @@
+site_name: My Docs
+nav:
+  - Home: index.md
+  - Rust: rust.md
+theme:
+  name: 'material'
+  palette:
+    primary: 'lime'
+    accent: 'lime'
+markdown_extensions:
+  - codehilite:
+      guess_lang: false    
+    
