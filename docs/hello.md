@@ -1,0 +1,5 @@
+## Rust
+
+```
+cargo new hello
+```

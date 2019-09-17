@@ -1,7 +1,8 @@
-site_name: My Docs
+site_name: Snippets
 nav:
   - Home: index.md
-  - Rust: rust.md
+  - Dictionary: dictionary.md
+  - Hello: hello.md
 theme:
   name: 'material'
   palette:
