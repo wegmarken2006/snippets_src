@@ -2,7 +2,7 @@ site_name: Snippets
 nav:
   - Home: index.md
   - Dictionary: dictionary.md
-  - Hello: hello.md
+  - Hello with CLI: hello.md
 theme:
   name: 'material'
   palette:
