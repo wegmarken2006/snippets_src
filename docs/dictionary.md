@@ -1,5 +1,40 @@
-## Rust
+## C#
 
+```c#
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace hello
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var word_list = new List<string> { "table", "chair", "table" };
+            var words = new Hashtable();
+            foreach (var item in word_list)
+            {
+                if (words.Contains(item))
+                {
+                    words[item] = (int)words[item] + 1;
+                }
+                else
+                {
+                    words.Add(item, 1);
+                }
+            }
+
+            foreach (DictionaryEntry item in words)
+            {
+                Console.WriteLine("{0}, {1}", item.Key, item.Value);
+            }
+        }
+    }
+}
+```
+
+## Rust
 ```rust
 use std::collections::HashMap;
 
