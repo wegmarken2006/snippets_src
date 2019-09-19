@@ -8,6 +8,8 @@ theme:
   palette:
     primary: 'lime'
     accent: 'lime'
+  logo:
+    icon: 'language'
 markdown_extensions:
   - codehilite:
       guess_lang: false    
