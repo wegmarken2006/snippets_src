@@ -51,6 +51,20 @@ main(List<String> arguments) {
 }
 ```
 
+## Python
+```python
+from typing import Dict
+
+word_list = ["table", "chair", "table"]
+words: Dict[str, int] = {}
+for item in word_list:
+    try:
+        words[item] += 1
+    except:
+        words[item] = 1
+print(words)
+```
+
 ## Rust
 ```rust
 use std::collections::HashMap;
