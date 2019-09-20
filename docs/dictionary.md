@@ -1,4 +1,4 @@
-## C#
+## C\#
 
 ```c#
 using System;
@@ -31,6 +31,23 @@ namespace hello
             }
         }
     }
+}
+```
+
+## Dart
+```dart
+main(List<String> arguments) {
+  var word_list = ["table", "chair", "table" ];
+  var words = {};
+  for (var item in word_list) {
+      if (words.containsKey(item)) {
+        words[item] += 1;
+      }
+      else {
+        words[item] = 1;
+      }
+  }
+  print('$words');
 }
 ```
 
