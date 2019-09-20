@@ -6,7 +6,7 @@ cd hello
 cargo run
 ```
 
-## C#
+## C\#
 ```
 dotnet new console -o hello
 cd hello
