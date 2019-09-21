@@ -51,6 +51,24 @@ main(List<String> arguments) {
 }
 ```
 
+## Go
+```go
+package main
+
+import "fmt"
+
+func main() {
+	wordList := []string{"table", "chair", "table"}
+	words := make(map[string]int)
+
+	for _, item := range wordList {
+		words[item] ++		
+	}
+
+	fmt.Printf("%u", words)
+}
+```
+
 ## Python
 ```python
 from typing import Dict

@@ -3,6 +3,7 @@ nav:
   - Home: index.md
   - Dictionary: dictionary.md
   - Hello with CLI: hello.md
+  - System command: syscom.md
 theme:
   name: 'material'
   palette:
