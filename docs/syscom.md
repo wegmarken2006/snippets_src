@@ -12,3 +12,15 @@ fn main() {
     println!("stdout: {}", String::from_utf8_lossy(&output.stdout));
 }
 ```
+
+## Dart
+```dart
+//fails on windows 64, dart VM 2.5.0
+import "dart:io";
+
+main(List<String> arguments) {
+  Process.run('dir', ['*.*']).then((ProcessResult result) {
+    print(result.stdout);
+  });
+}
+```
