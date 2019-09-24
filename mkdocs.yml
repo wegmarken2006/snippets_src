@@ -3,14 +3,20 @@ nav:
   - Home: index.md
   - Dictionary: dictionary.md
   - Hello with CLI: hello.md
+  - Lists:
+    - New List w and w/o value: lists1.md
   - System command: syscom.md
 theme:
   name: 'material'
   palette:
     primary: 'lime'
     accent: 'lime'
+  #feature:
+  #  tabs: true
   logo:
     icon: 'language'
+  favicon: 
+  #  icon: 'language'
 markdown_extensions:
   - codehilite:
       guess_lang: false    
