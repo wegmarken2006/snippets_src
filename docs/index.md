@@ -1,3 +1,3 @@
-# Welcome to Snippets
+# Snippets
 
-Tested snippets for different languages
+Tested on 64-bit Windows
