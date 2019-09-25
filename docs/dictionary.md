@@ -2,18 +2,19 @@
 ```c#
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        var word_list = new List<string> { "table", "chair", "table" };
-        var words = new Hashtable();
-        foreach (var item in word_list)
+        var wordList = new List<string> { "glass", "table", "chair", "table" };
+        //var words = new Hashtable();
+        var words = new Dictionary<string, int>();
+        foreach (var item in wordList)
         {
-            if (words.Contains(item))
+            if (words.ContainsKey(item))
             {
                 words[item] = (int)words[item] + 1;
             }
@@ -23,9 +24,17 @@ public class Program
             }
         }
 
-        foreach (DictionaryEntry item in words)
+        Console.WriteLine();
+        foreach (var item in words)
         {
-            Console.WriteLine("{0}, {1}", item.Key, item.Value);
+            Console.Write("{0}:{1} ", item.Key, item.Value);
+        }
+
+        Console.WriteLine();
+        var sorted = words.OrderBy(x => -x.Value);
+        foreach (var item in sorted)
+        {
+            Console.Write("{0}:{1} ", item.Key, item.Value);
         }
     }
 }
@@ -34,10 +43,12 @@ public class Program
 ## Dart
 ```dart
 
+import 'dart:collection';
+
 main(List<String> arguments) {
-  var word_list = ["table", "chair", "table" ];
-  var words = {};
-  for (var item in word_list) {
+  var wordList = ["glass", "table", "chair", "table"];
+  var words = Map();
+  for (var item in wordList) {
       if (words.containsKey(item)) {
         words[item] += 1;
       }
@@ -46,6 +57,18 @@ main(List<String> arguments) {
       }
   }
   print('$words');
+
+  //sort values descending order
+  var sorted = sortMap(words);
+  print('$sorted');
+}
+
+LinkedHashMap sortMap(Map map) {
+  var mapk = map.keys.toList();
+  //sort keys according to values descending order
+  mapk.sort((k1, k2) => map[k2].compareTo(map[k1]));
+  var outMap = LinkedHashMap.fromIterable(mapk, key: (k) => k, value: (k) => map[k]);
+  return(outMap);
 }
 ```
 
