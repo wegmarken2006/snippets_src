@@ -1,34 +1,31 @@
-## C\#
-
+## C\# 
 ```c#
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace hello
+public class Program
 {
-    class Program
+    public static void Main(string[] args)
     {
-        static void Main(string[] args)
+        var word_list = new List<string> { "table", "chair", "table" };
+        var words = new Hashtable();
+        foreach (var item in word_list)
         {
-            var word_list = new List<string> { "table", "chair", "table" };
-            var words = new Hashtable();
-            foreach (var item in word_list)
+            if (words.Contains(item))
             {
-                if (words.Contains(item))
-                {
-                    words[item] = (int)words[item] + 1;
-                }
-                else
-                {
-                    words.Add(item, 1);
-                }
+                words[item] = (int)words[item] + 1;
             }
+            else
+            {
+                words.Add(item, 1);
+            }
+        }
 
-            foreach (DictionaryEntry item in words)
-            {
-                Console.WriteLine("{0}, {1}", item.Key, item.Value);
-            }
+        foreach (DictionaryEntry item in words)
+        {
+            Console.WriteLine("{0}, {1}", item.Key, item.Value);
         }
     }
 }
@@ -36,6 +33,7 @@ namespace hello
 
 ## Dart
 ```dart
+
 main(List<String> arguments) {
   var word_list = ["table", "chair", "table" ];
   var words = {};
@@ -53,6 +51,7 @@ main(List<String> arguments) {
 
 ## Go
 ```go
+
 package main
 
 import (
@@ -96,6 +95,7 @@ func (p keyValList) Swap(i, j int){ p[i], p[j] = p[j], p[i] }
 
 ## Python
 ```python
+
 from typing import Dict, List, Tuple
 
 word_list: List[str] = ["table", "chair", "table", "glass"]
@@ -115,6 +115,7 @@ print(words_l)
 
 ## Rust
 ```rust
+
 use std::collections::HashMap;
 use std::cmp::Reverse;
 

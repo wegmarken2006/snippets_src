@@ -1,6 +1,7 @@
 site_name: Snippets
 nav:
   - Home: index.md
+  - Playground Links: playglinks.md
   - Dictionary: dictionary.md
   - Hello with CLI: hello.md
   - Lists:
@@ -20,4 +21,6 @@ theme:
 markdown_extensions:
   - codehilite:
       guess_lang: false    
+extra:
+   version: 2.0
     
