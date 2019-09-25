@@ -142,3 +142,21 @@ print(lst5)
 ## Rust
 ```rust
 ```
+
+## Nim
+```nim
+import sequtils
+import algorithm as al
+
+var lst1 = @[0]
+var lst2 = @[4, 5, 6]
+lst1 = concat(lst1, lst2)
+echo lst1
+lst1 = concat(@[10], lst1)
+echo lst1
+lst2 = al.reversed(lst1)
+echo lst2
+let b = map(lst2, proc (x: int): string =
+    $x)
+echo b
+```

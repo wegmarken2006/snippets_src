@@ -7,6 +7,9 @@
 ## Go
 [Go Playground](https://play.golang.org/)
 
+## Nim
+[Nim Playground](https://play.nim-lang.org/)
+
 ## Python
 [Tio Python3](https://tio.run/#python3)
 
