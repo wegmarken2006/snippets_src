@@ -24,7 +24,7 @@ public class Program
         //reverse
         lst1.Reverse();
 
-        //sublist["str21", "str20", "str10", "str00"] -> ["str20", "str10", "str00"]
+        //sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
         //list length
         var lst3 = lst1.GetRange(1, lst1.Count - 1);
 
@@ -33,7 +33,8 @@ public class Program
         {
             Console.Write("{0} ", item);
         }
-                //map and filter
+
+        //map and filter
         var lst4 = lst1.Select((x) => x.ToUpper());
         var lst5 = lst4.Where((x) => x != "STR00");
 
@@ -54,6 +55,57 @@ public class Program
 ## Go
 ```go
 
+package main
+
+import (
+	"fmt"
+	"sort"
+	"strings"
+)
+
+func main() {
+
+	lst1 := stringList{}
+	lst2 := stringList{"str20", "str21"}
+
+	//append element
+	lst1 = append(lst1, "str10")
+
+	//append list
+	lst1 = append(lst1, lst2...)
+
+	//add head element
+	lst1 = append([]string{"str00"}, lst1...)
+
+	//reverse
+	sort.Sort(sort.Reverse(lst1))
+
+	//sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+	//list length
+	lst3 := lst1[1:len(lst1)]
+
+	fmt.Printf("\n%v", lst3)
+
+	//map and filter
+	lst4 := stringList{}
+	for _, elem := range lst1 {
+		lst4 = append(lst4, strings.ToUpper(elem))
+	}
+	lst5 := stringList{}
+	for _, elem := range lst4 {
+		if elem != "STR00" {
+			lst5 = append(lst5, elem)
+		}
+	}
+
+	fmt.Printf("\n%v", lst5)
+}
+
+type stringList []string
+
+func (p stringList) Len() int           { return len(p) }
+func (p stringList) Less(i, j int) bool { return p[i] < p[j] }
+func (p stringList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 ```
 
 ## Python
