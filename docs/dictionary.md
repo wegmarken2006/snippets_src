@@ -9,8 +9,8 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var wordList = new List<string> { "glass", "table", "chair", "table" };
-        //var words = new Hashtable();
+        //count words
+        var wordList = new List<string> { "glass", "table", "chair", "chair" };
         var words = new Dictionary<string, int>();
         foreach (var item in wordList)
         {
@@ -46,7 +46,9 @@ public class Program
 import 'dart:collection';
 
 main(List<String> arguments) {
-  var wordList = ["glass", "table", "chair", "table"];
+
+  //count words
+  var wordList = ["glass", "table", "chair", "chair"];
   var words = Map();
   for (var item in wordList) {
       if (words.containsKey(item)) {
@@ -83,7 +85,8 @@ import (
 )
 
 func main() {
-	wordList := []string{"table", "chair", "table", "glass"}
+    //count words
+	wordList := []string{"glass", "table", "chair", "chair"}
 	words := make(map[string]int)
 
 	for _, item := range wordList {
@@ -116,12 +119,39 @@ func (p keyValList) Less(i, j int) bool { return p[i].val < p[j].val }
 func (p keyValList) Swap(i, j int){ p[i], p[j] = p[j], p[i] }
 ```
 
+## Nim
+```nim
+
+import tables
+import algorithm as al
+
+
+# count words
+var wordList =  @["glass", "table", "chair", "chair"]
+#var words = initTable[string, int]()
+var words = initOrderedTable[string, int]()
+for item in wordList:
+  if words.hasKey(item):
+    words[item] += 1
+  else:
+    words.add(item, 1)
+  
+echo words
+
+# sort by descending value
+words.sort(proc (x, y: (string, int)): int = x[1] - y[1], order = al.SortOrder.Descending)
+
+echo words
+```
+
 ## Python
 ```python
 
 from typing import Dict, List, Tuple
+from operator import itemgetter
 
-word_list: List[str] = ["table", "chair", "table", "glass"]
+# count words
+word_list: List[str] = ["glass", "table", "chair", "chair"]
 words: Dict[str, int] = {}
 for item in word_list:
     try:
@@ -132,7 +162,7 @@ print(words)
 
 # sort by descending value
 words_l: List[Tuple[str, int]] = list(words.items())
-words_l.sort(reverse=True)
+words_l = sorted(words_l, reverse=True, key=itemgetter(1))
 print(words_l)
 ```
 
@@ -144,7 +174,7 @@ use std::cmp::Reverse;
 
 fn main() {
     //count words
-    let word_list = vec!["table", "chair", "table", "glass"];
+    let word_list = vec!["glass", "table", "chair", "chair"];
     let mut words: HashMap<String, usize> = HashMap::new();
     for item in word_list  {
         let count = words.entry((*item).to_string()).or_insert(0);

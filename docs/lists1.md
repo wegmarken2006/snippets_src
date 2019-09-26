@@ -108,6 +108,39 @@ func (p stringList) Less(i, j int) bool { return p[i] < p[j] }
 func (p stringList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 ```
 
+## Nim
+```nim
+
+import sequtils as sq
+import algorithm as al
+import strutils as st
+
+# empty list
+var lst1: seq[string] = @[]
+var lst2 = @["str20", "str21"]
+
+# append element
+lst1 = sq.concat(lst1, @["str10"])
+
+#append list
+lst1 = sq.concat(lst1, lst2)
+
+# add head element
+lst1 = sq.concat(@["str00"], lst1)
+
+# reverse
+lst1 = al.reversed(lst1)
+
+# sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+# list length
+var lst3 = lst1[1 .. len(lst1) - 1]
+
+# map and filter
+var lst4 = map(lst3, proc (x: string): string = st.toUpper(x))
+var lst5 = filter(lst4, proc (x: string): bool = x != "STR00")
+echo lst5
+```
+
 ## Python
 ```python
 
@@ -141,22 +174,4 @@ print(lst5)
 
 ## Rust
 ```rust
-```
-
-## Nim
-```nim
-import sequtils
-import algorithm as al
-
-var lst1 = @[0]
-var lst2 = @[4, 5, 6]
-lst1 = concat(lst1, lst2)
-echo lst1
-lst1 = concat(@[10], lst1)
-echo lst1
-lst2 = al.reversed(lst1)
-echo lst2
-let b = map(lst2, proc (x: int): string =
-    $x)
-echo b
 ```
