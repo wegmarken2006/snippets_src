@@ -1,16 +1,13 @@
 site_name: Snippets
 nav:
   - Home: index.md
-  - Playground Links: playglinks.md
+  - Playground links.md
   - Data types:
-    - Dictionary: dictionary.md
+    - Dictionary.md
     - List.md
-  - Execution Time: exetime.md
-  - Hello with CLI: hello.md
-  
-#  - Lists:
-#    - New List w and w/o value: lists1.md
-  - System command: syscom.md
+  - Execution time.md
+  - Scaffold with CLI.md
+  - System command.md
 theme:
   name: 'material'
   palette:

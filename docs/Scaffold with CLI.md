@@ -1,10 +1,4 @@
-## Rust
-
-```
-cargo new hello -- bin
-cd hello
-cargo run
-```
+# Scaffold with CLI
 
 ## C\#
 ```
@@ -22,3 +16,11 @@ stagehand console-full
 pub get
 dart bin/main.dart
 ```
+
+## Rust
+```
+cargo new hello -- bin
+cd hello
+cargo run
+```
+
