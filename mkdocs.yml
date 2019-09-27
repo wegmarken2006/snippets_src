@@ -3,6 +3,7 @@ nav:
   - Home: index.md
   - Playground Links: playglinks.md
   - Dictionary: dictionary.md
+  - Execution Time: exetime.md
   - Hello with CLI: hello.md
   - Lists: lists1.md
 #  - Lists:

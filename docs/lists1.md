@@ -9,7 +9,10 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        List<string> lst1 = new List<string>();
+        //new empty list
+        var lst1 = new List<string>();
+
+        //new initialized list
         var lst2 = new List<string> { "str20", "str21" };
 
         //append element
@@ -65,7 +68,10 @@ import (
 
 func main() {
 
-	lst1 := stringList{}
+    //new empty list
+    lst1 := stringList{}
+    
+    //new initialized list
 	lst2 := stringList{"str20", "str21"}
 
 	//append element
@@ -115,12 +121,14 @@ import sequtils as sq
 import algorithm as al
 import strutils as st
 
-# empty list
+# new empty list
 var lst1: seq[string] = @[]
+
+# new initialized list
 var lst2 = @["str20", "str21"]
 
 # append element
-lst1 = sq.concat(lst1, @["str10"])
+lst1.add("str10")
 
 #append list
 lst1 = sq.concat(lst1, lst2)
@@ -134,6 +142,7 @@ lst1 = al.reversed(lst1)
 # sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
 # list length
 var lst3 = lst1[1 .. len(lst1) - 1]
+echo lst3
 
 # map and filter
 var lst4 = map(lst3, proc (x: string): string = st.toUpper(x))
@@ -146,7 +155,10 @@ echo lst5
 
 from typing import List
 
+# new empty list
 lst1: List[str] = []
+
+# new initialized list
 lst2: List[str] = ["str20", "str21"]
 
 # append element
