@@ -2,10 +2,12 @@ site_name: Snippets
 nav:
   - Home: index.md
   - Playground Links: playglinks.md
-  - Dictionary: dictionary.md
+  - Data types:
+    - Dictionary: dictionary.md
+    - List.md
   - Execution Time: exetime.md
   - Hello with CLI: hello.md
-  - Lists: lists1.md
+  
 #  - Lists:
 #    - New List w and w/o value: lists1.md
   - System command: syscom.md
