@@ -53,6 +53,38 @@ public class Program
 ## Dart
 ```dart
 
+main(List<String> arguments) {  
+  // new empty list
+  var lst1 = List<String>();  
+
+  //new initialized list
+  var lst2 = ["str20", "str21"];
+
+  // append element
+  lst1.add("str10");
+
+  // append list
+  lst1 = lst1 + lst2;
+
+  // add head element
+  lst1 = ["str00"] + lst1;
+
+  //reverse
+  lst1 = lst1.reversed.toList();
+
+  // sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+  // list length
+  var lst3 = lst1.sublist(1, lst1.length);
+
+  print('$lst3');
+
+  // map and filter
+  var lst4 = lst3.map((x) => x.toUpperCase());
+  var lst5 = lst4.where((x) => x != "STR00");
+  
+  print('$lst5');
+  
+}
 ```
 
 ## Go
@@ -186,4 +218,36 @@ print(lst5)
 
 ## Rust
 ```rust
+
+fn main() {
+    // new empty list
+    let mut lst1: Vec<&str> = vec![];
+
+    //new initialized list
+    let lst2 = vec!["str20", "str21"];
+
+    // append element
+    lst1.push("str10");
+
+    // append list
+    lst1.extend(lst2);
+
+    // add head element
+    lst1.insert(0, "str00");
+
+    //reverse
+    lst1.reverse();
+
+    // sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+    // list length
+    let lst3: Vec<&str> = lst1[1..lst1.len()].to_vec();
+
+    println!("{:?}", &lst3);
+
+    // map and filter
+    let lst4: Vec<_> = lst3.into_iter().map(|x| x.to_uppercase()).collect();
+    let lst5: Vec<_> = lst4.into_iter().filter(|x| *x != "STR00").collect();
+
+    println!("{:?}", &lst5);
+}
 ```

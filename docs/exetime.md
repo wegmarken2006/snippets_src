@@ -90,6 +90,54 @@ List<int> findProperDivisor(int n) {
 }
 ```
 
+## Go
+```go
+
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+
+	start := time.Now() //START MEASURE
+	perfects := classifyPerfect(20001)
+	duration := time.Since(start) //END MEASURE
+
+	fmt.Printf("\n%v", perfects)
+	fmt.Printf("\nElapsed: %v", duration)
+}
+
+func classifyPerfect(nnum int) []int {
+	perfects := []int{}
+	for n := 1; n < nnum; n++ {
+		divisors := findProperDivisor(n)
+		sum := 0
+		for i := 0; i < len(divisors); i++ {
+			sum += divisors[i]
+		}
+
+		if sum == n {
+			perfects = append(perfects, n)
+		}
+	}
+	return perfects
+}
+
+func findProperDivisor(n int) []int {
+	divisors := []int{}
+	endloop := int(n/2) + 1
+	for i := 1; i < endloop; i++ {
+		if n%i == 0 {
+			divisors = append(divisors, i)
+		}
+	}
+	return divisors
+}
+```
+
 ## Nim
 ```nim
 
