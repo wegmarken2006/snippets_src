@@ -143,7 +143,7 @@ func findProperDivisor(n int) []int {
 ## Nim
 ```nim
 
-# compile with: nim c -d:release --passC="-flto -ffast-math" <filename>
+# compile with: nim c -d:release  <filename>
 import times as ts
 import sequtils as sq
 

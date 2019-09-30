@@ -3,9 +3,11 @@ nav:
   - Home: index.md
   - Playground links.md
   - Data types:
-    - Dictionary.md
+    - Dict.md
     - List.md
   - Execution time.md
+  - File:
+    - Write & Read lines.md
   - Scaffold with CLI.md
   - System command.md
 theme:
