@@ -1,5 +1,40 @@
 # Write & Read Lines
+## C\#
+```c#
 
+using System;
+using System.IO;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var fileName = "tmp01.txt";
+
+        using (var f = File.CreateText(fileName))
+        {
+            f.WriteLine("This is\n\na text\nfile");
+        }
+
+        try
+        {
+            using (var f = File.OpenText(fileName))
+            {
+                string s;
+                while ((s = f.ReadLine()) != null)
+                {
+                    Console.WriteLine(s);
+                }
+            }
+        }
+        catch
+        {
+            Console.WriteLine("Could not find {0}", fileName);
+        }
+
+    }
+}
+```
 
 ## Dart
 ```dart
@@ -23,8 +58,48 @@ main() async {
       print('$line');
     }
   } catch (e) {
-    print(e);
+    print("Cannot find $fileName");
   }
+}
+```
+
+## Go
+```go
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+func main() {
+	fileName := "tmp01.txt"
+	file, err := os.Create(fileName)
+	if err != nil {
+		fmt.Printf("Can't create %s\n", fileName)
+		os.Exit(0)
+	}
+	toWrite := []byte("This is\n\na text\nfile")
+	file.Write(toWrite)
+	file.Close()
+
+	file, err = os.Open(fileName)
+	if err != nil {
+		fmt.Printf("Can't open %s\n", fileName)
+		os.Exit(0)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Reading error: ", err)
+	}
 }
 ```
 
@@ -46,6 +121,28 @@ if not isNil(strmRead):
 strmRead.close()
 ```
 
+## Python
+```python
+
+import os
+import sys
+
+file_name = "tmp01.txt"
+
+try:
+    with open(file_name, "w") as file:
+        file.write("This is\n\na text\nfile")
+except:
+    print(f"Error writing  {file_name}")
+
+try:
+    with open(file_name, "r") as file:
+        for line in file:
+            print(line, end='')
+except:
+    print(f"Error reading {file_name}")
+```
+
 ## Rust
 ```rust
 
@@ -55,14 +152,11 @@ use std::io::BufRead;
 use std::io::BufReader;
 fn main() {
     let file_name = "tmp01.txt";
-    let mut f = match File::create(file_name) {
-        Ok(file) => file,
-        Err(_) => panic!("Cannot create {}", file_name),
-    };
-    match f.write("This is\n\na text\nfile".as_bytes()) {
-        Ok(_) => {}
-        Err(_) => panic!("Cannot write to {}", file_name),
-    };
+    let mut f = File::create(file_name)
+        .expect(&format!("Cannot create {}", file_name));
+
+    f.write("This is\n\na text\nfile".as_bytes()) 
+        .expect(&format!("Cannot write to {}", file_name));
 
     let f = File::open(file_name)
         .expect(&format!("File {} not found", file_name));
@@ -72,12 +166,12 @@ fn main() {
     for line in file.lines() {
         let str1: String = match line {
             Ok(str1) => str1.to_ascii_lowercase(),
-            Err(_) => {
-                //return empty string
-                String::new()
+            Err(_) => {                
+                String::new() //return empty string
             }
         };
         println!("{}", &str1);
     }
 }
+
 ```
