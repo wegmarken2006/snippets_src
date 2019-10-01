@@ -12,9 +12,10 @@ public class Program
     {
         var psi = new ProcessStartInfo();
         var process = new Process(); //("cargo", "version");
-        psi.Arguments = "version";
-        psi.FileName = "cargo";
+        psi.Arguments = "--version";
+        psi.FileName = "dotnet";
         psi.RedirectStandardOutput = true;
+        psi.UseShellExecute = false;
         process.StartInfo = psi;
         process.Start();
 
@@ -61,7 +62,7 @@ func main() {
 
 import subprocess
 
-outp = subprocess.run(["cargo", "version"], capture_output=True, text=True)
+outp = subprocess.run(["pip", "--version"], capture_output=True, text=True)
 print(outp.stdout)
 ```
 

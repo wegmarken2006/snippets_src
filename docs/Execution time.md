@@ -147,16 +147,16 @@ func findProperDivisor(n int) []int {
 import times as ts
 import sequtils as sq
 
-proc findProperDivisors(n: int): seq[int] =
-    var divisors: seq[int]
-    let endloop: int = int(n / 2)
+proc findProperDivisors(n: int32): seq[int32] =
+    var divisors: seq[int32]
+    let endloop: int32 = int32(n / 2)
     for i in 1..endloop:
         if (n mod i) == 0:
             divisors.add(i)
     divisors
 
-proc classifyPerfects(num: int): seq[int] =
-    var perfects: seq[int]
+proc classifyPerfects(num: int32): seq[int32] =
+    var perfects: seq[int32]
     for n in 1..num:
         let divisors = findProperDivisors(n)
         var sumd = 0
