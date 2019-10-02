@@ -1,5 +1,38 @@
 # Structure or Class
 
+## Python
+```python
+
+from dataclasses import dataclass
+
+@dataclass
+class Person:
+    first_name: str = "John"
+    second_name: str = "Doe"
+
+@dataclass
+class Customer:
+    person: Person
+    __balance: float = 0.0 #private
+
+    def add_to_balance(self, num: float):
+        self.__balance += num
+
+    def get_balance(self) -> float:
+        return self.__balance
+
+p1 = Person()
+c1 = Customer(p1)
+
+# method
+c1.add_to_balance(100.0)
+c1.add_to_balance(10.0)
+new_balance = c1.get_balance()
+
+# property
+print(f" New {c1.person.first_name} balance: {new_balance}")
+```
+
 ## Rust
 ```rust
 
