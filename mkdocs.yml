@@ -1,10 +1,11 @@
-site_name: Snippets
+site_name: Runnable Snippets
 nav:
   - Home: index.md
   - Playground links.md
   - Data types:
     - Dict.md
     - List.md
+    - Structure or Class.md
   - Execution time.md
   - File:
     - Write & Read lines.md
