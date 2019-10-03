@@ -13,6 +13,7 @@ public class Program
     public static void Main(string[] args)
     {
         //count words
+
         var wordList = new List<string> { "glass", "table", "chair", "chair" };
         var words = new Dictionary<string, int>();
         foreach (var item in wordList)
@@ -51,6 +52,7 @@ import 'dart:collection';
 main(List<String> arguments) {
 
   //count words
+
   var wordList = ["glass", "table", "chair", "chair"];
   var words = Map();
   for (var item in wordList) {
@@ -89,6 +91,7 @@ import (
 
 func main() {
     //count words
+
 	wordList := []string{"glass", "table", "chair", "chair"}
 	words := make(map[string]int)
 
@@ -130,8 +133,8 @@ import algorithm as al
 
 
 # count words
+
 var wordList =  @["glass", "table", "chair", "chair"]
-#var words = initTable[string, int]()
 var words = initOrderedTable[string, int]()
 for item in wordList:
   if words.hasKey(item):
@@ -154,6 +157,7 @@ from typing import Dict, List, Tuple
 from operator import itemgetter
 
 # count words
+
 word_list: List[str] = ["glass", "table", "chair", "chair"]
 words: Dict[str, int] = {}
 for item in word_list:
@@ -177,6 +181,7 @@ use std::cmp::Reverse;
 
 fn main() {
     //count words
+    
     let word_list = vec!["glass", "table", "chair", "chair"];
     let mut words: HashMap<String, usize> = HashMap::new();
     for item in word_list  {
