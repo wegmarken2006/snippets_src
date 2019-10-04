@@ -46,6 +46,73 @@ main(List<String> args) {
 }
 ```
 
+## Go
+```go
+
+//file src/moda/moda.go -> package moda
+package moda
+
+// all public identifier must start with Uppercase
+
+type Person struct {
+    FirstName  string
+    SecondName string
+}
+
+type Customer struct {
+    Person  Person
+    balance float64 //lowercase because private
+}
+
+// struct creation with optional parameters
+func NewPerson(args ...string) Person {
+    firstName := "John"
+    secondName := "Doe"
+    if len(args) > 0 {
+        firstName = args[0]
+    }
+    if len(args) > 1 {
+        secondName = args[1]
+    }
+    return Person{FirstName: firstName, SecondName: secondName}
+}
+
+// struct creation
+func NewCustomer(person Person) Customer {
+    return Customer{Person: person, balance: 0.0}
+}
+
+// public methods for Customer
+func (customer *Customer) AddToBalance(sum float64) {
+    customer.balance += sum
+}
+func (customer *Customer) GetBalance() float64 {
+    return customer.balance
+}
+```
+```go
+
+package main
+
+import (
+    "fmt"
+    "moda"
+)
+
+func main() {   
+    p1 := moda.NewPerson("Mark")
+    c1 := moda.NewCustomer(p1)
+
+    //method
+    c1.AddToBalance(100.0)
+    c1.AddToBalance(10.0)
+    balance := c1.GetBalance()
+
+    //property
+    fmt.Printf("\nNew %v balance: %v", c1.Person.FirstName, balance) 
+}
+```
+
 ## Nim
 ```nim
 
