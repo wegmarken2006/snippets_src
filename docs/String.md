@@ -27,6 +27,11 @@ class Program
 ## Dart
 ```dart
 
+// dependencies:
+//  sprintf: ^4.0.2
+
+import 'package:sprintf/sprintf.dart';
+
 main(List<String> arguments) {
   var name = "John";
   var age = 21;
@@ -35,8 +40,12 @@ main(List<String> arguments) {
     
   // String interpolation
   var str1 = "$name age is $age, weekday is $day, ${date.hour}:${date.minute}";
-
   print(str1);
+
+  // String formatting float hex
+  var str2 = sprintf("\nfour decimals: %.4f, hex for %d: %x", [0.123456, 16, 16]);
+  print(str2);
+  
 }
 ```
 
@@ -52,9 +61,11 @@ fn main() {
     let age = 21;
     let date = Utc::now();
 
-    // STring formatting
+    // STring formatting: string, int, date
     let str1 = format!("{} age is {} weekday is, {:?}, {:?}:{:?}", 
         name, age, date.weekday(), date.hour(), date.minute());
     println!("{}", str1);
+    //float, hex
+    println!("four decimals: {:.4}, hex for {}: 0x{:X}", 0.123456, 16, 16);
 }
 ```
