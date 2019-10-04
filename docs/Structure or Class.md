@@ -53,9 +53,7 @@ class Program
         Console.WriteLine("New {0} balance: {1}", c1.person.firstName, c1.GetBalance());
     }
 }
-
-
-``
+```
 
 ## Dart
 ```dart
