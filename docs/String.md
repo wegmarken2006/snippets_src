@@ -39,3 +39,22 @@ main(List<String> arguments) {
   print(str1);
 }
 ```
+
+## Rust
+```rust
+
+// [dependencies]
+// chrono = "*"
+use chrono::{Datelike, Timelike, Utc};
+
+fn main() {
+    let name = "John";
+    let age = 21;
+    let date = Utc::now();
+
+    // STring formatting
+    let str1 = format!("{} age is {} weekday is, {:?}, {:?}:{:?}", 
+        name, age, date.weekday(), date.hour(), date.minute());
+    println!("{}", str1);
+}
+```
