@@ -1,5 +1,62 @@
 # Structure or Class
 
+## C\#
+```c#
+
+using System;
+
+class Person
+{
+    public string firstName;
+    public string secondName;
+    //constructor with default arguments
+    public Person(string fname = "John", string sname = "Doe")
+    {
+        firstName = fname;
+        secondName = sname;
+    }
+
+}
+
+class Customer
+{
+    public Person person;
+    //keep  balance private
+    double balance = 0.0;
+
+    public Customer(Person p)
+    {
+        person = p;
+    }
+    //methods
+    public void AddToBalance(double sum)
+    {
+        balance += sum;
+    }
+    public double GetBalance()
+    {
+        return balance;
+    }
+}
+class Program
+{
+    static void Main(string[] args)
+    {
+        var p1 = new Person("Mark");
+        var c1 = new Customer(p1);
+
+        //methos
+        c1.AddToBalance(100.0);
+        c1.AddToBalance(10.0);
+
+        //property
+        Console.WriteLine("New {0} balance: {1}", c1.person.firstName, c1.GetBalance());
+    }
+}
+
+
+``
+
 ## Dart
 ```dart
 
