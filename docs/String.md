@@ -103,8 +103,12 @@ let str2 = &"four decimals: {0.123456:2.4f}, hex for {16}: 0x{16:X}"
 echo str2
 
 var elems = str2.split(" ")
+
+# Eliminate ',', ':'
 elems =  map(elems, proc (x: string): string = x.replace(",",""))
 elems =  map(elems, proc (x: string): string = x.replace(":",""))
+
+# Parse string for numbers
 for item in elems:
     try:
         let num = parseFloat(item)
@@ -138,7 +142,7 @@ fn main() {
     let str2 = &format!("four decimals: {:.4}, hex for {}: 0x{:X}", 0.123456, 16, 16);
     println!("{}", str2);
 
-    // Parse string for numers
+    // Parse string for numbers
     let elems: Vec<&str> = str2.split(" ").collect();
 
     // Eliminate ',', ':'
