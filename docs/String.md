@@ -83,6 +83,41 @@ main(List<String> arguments) {
 }
 ```
 
+## Go
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"time"
+)
+
+func main() {
+	name := "John"
+	age := 21
+	date := time.Now()
+
+	// String interpolation
+	str1 := fmt.Sprintf("%s age is %d, weekday is %s, %d:%d\n",
+		name, age, date.Weekday(), date.Hour(), date.Minute())
+	fmt.Print(str1)
+
+	str2 := fmt.Sprintf("four decimals %.4f, hex for %d: 0x%x \n", 1.23456, 16, 16)
+	fmt.Print(str2)
+
+	elems := strings.Split(str2, " ")
+	var num float64
+	for _, item := range elems {
+		item = strings.Trim(item, ",:")
+		_, err := fmt.Sscanf(item, "%f", &num)
+		if err == nil {
+			fmt.Printf("Found float %f in \"%s\"\n", num, item)
+		}
+	}
+}
+```
+
 ## Nim
 ```nim
 import strformat
@@ -115,6 +150,39 @@ for item in elems:
         echo &"Found float {num} in \"{item}\""
     except:
         discard
+```
+
+## Python
+```python
+
+import datetime
+
+name = "John"
+age = 21
+date = datetime.datetime.now()
+
+# String interpolation
+str1 = f"{name } age is {age}, today is {date.day}, {date.hour}:{date.minute}"
+print(str1)
+
+#  String formatting
+str1 = "{} age is {}, today us {}, {}:{}".format(name, age, date.day, date.hour, date.minute)
+print(str1)
+
+# float, hexadecimal
+str2 = "four decimals: {:.4f}, hex for {}: 0x{:x}".format(0.123456, 16, 16)
+print(str2)
+
+# parse string for numbers
+elems = str2.split(" ")
+for item in elems:
+    item = item.replace(",", "")
+    item = item.replace(":", "")
+    try:
+        num = float(item)
+        print(f"Found {num} in \"{item}\"")
+    except:
+        pass
 ```
 
 ## Rust
