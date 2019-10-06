@@ -257,7 +257,6 @@ console.time("Elapsed");
 let perfects = classifyPerfect(20001);
 console.timeEnd("Elapsed");
 console.log(`${perfects}`);
-//console.log(`Elapsed: ${end - start} ms`);
 
 function classifyPerfect(nnum: number) {
     let perfects = [];
