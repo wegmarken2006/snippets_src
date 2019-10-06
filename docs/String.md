@@ -224,3 +224,28 @@ fn main() {
     }
 }
 ```
+
+## TypeScript
+``` typescript
+
+let name1 = "John";
+let age = 21;
+let date = new Date();
+
+// String interpolation (use backtick)
+let str1 = `${name1} age is ${age}, today is ${date.getDay()}, ${date.getHours()}:${date.getMinutes()}`;
+console.log(str1);
+
+let num = 16
+let str2 = `four decimals: ${1.23456.toFixed(4)}, hex for ${num} is 0x${num.toString(16)}`;
+console.log(str2);
+
+// Parse string for number
+let elems = str2.split(" ");
+elems.forEach(item => {
+    let num = parseFloat(item);
+    if (!isNaN(num)) {
+        console.log(`Found float ${num} in \"${item}\"`);
+    }
+});
+```
