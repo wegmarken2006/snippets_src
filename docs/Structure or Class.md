@@ -311,5 +311,46 @@ fn main() {
     //Property
     println!("New {} balance: {} ", &c1.person.first_name, c1.get_balance());
 }
+```
 
+## TypeScript
+``` typescript
+
+class Person {
+    firstName: string;
+    secondName: string;
+    //Default/Optional parameters 
+    constructor(fname: string = "John", sname: string = "Doe") {
+        this.firstName = fname;
+        this.secondName = sname;
+    }
+}
+
+class Customer {
+    person: Person;
+    private _balance: number = 0.0;
+    constructor(p: Person) {
+        this.person = p;
+    }
+    addToBalance(sum: number) {
+        this._balance += sum;
+    }
+    getBalance() {
+        return this._balance;
+    }
+}
+
+var p1 = new Person("Mark");
+var c1 = new Customer(p1);
+c1.person = p1;
+
+//Method
+c1.addToBalance(100.0);
+c1.addToBalance(10.0);
+
+//Property
+var pname = c1.person.firstName;
+var balance = c1.getBalance();
+
+console.log(`New ${pname} balance: ${balance}`);
 ```

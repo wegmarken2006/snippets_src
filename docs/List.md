@@ -84,7 +84,6 @@ main(List<String> arguments) {
   var lst5 = lst4.where((x) => x != "STR00");
   
   print('$lst5');
-  
 }
 ```
 
@@ -252,3 +251,38 @@ fn main() {
     println!("{:?}", &lst5);
 }
 ```
+
+## TypeScript
+``` typescript
+
+// new empty list
+var lst1 = [];
+
+//new initialized list
+var lst2 = ["str20", "str21"];
+
+// append element
+lst1.push("str10");
+
+// append list
+lst1 = lst1.concat(lst2);
+
+// add head element
+lst1 = ["str00"].concat(lst1);
+
+//reverse
+lst1 = lst1.reverse();
+
+// sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+// list length
+var lst3 = lst1.slice(1, lst1.length);
+
+console.log(`${lst3}`);
+
+// map and filter
+var lst4 = lst3.map((x) => x.toUpperCase());
+var lst5 = lst4.filter((x) => x != "STR00");
+
+console.log(`${lst5}`);
+```
+
