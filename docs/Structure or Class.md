@@ -1,5 +1,60 @@
 # Structure or Class
 
+## C\#
+```c#
+
+using System;
+
+class Person
+{
+    public string firstName;
+    public string secondName;
+    //constructor with default arguments
+    public Person(string fname = "John", string sname = "Doe")
+    {
+        firstName = fname;
+        secondName = sname;
+    }
+
+}
+
+class Customer
+{
+    public Person person;
+    //keep  balance private
+    double balance = 0.0;
+
+    public Customer(Person p)
+    {
+        person = p;
+    }
+    //methods
+    public void AddToBalance(double sum)
+    {
+        balance += sum;
+    }
+    public double GetBalance()
+    {
+        return balance;
+    }
+}
+class Program
+{
+    static void Main(string[] args)
+    {
+        var p1 = new Person("Mark");
+        var c1 = new Customer(p1);
+
+        //methos
+        c1.AddToBalance(100.0);
+        c1.AddToBalance(10.0);
+
+        //property
+        Console.WriteLine("New {0} balance: {1}", c1.person.firstName, c1.GetBalance());
+    }
+}
+```
+
 ## Dart
 ```dart
 
@@ -111,6 +166,73 @@ func main() {
 	fmt.Printf("\nNew %v balance: %v", c1.Person.FirstName, balance) 
 }
 
+```
+
+## Go
+```go
+
+//file src/moda/moda.go -> package moda
+package moda
+
+// all public identifier must start with Uppercase
+
+type Person struct {
+    FirstName  string
+    SecondName string
+}
+
+type Customer struct {
+    Person  Person
+    balance float64 //lowercase because private
+}
+
+// struct creation with optional parameters
+func NewPerson(args ...string) Person {
+    firstName := "John"
+    secondName := "Doe"
+    if len(args) > 0 {
+        firstName = args[0]
+    }
+    if len(args) > 1 {
+        secondName = args[1]
+    }
+    return Person{FirstName: firstName, SecondName: secondName}
+}
+
+// struct creation
+func NewCustomer(person Person) Customer {
+    return Customer{Person: person, balance: 0.0}
+}
+
+// public methods for Customer
+func (customer *Customer) AddToBalance(sum float64) {
+    customer.balance += sum
+}
+func (customer *Customer) GetBalance() float64 {
+    return customer.balance
+}
+```
+```go
+
+package main
+
+import (
+    "fmt"
+    "moda"
+)
+
+func main() {   
+    p1 := moda.NewPerson("Mark")
+    c1 := moda.NewCustomer(p1)
+
+    //method
+    c1.AddToBalance(100.0)
+    c1.AddToBalance(10.0)
+    balance := c1.GetBalance()
+
+    //property
+    fmt.Printf("\nNew %v balance: %v", c1.Person.FirstName, balance) 
+}
 ```
 
 ## Nim
@@ -256,5 +378,46 @@ fn main() {
     //Property
     println!("New {} balance: {} ", &c1.person.first_name, c1.get_balance());
 }
+```
 
+## TypeScript
+``` typescript
+
+class Person {
+    firstName: string;
+    secondName: string;
+    //Default/Optional parameters 
+    constructor(fname: string = "John", sname: string = "Doe") {
+        this.firstName = fname;
+        this.secondName = sname;
+    }
+}
+
+class Customer {
+    person: Person;
+    private _balance: number = 0.0;
+    constructor(p: Person) {
+        this.person = p;
+    }
+    addToBalance(sum: number) {
+        this._balance += sum;
+    }
+    getBalance() {
+        return this._balance;
+    }
+}
+
+var p1 = new Person("Mark");
+var c1 = new Customer(p1);
+c1.person = p1;
+
+//Method
+c1.addToBalance(100.0);
+c1.addToBalance(10.0);
+
+//Property
+var pname = c1.person.firstName;
+var balance = c1.getBalance();
+
+console.log(`New ${pname} balance: ${balance}`);
 ```

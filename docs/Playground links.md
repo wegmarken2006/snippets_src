@@ -27,3 +27,6 @@
 [Rust Playground](https://play.rust-lang.org/)
 
 [Tio Rust](https://tio.run/#rust)
+
+## TypeScript
+[Tio TypeScript](https://tio.run/#typescript)

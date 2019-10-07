@@ -249,3 +249,38 @@ fn find_proper_divisors(n: i32) -> Vec<i32> {
     return divisors;
 }
 ```
+
+## TypeScript
+```typescript
+
+console.time("Elapsed");
+let perfects = classifyPerfect(20001);
+console.timeEnd("Elapsed");
+console.log(`${perfects}`);
+
+function classifyPerfect(nnum: number) {
+    let perfects = [];
+    for (var n = 1; n < nnum; n++) {
+        let divisors = findProperDivisor(n);
+        var sum = 0;
+        if (divisors.length > 0) {
+            divisors.forEach(x => sum += x);
+        }
+        if (sum == n) {
+            perfects.push(n);
+        }
+    }
+    return perfects;
+}
+
+function findProperDivisor(n: number) {
+    let divisors = [];
+    let endloop = Math.floor(n / 2) + 1;
+    for (let i = 1; i < endloop; i++) {
+        if (n % i == 0) {
+            divisors.push(i);
+        }
+    }
+    return divisors;
+}
+```

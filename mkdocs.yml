@@ -5,7 +5,9 @@ nav:
   - Data types:
     - Dict.md
     - List.md
+    - String.md
     - Structure or Class.md
+    - Union.md
   - Execution time.md
   - File:
     - Write & Read lines.md
