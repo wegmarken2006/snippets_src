@@ -319,7 +319,7 @@ c1.add_to_balance(10.0)
 new_balance = c1.get_balance()
 
 # property
-print(f" New {c1.person.first_name} balance: {new_balance}")
+print(f" New {c1.person.firstName} balance: {new_balance}")
 ```
 
 ## Rust

@@ -3,6 +3,7 @@
 ## C\#
 ```c#
 
+// exe -> dotnet publish -c Release -r win10-x64
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +18,6 @@ public class Program
         var perfects = classifyPerfects(20001);
         timer.Stop(); //END MEASURE
 
-        Console.WriteLine("Perfects: {0}", perfects.Count);
         foreach (var item in perfects)
         {
             Console.Write("{0} ", item);
@@ -29,6 +29,7 @@ public class Program
         var perfects = new List<int>();
         for (int n = 1; n < num; n++) {
             var divisors = findProperDivisor(n);
+            // list_sum
             var sum = divisors.Sum();
             if (sum == n) {
                 perfects.Add(n);
@@ -143,7 +144,7 @@ func findProperDivisor(n int) []int {
 ## Nim
 ```nim
 
-# compile with: nim c -d:release  <filename>
+# exe -> nim c -d:release  <filename>
 import times as ts
 import sequtils as sq
 
@@ -170,7 +171,6 @@ var start = ts.getTime() # START MEASURE
 var perfects = classifyPerfects(20001)
 var endt = ts.getTime() # END MEASURE
 
-echo perfects.len
 echo perfects
 echo endt - start
 ``` 
@@ -193,6 +193,7 @@ def classify_perfects(num: int) -> List[int]:
     perfects: List[int] = []
     for n in range(1, num):
         divisors = find_proper_divisors(n)
+        # list_sum
         sumd = sum(divisors)
         if sumd == n:
             perfects += [n]
@@ -202,7 +203,6 @@ start_time: float = time.time() # START MEASURE
 perfects = classify_perfects(20001)
 end_time: float = time.time() # END MEASURE
 
-print(f"Perfects: {len(perfects)}")
 for item in perfects:
     print(f"{item}")
 print(f"Elapsed: {((end_time - start_time)*1000)} ms")
@@ -211,6 +211,7 @@ print(f"Elapsed: {((end_time - start_time)*1000)} ms")
 ## Rust
 ```rust
 
+//exe -> cargo build --release
 use std::time::{Instant};
 
 fn main() {
@@ -218,10 +219,7 @@ fn main() {
     let perfects = classify_perfect(20001);
     let new_now = Instant::now();  //END MEASURE
 
-    //Output
-    println!("Perfects: {:?}", perfects.len());
     println!("{:?}", perfects);
-
     println!("Elapsed: {:?}", new_now.duration_since(now));
 
 }
@@ -231,6 +229,7 @@ fn classify_perfect(num: i32) -> Vec<i32> {
     for n in 1..num {
         let divisors = find_proper_divisors(n);
 
+        // list_sum
         let sum: i32 = divisors.iter().sum();
         if sum == n {
             perfects.push(n);
@@ -253,9 +252,9 @@ fn find_proper_divisors(n: i32) -> Vec<i32> {
 ## TypeScript
 ```typescript
 
-console.time("Elapsed");
+console.time("Elapsed"); //START MEASURE
 let perfects = classifyPerfect(20001);
-console.timeEnd("Elapsed");
+console.timeEnd("Elapsed"); //END MEASURE
 console.log(`${perfects}`);
 
 function classifyPerfect(nnum: number) {
