@@ -109,6 +109,56 @@ cType(IComposite c) {
 
 ## Go
 ```go
+
+package main
+
+import (
+	"fmt"
+)
+
+type CompositeType interface {
+	isComposite() bool
+}
+
+type Person struct {
+	FirstName  string
+	SecondName string
+}
+// struct creation
+func NewPerson(firstName string, secondName string) Person {
+	return Person{FirstName: firstName, SecondName: secondName}
+}
+
+type CInt struct {
+	value int
+}
+// struct creation
+func NewCInt(num int) CInt {
+	return CInt{value: num}
+}
+
+//link Person and CInt to CompositeType
+func (p Person) isComposite() bool { return true }
+func (c CInt) isComposite() bool   { return true }
+
+func cType(c CompositeType) {
+	switch c.(type) {
+	case Person:
+		//cast to actual tyupe
+		fmt.Printf("\nPerson %v", c.(Person).FirstName)
+	case CInt:
+		//cast to actual tyupe
+		fmt.Printf("\nNumber %v", c.(CInt).value)
+	}
+}
+
+func main() {
+	p1 := NewPerson("John", "Doe")
+	c1 := NewCInt(12) //int needs to be enveloped in CInt
+
+	cType(p1)
+	cType(c1)
+}
 ```
 
 ## Nim
@@ -167,6 +217,34 @@ c_type(12)
 
 ## Rust
 ```rust
+
+pub enum Composite {
+    Person(Person),
+    CInt(i32)
+}
+
+pub struct Person {
+    pub first_name: String,
+    pub second_name: String,
+}
+
+pub fn c_type(c: Composite) {
+    match c {
+        Composite::Person(p) => println!("Person {}", p.first_name) ,
+        Composite::CInt(c) => println!("Number {}", c),
+    }
+}
+
+fn main() {
+    let p1 = Person {
+        first_name: "John".to_string(),
+        second_name: "Doe".to_string(),
+    };
+
+    //all types must be enveloped in the containing enum
+    c_type(Composite::Person(p1));
+    c_type(Composite::CInt(12));
+}
 ```
 
 ## TypeScript
