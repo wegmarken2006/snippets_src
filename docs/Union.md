@@ -1,14 +1,72 @@
 # Union
 
+## C\#
+```c#
+
+using System;
+using System.Collections.Generic;
+
+public interface IComposite
+{
+    bool isComposite();
+}
+
+class Person : IComposite
+{
+    public string firstName;
+    public string secondName;
+    //constructor with default arguments
+    public Person(string fname = "John", string sname = "Doe")
+    {
+        firstName = fname;
+        secondName = sname;
+    }
+    bool IComposite.isComposite() { return true; }
+}
+
+public class CInt : IComposite
+{
+    bool IComposite.isComposite() { return true; }
+    public int value;
+    public CInt(int num)
+    {
+        value = num;
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var p1 = new Person();
+        var c1 = new CInt(12);
+        cType(p1);
+        cType(c1); //int needs to be enveloped in CInt
+    }
+
+    public static void cType(IComposite c)
+    {
+        if (c is Person cp)
+        {
+            Console.Write("Person {0}\n", cp.firstName);
+        }
+        else if (c is CInt ci)
+        {
+            Console.Write("Number {0}\n", ci.value);
+        }
+    }
+}
+```
+
 ## Dart
 ```dart
 
 // interface to represent union
-class Composite {
-  bool isComposite() {}
+class IComposite {
+  bool isComposite() {return true;}
 }
 
-class Person implements Composite {
+class Person implements IComposite {
   String firstName;
   String secondName;
   Person([this.firstName = "John", this.secondName = "Doe"]);
@@ -18,9 +76,9 @@ class Person implements Composite {
   }
 }
 
-class cInt implements Composite {
+class CInt implements IComposite {
   int value;
-  cInt(this.value);
+  CInt(this.value);
 
   bool isComposite() {
     return true;
@@ -31,13 +89,13 @@ main(List<String> args) {
   var p1 = Person();
 
   cType(p1);
-  cType(cInt(12)); //int needs to be enveloped in cInt
+  cType(CInt(12)); //int needs to be enveloped in CInt
 }
 
-cType(Composite c) {
-  if (c is cInt) {
+cType(IComposite c) {
+  if (c is CInt) {
     //cast to the actual type
-    var c1 = c as cInt;
+    var c1 = c as CInt;
     var value = c1.value;
     print("Number $value");
   } else if (c is Person) {
@@ -47,6 +105,10 @@ cType(Composite c) {
     print("Person $name");
   }
 }
+```
+
+## Go
+```go
 ```
 
 ## Nim
@@ -101,6 +163,10 @@ def c_type(c: Composite):
 p1 = Person()
 c_type(p1)
 c_type(12)
+```
+
+## Rust
+```rust
 ```
 
 ## TypeScript

@@ -3,7 +3,7 @@
 ## C\#
 ```c#
 
-// exe -> dotnet publish -c Release -r win10-x64
+// exe -> dotnet publish -c Release -r win10-x64 --self-contained true
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

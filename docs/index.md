@@ -1,11 +1,15 @@
 # Runnable Snippets
 
-Tested on 64-bit Windows
 
-* dotnet 3.0.100
+Tested on 64-bit Windows and Playgrounds (when possible).
+
+Languages:
+* C# 4.0.30319
 * Dart 2.5.0
-* go 1.13
-* nim 1.0
+* Go 1.13
+* Nim 1.0
 * Python 3.7.1
-* rustc 1.38.0
-* tsc 1.5.0
+* Rust 1.38.0
+* Typescript 3.5.3
+
+Still updating.
