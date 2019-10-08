@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Program
 {
@@ -27,6 +28,10 @@ public class Program
 
         //reverse
         lst1.Reverse();
+
+        //access elem with out of bounds check
+        var elem  = lst1.ElementAtOrDefault(100);
+        Console.Write("Elem *{0}* ", elem);
 
         //sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
         //list length
@@ -238,6 +243,14 @@ fn main() {
     //reverse
     lst1.reverse();
 
+    //access elem with out of bounds check
+    let elem = match lst1.get(100) {
+        None => "not found",
+        Some(x) => x
+    };
+    println!("Elem {}", elem);
+
+
     // sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
     // list length
     let lst3: Vec<&str> = lst1[1..lst1.len()].to_vec();
@@ -250,6 +263,7 @@ fn main() {
 
     println!("{:?}", &lst5);
 }
+
 ```
 
 ## TypeScript
