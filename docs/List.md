@@ -78,17 +78,29 @@ main(List<String> arguments) {
   //reverse
   lst1 = lst1.reversed.toList();
 
+  //trap out of bounds access
+  var elem = getElemAt(lst1, 100);
+  print('Elem *$elem*');
+
   // sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
   // list length
   var lst3 = lst1.sublist(1, lst1.length);
-
   print('$lst3');
 
   // map and filter
   var lst4 = lst3.map((x) => x.toUpperCase());
   var lst5 = lst4.where((x) => x != "STR00");
-  
   print('$lst5');
+}
+
+String getElemAt(List<String> lst, int index) {
+  String elem;
+  try {
+    elem = lst[index];
+  } catch (e) {
+    elem = "";
+  }
+  return elem;
 }
 ```
 
@@ -98,50 +110,52 @@ main(List<String> arguments) {
 package main
 
 import (
-	"fmt"
-	"sort"
-	"strings"
+    "fmt"
+    "sort"
+    "strings"
 )
 
 func main() {
 
     //new empty list
     lst1 := stringList{}
-    
+
     //new initialized list
-	lst2 := stringList{"str20", "str21"}
+    lst2 := stringList{"str20", "str21"}
 
-	//append element
-	lst1 = append(lst1, "str10")
+    //append element
+    lst1 = append(lst1, "str10")
 
-	//append list
-	lst1 = append(lst1, lst2...)
+    //append list
+    lst1 = append(lst1, lst2...)
 
-	//add head element
-	lst1 = append([]string{"str00"}, lst1...)
+    //add head element
+    lst1 = append([]string{"str00"}, lst1...)
 
-	//reverse
+    //reverse
 	sort.Sort(sort.Reverse(lst1))
+	
+	//trap out of bounds access
+	elem := getElemAt(lst1, 100)
+	fmt.Printf("\nElem *%v*", elem)
 
-	//sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
-	//list length
-	lst3 := lst1[1:len(lst1)]
+    //sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+    //list length
+    lst3 := lst1[1:len(lst1)]
+    fmt.Printf("\n%v", lst3)
 
-	fmt.Printf("\n%v", lst3)
-
-	//map and filter
-	lst4 := stringList{}
-	for _, elem := range lst1 {
-		lst4 = append(lst4, strings.ToUpper(elem))
-	}
-	lst5 := stringList{}
-	for _, elem := range lst4 {
-		if elem != "STR00" {
-			lst5 = append(lst5, elem)
-		}
-	}
-
-	fmt.Printf("\n%v", lst5)
+    //map and filter
+    lst4 := stringList{}
+    for _, elem := range lst1 {
+        lst4 = append(lst4, strings.ToUpper(elem))
+    }
+    lst5 := stringList{}
+    for _, elem := range lst4 {
+        if elem != "STR00" {
+            lst5 = append(lst5, elem)
+        }
+    }
+    fmt.Printf("\n%v", lst5)
 }
 
 type stringList []string
@@ -149,6 +163,16 @@ type stringList []string
 func (p stringList) Len() int           { return len(p) }
 func (p stringList) Less(i, j int) bool { return p[i] < p[j] }
 func (p stringList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+
+func getElemAt(lst stringList, index int) string {
+	defer recoverList()
+	elem := lst[index]
+	return elem
+}
+
+func recoverList() {
+	recover()
+}
 ```
 
 ## Nim
@@ -157,7 +181,14 @@ func (p stringList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 import sequtils as sq
 import algorithm as al
 import strutils as st
+import strformat
 
+proc getElemAt(lst: seq[string], index: int): string =
+    try:
+        return lst[index]
+    except :
+        return ""
+        
 # new empty list
 var lst1: seq[string] = @[]
 
@@ -175,6 +206,10 @@ lst1 = sq.concat(@["str00"], lst1)
 
 # reverse
 lst1 = al.reversed(lst1)
+
+# trap out of bounds access
+let elem = getElemAt(lst1, 100)
+echo &"Elem *{elem}*" 
 
 # sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
 # list length
@@ -200,6 +235,11 @@ lst2: List[str] = ["str20", "str21"]
 
 # append element
 lst1 = lst1 + ["str10"]
+def elem_at_index(lst: List[str], index: int) -> str:
+    try:
+        return lst[index]
+    except:
+        return ""
 
 # append list
 lst1 = lst1 + lst2
@@ -209,6 +249,10 @@ lst1 = ["str00"] + lst1
 
 # reverse
 lst1.reverse()
+
+# trap outof bounds access
+elem = elem_at_index(lst1, 100)
+print(f"Elem *{elem}*")
 
 # sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
 # list length
