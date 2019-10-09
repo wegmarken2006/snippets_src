@@ -1,7 +1,7 @@
 # Runnable Snippets
 
 
-Tested on 64-bit Windows and Playgrounds (when possible).
+Unpretending snippets tested on 64-bit Windows and Playgrounds (when possible).
 
 Languages:
 
