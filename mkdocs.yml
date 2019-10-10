@@ -11,6 +11,7 @@ nav:
   - Execution time.md
   - File:
     - Write & Read lines.md
+  - Numeric.md
   - Scaffold with CLI.md
   - System command.md
 theme:
