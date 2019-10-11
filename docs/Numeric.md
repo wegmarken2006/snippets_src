@@ -2,6 +2,27 @@
 
 ## C\# 
 ```c#
+
+//dotnet add package Microsoft.ML.Probabilistic
+using System;
+using Microsoft.ML.Probabilistic.Math;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        double[,] x = {{1.0,2.0,3.0},{3.0,4.0,5.0},{4.0,5.0,6.0}};
+        var a = new Matrix(x);
+        var at = a.Transpose();
+        var b = a*at;
+        var dt = a.Determinant();
+        //var i = a.Inverse(); not implemented yet
+        Console.WriteLine("{0}", at);
+        Console.WriteLine("{0}", b);
+        Console.WriteLine("{0}", dt);
+        //Console.WriteLine("{0}", i);
+    }
+}
 ```
 
 

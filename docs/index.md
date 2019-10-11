@@ -5,7 +5,7 @@ Unpretending snippets tested on 64-bit Windows and Playgrounds (when possible).
 
 Languages:
 
-* C# 4.0.30319
+* C# 8.0
 * Dart 2.5.0
 * Go 1.13
 * Nim 1.0
