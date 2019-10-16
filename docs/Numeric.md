@@ -3,28 +3,51 @@
 ## C\# 
 ```c#
 
-//dotnet add package Microsoft.ML.Probabilistic
+//dotnet add package MathNet.Numerics
 using System;
-using Microsoft.ML.Probabilistic.Math;
+using System.Collections.Generic;
+using MathNet.Numerics.Statistics;
+using MathNet.Numerics.LinearAlgebra.Double;
+using System.Diagnostics;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        double[,] x = {{1.0,2.0,3.0},{3.0,4.0,5.0},{0.0,5.0,6.0}};
-        var a = new Matrix(x);
+        var timer = Stopwatch.StartNew(); //START MEASURE
+        double[,] x = { { 1.0, 2.0, 3.0 }, { 3.0, 4.0, 5.0 }, { 0.0, 5.0, 6.0 } };
+        var a = DenseMatrix.OfArray(x);
         var at = a.Transpose();
-        var b = a*at;
+        var i = a.Inverse();
+        var v = a.ToColumnArrays();
+        var am0 = new List<double>();
+        var as0 = new List<double>();
+        var amax0 = new List<double>();
+        foreach (var item in v)
+        {
+            var stats = new DescriptiveStatistics(item);
+            am0.Add(stats.Mean);
+            as0.Add(stats.StandardDeviation);
+            amax0.Add(stats.Maximum);
+        }
+        var b = a * at;
         var dt = a.Determinant();
-        //var i = a.Inverse(); not implemented yet
-        Console.WriteLine("{0}", at);
-        Console.WriteLine("{0}", b);
-        Console.WriteLine("{0}", dt);
-        //Console.WriteLine("{0}", i);
+        timer.Stop(); //END MEASURE
+
+        am0.ForEach((x) => Console.Write("{0} ", x));
+        Console.WriteLine("");
+        as0.ForEach((x) => Console.Write("{0} ", x));
+        Console.WriteLine("");
+        amax0.ForEach((x) => Console.Write("{0} ", x));
+        Console.WriteLine("");
+        Console.WriteLine("{0} ", at);
+        Console.WriteLine("{0} ", b);
+        Console.WriteLine("{0} ", dt);
+        Console.WriteLine("{0} ", i);
+        Console.WriteLine("\nElapsed: {0}ms", timer.ElapsedMilliseconds);
     }
 }
 ```
-
 
 ## Python 
 ```python
@@ -67,6 +90,7 @@ use std::time::{Instant};
 
 fn main() {
     let now = Instant::now(); //START MEASURE
+
     let a = py_matrix(vec![vec![1., 2., 3.], vec![3., 4., 5.], vec![ 0., 5., 6.]]);
     let am0 = a.mean();
     let as0 = a.sd();
@@ -79,6 +103,7 @@ fn main() {
     let b = &a * at;
     let dt = &a.det();
     let i = &a.inv().expect("inverse failed");
+
     let new_now = Instant::now();  //END MEASURE
 
     am0.print();
