@@ -195,3 +195,65 @@ fn main() {
     println!("Elapsed: {:?}", new_now.duration_since(now)); 
 }
 ```
+
+## Rust 
+```rust
+
+//[dependencies]
+//ndarray = "0.13.0"
+//ndarray-linalg = { version = "0.12", features = ["intel-mkl"] }
+use std::time::Instant;
+
+extern crate ndarray;
+extern crate ndarray_linalg;
+
+use ndarray::*;
+//use ndarray::prelude::*;
+//use ndarray_linalg::cholesky::{DeterminantC, InverseC};
+use ndarray_linalg::*;
+
+pub trait VecStats {
+    fn max(&self) -> f64;
+}
+
+impl VecStats for Array1<f64> {
+    fn max(&self) -> f64 {
+        let mut max_el = self[0];
+        for elem in self {
+            if *elem > max_el {
+                max_el = *elem;
+            }
+        }
+        max_el
+    }
+}
+
+fn main() {
+    let now = Instant::now(); //START MEASURE
+
+    let a: Array2<f64> = array![[1., 2., 3.], [3., 4., 5.], [0., 5., 6.]];
+    //let a = Array::from_shape_vec((3, 3), vec![1., 2., 3., 3., 4., 5., 0., 5., 6.]).unwrap();
+    let am0 = a.mean_axis(Axis(0)).expect("Mean error");
+    let as0 = a.std_axis(Axis(0), 1.);
+    let mut amax0: Vec<f64> = vec![];
+    let cols = a.ncols();
+    for index in 0..cols {
+        amax0.push(a.column(index).to_owned().max())
+    }
+    let at = a.t();
+    let b = a.dot(&at);
+    let i = a.inv().expect("Inversion error");
+    let dt = a.det().expect("Determinant error");
+
+    let new_now = Instant::now(); //END MEASURE
+
+    println!("{}", am0);
+    println!("{}", as0);
+    println!("{:?}", &amax0);
+    println!("{}", at);
+    println!("{}", b);
+    println!("{}", dt);
+    println!("{}", i);
+    println!("Elapsed: {:?}", new_now.duration_since(now));
+}
+```
