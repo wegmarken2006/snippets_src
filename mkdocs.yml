@@ -12,6 +12,8 @@ nav:
   - Execution time.md
   - File:
     - Write & Read lines.md
+  - GUI:
+    - GTK.md
   - Numeric.md
   - Scaffold with CLI.md
   - System command.md
