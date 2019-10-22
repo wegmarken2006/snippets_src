@@ -36,6 +36,40 @@ proc main =
 main()
 ```
 
+## Python
+```python
+
+# Tested in Ubuntu 18.04
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+count = 0
+
+def on_button_clicked(widget):
+    global count
+    label: Gtk.Label = builder.get_object("label1")
+    count += 1
+    label.set_text(f" {count}")
+
+def on_b_quit_clicked(widget):
+    print("Bye")
+    quit()
+
+
+builder = Gtk.Builder()
+builder.add_from_file("builder.ui")
+window = builder.get_object("window")
+button = builder.get_object("button1")
+label = builder.get_object("label1")
+b_quit = builder.get_object("quit")
+
+button.connect("clicked", on_button_clicked)
+b_quit.connect("clicked", on_b_quit_clicked)
+window.show_all()
+Gtk.main()
+```
+
 ## Rust
 ```rust
 
