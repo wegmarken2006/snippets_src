@@ -1,5 +1,57 @@
 # GTK
 
+## Go
+```go
+
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/gotk3/gotk3/glib"
+	"github.com/gotk3/gotk3/gtk"
+)
+
+func main() {
+	app, _ := gtk.ApplicationNew("org.gtk.example", glib.APPLICATION_FLAGS_NONE)
+
+	count := 0
+
+	app.Connect("activate", func() {
+		b, _ := gtk.BuilderNew()
+		b.AddFromFile("builder.ui")
+
+		obj, _ := b.GetObject("window")
+		win := obj.(*gtk.ApplicationWindow)
+		obj, _ = b.GetObject("button1")
+		button1 := obj.(*gtk.Button)
+		obj, _ = b.GetObject("quit")
+		bQuit := obj.(*gtk.Button)
+		obj, _ = b.GetObject("label1")
+		label := obj.(*gtk.Label)
+		cStr := fmt.Sprintf(" %d", count)
+		label.SetText(cStr)
+
+		button1.Connect("clicked", func() {
+			count += 1
+			cStr := fmt.Sprintf(" %d", count)
+			label.SetText(cStr)
+		})
+
+		bQuit.Connect("clicked", func() {
+			fmt.Println("Bye")
+			win.Destroy()
+		})
+
+		win.ShowAll()
+		app.AddWindow(win)
+	})
+
+	app.Run(os.Args)
+}
+```
+
 ## Nim
 ```nim
 
@@ -157,6 +209,7 @@ fn main() {
 ```
 
 ## builder.ui
+Generated with [Glade](https://glade.gnome.org/)
 ```xml
 
 <?xml version="1.0" encoding="UTF-8"?>
