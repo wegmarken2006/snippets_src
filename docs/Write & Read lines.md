@@ -48,7 +48,7 @@ main() async {
   var f = File(fileName);
   var sink = f.openWrite();
   sink.write("This is\n\na text\nfile");
-  await sink.close();
+  sink.close();
 
   var fRead = File(fileName);
   Stream<List<int>> inputStream = fRead.openRead();
