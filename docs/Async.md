@@ -55,3 +55,34 @@ namespace hello
     }
 }
 ```
+
+## Rust 
+```
+
+//[dependencies]
+//async-std = "1.0.1"
+//surf = "1.0.3"
+
+use async_std::task::*;
+use surf::{get};
+
+fn main() {
+    block_on(sum_page_sizes());
+}
+
+async fn sum_page_sizes() {
+    let urls = vec![
+        "https://wegmarken2006.github.io/snippets/",
+        "https://wegmarken2006.github.io/snippets/Cross/",
+        "https://wegmarken2006.github.io/snippets/Dict/",
+        "https://wegmarken2006.github.io/snippets/Execution%20time/",
+    ];
+    let mut total = 0;
+    for url in urls {
+        let response = get(&url).recv_string().await.unwrap();
+        total = total + response.len();
+    }
+
+    println!("{}", total);
+}
+```
