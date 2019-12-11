@@ -2,6 +2,7 @@ site_name: Runnable Snippets
 nav:
   - Home: index.md
   - Playground links.md
+  - Async.md
   - Cross.md
   - Data types:
     - Dict.md
