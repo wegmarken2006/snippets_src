@@ -2,7 +2,9 @@ site_name: Runnable Snippets
 nav:
   - Home: index.md
   - Playground links.md
-  - Async.md
+  - Concurrency:
+    - Async.md
+    - Channels.md
   - Constructs:
     - For Enumerate.md
   - Cross.md
