@@ -6,7 +6,7 @@
 [Tio C# (.NET Core)](https://tio.run/#cs-core)
 
 ## Dart
-[DatPad](https://dartpad.dartlang.org/)
+[DartPad](https://dartpad.dartlang.org/)
 
 [Tio Dart](https://tio.run/#dart)
 
