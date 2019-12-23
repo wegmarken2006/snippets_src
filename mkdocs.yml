@@ -18,6 +18,9 @@ nav:
     - Structure or Class.md
     - Union.md
   - Execution time.md
+  - FFI:
+    - C Callable.md
+    - C Call.md
   - File:
     - Write & Read lines.md
   - GUI:
