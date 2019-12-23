@@ -1,7 +1,9 @@
 site_name: Runnable Snippets
 nav:
   - Home: index.md
-  - Playground links.md
+  - Tools:
+    - Playground links.md
+    - Installation tricks.md
   - Concurrency:
     - Async.md
     - Channels.md
