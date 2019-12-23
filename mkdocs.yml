@@ -9,6 +9,7 @@ nav:
     - Channels.md
   - Constructs:
     - For Enumerate.md
+    - For Range.md
   - Cross.md
   - Data types:
     - Dict.md
