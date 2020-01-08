@@ -4,6 +4,7 @@ nav:
   - Tools:
     - Playground links.md
     - Installation tricks.md
+    - Packages.md
   - Concurrency:
     - Async.md
     - Channels.md
