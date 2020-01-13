@@ -17,6 +17,15 @@ pub get
 dart bin/main.dart
 ```
 
+## flutter
+```
+mkdir hello
+cd hello
+flutter create .
+flutter pub get
+flutter run
+```
+
 ## Rust
 ```
 cargo new hello -- bin
