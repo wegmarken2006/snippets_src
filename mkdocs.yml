@@ -24,6 +24,8 @@ nav:
     - C Call.md
   - File:
     - Write & Read lines.md
+  - Frameworks:
+    - Flutter.md
   - GUI:
     - GTK.md
   - Numeric.md
