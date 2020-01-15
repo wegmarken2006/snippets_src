@@ -1,6 +1,6 @@
 # Flutter
 
-## List dynamic
+## Dynamic List
 ```dart
 
 import 'package:flutter/material.dart';
@@ -64,7 +64,7 @@ class BodyLayoutState extends State<BodyLayout> {
 }
 ```
 
-## Navigate page and back
+## Page Navigation
 ```dart
 
 import 'package:flutter/material.dart';
@@ -150,6 +150,199 @@ class ClassPageBBB extends StatelessWidget {
 }
 ```
 
-## Input Field
+## Input Fields
 ```dart
+
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'MyApp',
+      theme: new ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: Scaffold(
+        appBar: new AppBar(
+          title: new Text('MyApp'),
+        ),
+        body: BodyLayout(),
+      ),
+    );
+  }
+}
+
+class BodyLayout extends StatefulWidget {
+  @override
+  BodyLayoutState createState() {
+    return new BodyLayoutState();
+  }
+}
+
+class DataToElab {
+  String f1, f2;
+  DataToElab([this.f1 = '0', this.f2 = '0']);
+}
+
+class BodyLayoutState extends State<BodyLayout> {
+  final contr1 = TextEditingController(text: '0');
+  final contr2 = TextEditingController(text: '0');
+  final contr3 = TextEditingController(text: '0');
+  DataToElab _dElab = DataToElab();
+
+  String _elabFields(DataToElab dElab) {
+    var add1 = double.parse(dElab.f1);
+    var add2 = double.parse(dElab.f2);
+    var res = add1 + add2;
+    return '$res';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: ListView(
+        children: <Widget>[
+          TextFormField(
+            controller: contr1,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.euro_symbol),
+              hintText: 'Enter number',
+              labelText: 'First',
+            ),
+            onFieldSubmitted: (text) {
+              setState(() {
+                _dElab.f1 = text;
+                var res = _elabFields(_dElab);
+                contr3.text = res;
+              });
+            },
+          ),
+          TextFormField(
+            controller: contr2,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.euro_symbol),
+              hintText: 'Enter number',
+              labelText: 'Second',
+            ),
+            onFieldSubmitted: (text) {
+              setState(() {
+                _dElab.f2 = text;
+                var res = _elabFields(_dElab);
+                contr3.text = res;
+              });
+            },
+          ),
+          TextFormField(
+            controller: contr3,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.add_circle),
+              labelText: 'Result',
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 64.0),
+            child: RaisedButton(
+              onPressed: () {
+                _dElab.f1 = contr1.text;
+                _dElab.f2 = contr2.text;
+                var res = _elabFields(_dElab);
+                contr3.text = res;
+              },
+              child: Text('Calculate'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+## Multiple Columns form
+```dart
+
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'MyApp',
+      theme: new ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: Scaffold(
+        appBar: new AppBar(
+          title: new Text('MyApp'),
+        ),
+        body: BodyLayout(),
+      ),
+    );
+  }
+}
+
+class BodyLayout extends StatefulWidget {
+  @override
+  BodyLayoutState createState() {
+    return new BodyLayoutState();
+  }
+}
+
+class DataToElab {
+  String f1, f2;
+  DataToElab([this.f1 = '0', this.f2 = '0']);
+}
+
+class BodyLayoutState extends State<BodyLayout> {
+  final contr1 = TextEditingController(text: '0');
+  final contr2 = TextEditingController(text: '0');
+
+  Column _form1() {
+    return Column(
+      children: <Widget>[
+        Flexible(
+          child: TextFormField(
+            controller: contr1,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.euro_symbol),
+              hintText: 'Enter number',
+              labelText: 'First',
+            ),
+          ),
+        ),
+        Flexible(
+          child: TextFormField(
+            controller: contr2,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.euro_symbol),
+              hintText: 'Enter number',
+              labelText: 'Second',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+          child: _form1(),
+        ),
+        Flexible(
+          child: _form1(),
+        ),
+      ],
+    );
+  }
+}
 ```
