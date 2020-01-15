@@ -175,6 +175,46 @@ func recoverList() {
 }
 ```
 
+## Kotlin
+```kotlin
+
+fun main() {
+    // new empty list
+    var lst1 = mutableListOf<String>()
+    
+    //new initialized list
+    var lst2 = mutableListOf("str20", "str21")
+    
+    // append element
+    lst1.add("str10")
+    
+    // append list
+    lst1.addAll(lst2)
+    
+    // add head element
+    lst1.add(0, "str00")
+    
+    // reverse
+    lst1.reverse()
+    
+    //access elem with out of bounds check
+    val elem = lst1.elementAtOrNull(100)
+    println("Elem ${elem}")
+    
+    // sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+    // list length
+    val lst3 = lst1.subList(1, lst1.size)
+                            
+    println(lst3)
+    
+    //map and filter
+    val lst4 = lst3.map{it -> it.toUpperCase()}
+    val lst5 = lst4.filter{it -> !it.equals("STR00")}
+    
+    println(lst5)    
+}
+```
+
 ## Nim
 ```nim
 
