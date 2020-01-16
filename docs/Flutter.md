@@ -333,15 +333,135 @@ class BodyLayoutState extends State<BodyLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
         Flexible(
-          child: _form1(),
+          child: Row(
+            children: [
+              Flexible(
+                child: _form1(),
+              ),
+              Flexible(
+                child: _form1(),
+              ),
+            ],
+          ),
         ),
         Flexible(
-          child: _form1(),
+          child: TextFormField(
+            //controller: contr3,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.add_circle),
+              labelText: 'Result',
+            ),
+          ),
+        ),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 64.0),
+            child: RaisedButton(
+              onPressed: () {},
+              child: Text('Calculate'),
+            ),
+          ),
         ),
       ],
+    );
+  }
+}
+```
+
+## Persistence, Key/Value
+```dart
+
+//dependencies:
+//  shared_preferences: ^0.5.6
+
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'MyApp',
+      theme: new ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: Scaffold(
+        appBar: new AppBar(
+          title: new Text('MyApp'),
+        ),
+        body: BodyLayout(),
+      ),
+    );
+  }
+}
+
+Future<SharedPreferences> _getPrefs() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs;
+}
+
+void _setVal(SharedPreferences prefs, String key, int value) {
+  prefs.setInt(key, value);
+}
+
+int _getVal(SharedPreferences prefs, String key) {
+  final value = prefs.getInt(key) ?? 0;
+  return value;
+}
+
+class BodyLayout extends StatefulWidget {
+  @override
+  BodyLayoutState createState() {
+    return new BodyLayoutState();
+  }
+}
+
+class BodyLayoutState extends State<BodyLayout> {
+  final contr3 = TextEditingController();
+  SharedPreferences _prefs;
+
+  @override
+  void initState() {
+    _getPrefs().then((onValue) {
+      _prefs = onValue;
+      //Init Output field with current key value
+      var tmp = _getVal(_prefs, 'key1');
+      contr3.text = '$tmp';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: ListView(
+        children: <Widget>[
+          TextFormField(
+            controller: contr3,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.add_circle),
+              labelText: 'Key Value',
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 64.0),
+            child: RaisedButton(
+              onPressed: () {
+                var tmp = _getVal(_prefs, 'key1');
+                tmp = tmp + 1;
+                _setVal(_prefs, 'key1', tmp);
+                contr3.text = '$tmp';
+              },
+              child: Text('Inc Key'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
