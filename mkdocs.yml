@@ -32,8 +32,8 @@ nav:
   - Numeric.md
   - Scaffold with CLI.md
   - System command.md
-  - Video:
-    - OpenCV.md
+  - VideoCapture.md
+
 theme:
   name: 'material'
   palette:
