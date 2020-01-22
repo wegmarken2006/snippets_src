@@ -1,7 +1,6 @@
 # CSV
 
-
-# Dart
+## Dart
 ```dart
 
 //dependencies:
@@ -12,17 +11,17 @@ import 'dart:io';
 import 'dart:convert';
 
 main() async {
-  const CVS_PATH = 'tmp001.csv' ;
+  const CSV_PATH = 'tmp001.csv' ;
   
   var llWrite = [['FirstName', 'SecondName'], ['John', 'Doe'], ['Mark', 'Smith']];
   String csv = const ListToCsvConverter(fieldDelimiter: '\t').convert(llWrite);
 
-  var f = File(CVS_PATH);
+  var f = File(CSV_PATH);
   var sink = f.openWrite();
   sink.write(csv);
   await sink.close();
 
-  var input = File(CVS_PATH).openRead();
+  var input = File(CSV_PATH).openRead();
   var llRead = await input
     .transform(utf8.decoder)
     .transform(CsvToListConverter(fieldDelimiter: '\t'))
@@ -80,11 +79,29 @@ func main() {
 			fmt.Println("Record reading error")
 			os.Exit(0)
 		}
-		fmt.Println(record)
+		fmt.Printf("First: %s, Second: %s\n", record[0], record[1])
 	}
 }
 ```
 
+## Python
+```python
+
+import csv
+
+CSV_PATH = 'tmp001.csv'
+
+with open(CSV_PATH, 'w', newline='') as csvfile:
+    wr = csv.writer(csvfile, delimiter='\t')
+    wr.writerow(['FirstName', 'SecondName'])
+    wr.writerow(['John', 'Doe'])
+    wr.writerow(['Mark', 'Smith'])
+
+with open(CSV_PATH) as csvfile:
+    rd = csv.reader(csvfile, delimiter='\t')
+    for rw in rd:
+        print(f"First: {rw[0]}, Second: {rw[1]}")
+```
 
 ## Rust
 ```rust
