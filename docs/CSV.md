@@ -34,6 +34,58 @@ main() async {
 }
 ```
 
+## Go
+```go
+
+package main
+
+import (
+	"encoding/csv"
+	"fmt"
+	"io"
+	"os"
+)
+
+func main() {
+	records := [][]string{
+		{"FirstName", "SecondName"},
+		{"John", "Doe"}, {"Mark", "Smith"},
+	}
+	fileName := "tmp001.csv"
+	file, err := os.Create(fileName)
+	if err != nil {
+		fmt.Printf("Can't create %s\n", fileName)
+		os.Exit(0)
+	}
+
+	w := csv.NewWriter(file)
+	w.WriteAll(records) // calls
+	file.Close()
+
+	file, err = os.Open(fileName)
+	if err != nil {
+		fmt.Printf("Can't open %s\n", fileName)
+		os.Exit(0)
+	}
+	defer file.Close()
+
+	r := csv.NewReader(file)
+
+	for {
+		record, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			fmt.Println("Record reading error")
+			os.Exit(0)
+		}
+		fmt.Println(record)
+	}
+}
+```
+
+
 ## Rust
 ```rust
 
