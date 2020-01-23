@@ -39,6 +39,7 @@ cv2.destroyAllWindows()
 ```rust
 
 //compile in release for good performance
+//on linux it requires libv4l-dev, libjpeg-dev
 
 //[dependencies]
 //camera_capture = "0.5.0"
@@ -46,14 +47,15 @@ cv2.destroyAllWindows()
 //image = "0.22.4"
 
 use image::{imageops, DynamicImage, RgbImage};
-use minifb::{Key, MouseButton, MouseMode, Window, WindowOptions};
+use minifb::{Key, Window, WindowOptions};
 
 const WIDTH: usize = 200;
 const HEIGHT: usize = 200;
 
 fn main() {
     let cam = camera_capture::create(0).expect("Camera create error");
-    let mut cam_iter = cam.fps(5.0).unwrap().start().unwrap();
+    //let mut cam_iter = cam.fps(5.0).unwrap().start().unwrap();
+    let mut cam_iter = cam.start().unwrap();
     let mut window = Window::new(
         "image, click or press ESC to exit",
         WIDTH,
