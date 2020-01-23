@@ -38,7 +38,7 @@ cv2.destroyAllWindows()
 ## Rust
 ```rust
 
-//currently visibily slower than Python
+//compile in release for good performance
 
 //[dependencies]
 //camera_capture = "0.5.0"
@@ -46,7 +46,7 @@ cv2.destroyAllWindows()
 //image = "0.22.4"
 
 use image::{imageops, DynamicImage, RgbImage};
-use minifb::{Key, MouseButton, MouseMode, Scale, Window, WindowOptions};
+use minifb::{Key, MouseButton, MouseMode, Window, WindowOptions};
 
 const WIDTH: usize = 200;
 const HEIGHT: usize = 200;
