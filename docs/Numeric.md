@@ -154,6 +154,44 @@ print(i)
 print(f"Elapsed: {((end_time - start_time)*1000)} ms")
 ```
 
+## Python 
+```python
+
+# pytorch
+import time
+import torch as pt
+
+start_time: float = time.time() # START MEASURE
+
+a = pt.Tensor([[1.,2.,3.],[3.,4.,5.],[0.,5.,6.]])
+cols = a.size()[1] 
+am0 = pt.Tensor()
+as0 = pt.Tensor()
+amax0 = pt.Tensor()
+for ind in range(0, cols):
+    ac = a[:, ind]
+    am = ac.mean(dtype=pt.float).item()
+    astd = ac.std().item()
+    amax = ac.max().item()
+    am0 = pt.cat((am0, pt.Tensor([am])))
+    as0 = pt.cat((as0, pt.Tensor([astd])))
+    amax0 = pt.cat((amax0, pt.Tensor([amax])))
+at = a.t()
+b = a.matmul(at)
+dt = a.det().item()
+i = a.inverse()
+
+end_time: float = time.time() # END MEASURE
+print(am0)
+print(as0)
+print(amax0)
+print(at)
+print(b)
+print(dt)
+print(i)
+print(f"Elapsed: {((end_time - start_time)*1000)} ms")
+```
+
 ## Rust 
 ```rust
 
@@ -255,5 +293,50 @@ fn main() {
     println!("{}", dt);
     println!("{}", i);
     println!("Elapsed: {:?}", new_now.duration_since(now));
+}
+```
+
+## Rust 
+```rust
+
+//[dependencies]
+//tch = "0.1.5"
+use tch::{Tensor, Kind, IndexOp};
+use std::time::{Instant};
+
+fn main() {
+    let now = Instant::now(); //START MEASURE
+
+    let a = Tensor::of_slice(&[1., 2., 3., 3., 4., 5., 0., 5., 6.]).view([3, 3]);
+    let mut am0_v: Vec<f64> = vec![];
+    let mut as0_v: Vec<f64> = vec![];
+    let mut amax0_v: Vec<f64> = vec![];
+
+    let cols = a.size()[1];
+    for ind in 0..cols {
+        let ac = a.i((.., ind));
+        let am = ac.mean(Kind::Double);
+        let astd = ac.std(true);
+        let amax = ac.max();
+        am0_v.push(Vec::<f64>::from(am)[0]);
+        as0_v.push(Vec::<f64>::from(astd)[0]);
+        amax0_v.push(Vec::<f64>::from(amax)[0]);
+        //am0 = Tensor::cat(&am0, &am);
+    }
+    let at = a.transpose(-2, 1);
+    let b = a.matmul(&at);
+    let dt = f64::from(a.det());
+    let i = a.inverse();
+
+    let new_now = Instant::now();  //END MEASURE
+
+    println!("{:?}", am0_v);
+    println!("{:?}", as0_v);
+    println!("{:?}", amax0_v);
+    at.print();
+    b.print();
+    println!("{}", dt);
+    i.print();
+    println!("Elapsed: {:?}", new_now.duration_since(now)); 
 }
 ```
