@@ -13,6 +13,7 @@ nav:
     - For Range.md
   - Cross.md
   - Data types:
+    - DateTime.md
     - Dict.md
     - List.md
     - String.md
