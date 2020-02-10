@@ -11,7 +11,7 @@ nav:
   - Constructs:
     - For Enumerate.md
     - For Range.md
-  - Cross.md
+    - Cross.md
   - Data types:
     - DateTime.md
     - Dict.md
@@ -19,7 +19,7 @@ nav:
     - String.md
     - Structure or Class.md
     - Union.md
-  - Execution time.md
+    - Execution time.md
   - FFI:
     - C Callable.md
     - C Call.md
@@ -30,12 +30,12 @@ nav:
     - Flutter.md
   - GUI:
     - GTK.md
-  - Numeric.md
-  - Scaffold with CLI.md
-  - System command.md
+    - Numeric.md
+    - Scaffold with CLI.md
+    - System command.md
   - Video:
-   - VideoCapture.md
-   - FaceDetect.md
+    - VideoCapture.md
+    - FaceDetect.md
 
 theme:
   name: 'material'
@@ -53,4 +53,4 @@ markdown_extensions:
       guess_lang: false    
 extra:
    version: 2.0
-    
+dev_addr: '127.0.0.1:8081'
