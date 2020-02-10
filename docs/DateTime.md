@@ -1,5 +1,57 @@
 # Date & Time
 
+
+## Dart
+```dart
+
+//dependencies:
+//  intl: ^0.16.1
+
+import 'package:intl/intl.dart';
+
+main() async {
+  var today = DateTime.now();
+
+  // from date to string
+  var today_str = DateFormat('yyyy-MM-dd**kk:mm:ss').format(today);
+  var date_str = DateFormat('dd-MM-yyyy').format(today);
+  var time_str = DateFormat('kk:mm').format(today);
+
+  // from string to date
+  var today2 = DateFormat('yyyy-MM-dd**kk:mm:ss').parse(today_str);
+
+  var hour = today.hour;
+  var minute = today.minute;
+  var day = today.day;
+  var month = today.month;
+  var year = today.year;
+
+  // weekday
+  var days_of_week = ["sun", "mon", "tue", "wed", "thu", "fry", "sat"];
+  var weekday = days_of_week[today.weekday];
+  
+  var tomorrow = today.add(Duration(days: 1));
+
+  // difference between dates
+  var next_week = today.add(Duration(days: 7));
+  var delta_w = next_week.difference(today).inDays;
+  var next_year = today.add(Duration(days: 366));
+  var n_year = next_year.year;
+  var delta_y = n_year - year;
+    
+  print(today);
+  print(today_str);
+  print ('$day-$month-$year  $hour:$minute');
+  print(date_str);
+  print(time_str);
+  print(today2);
+  print(weekday);
+  print(tomorrow);
+  print(delta_w);
+  print(delta_y);
+}
+```
+
 ## Python
 ```python
 
@@ -28,7 +80,7 @@ weekday = days_of_week[today.weekday()]
 tomorrow = today + dt.timedelta(days=1)
 tomorrow_str = dt.datetime.strftime(tomorrow, '%d-%m-%Y')
 
-# differenxe between dates
+# difference between dates
 next_week = today + dt.timedelta(days=7)
 delta_w = (next_week -today).days
 next_year = today + dt.timedelta(days=366)
