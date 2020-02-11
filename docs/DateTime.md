@@ -89,6 +89,8 @@ func main() {
 	nextWeek := today.AddDate(0, 0, 7)
 	deltaW := nextWeek.Sub(today).Hours() / 24
 	nextYear := today.AddDate(1, 0, 0)
+	nYear := nextYear.Year()
+	deltaY := nYear - year
 
 	fmt.Printf("%v\n", today)
 	fmt.Printf("%v\n", todayStr)
@@ -98,7 +100,7 @@ func main() {
 	fmt.Printf("%v\n", weekday)
 	fmt.Printf("%v\n", tomorrow)
 	fmt.Printf("%v\n", deltaW)
-	fmt.Printf("%v\n", nextYear)
+	fmt.Printf("%v\n", deltaY)
 }
 ```
 
