@@ -52,6 +52,56 @@ main() async {
 }
 ```
 
+## Go
+```go
+
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	today := time.Now()
+	year := today.Year()
+	month := today.Month()
+	day := today.Day()
+	hour := today.Hour()
+	minute := today.Minute()
+	second := today.Second()
+
+	// from date to string
+	todayStr := fmt.Sprintf("%d-%02d-%02d**%02d:%02d:%02d",
+		year, month, day, hour, minute, second)
+	dateStr := today.Format("2006-01-02")
+	timeStr := today.Format("15:04:05")
+
+	// from string to date
+	today2, _ := time.Parse("2006-01-02**15:04:05", todayStr)
+
+	// weekday
+	weekday := today.Weekday()
+
+	tomorrow := today.AddDate(0, 0, 1)
+
+	// difference between dates
+	nextWeek := today.AddDate(0, 0, 7)
+	deltaW := nextWeek.Sub(today).Hours() / 24
+	nextYear := today.AddDate(1, 0, 0)
+
+	fmt.Printf("%v\n", today)
+	fmt.Printf("%v\n", todayStr)
+	fmt.Printf("%v\n", dateStr)
+	fmt.Printf("%v\n", timeStr)
+	fmt.Printf("%v\n", today2)
+	fmt.Printf("%v\n", weekday)
+	fmt.Printf("%v\n", tomorrow)
+	fmt.Printf("%v\n", deltaW)
+	fmt.Printf("%v\n", nextYear)
+}
+```
+
 ## Python
 ```python
 
