@@ -97,3 +97,51 @@ print(tomorrow_str)
 print(delta_w)
 print(delta_y)
 ```
+
+## Rust
+```rust
+
+// chrono = "*"
+use chrono::{Datelike, Duration, NaiveDateTime, Timelike, Utc};
+
+fn main() {
+    let today = Utc::now();
+
+    //from date to string
+    let today_str = format!("{}", today.format("%Y-%m-%d**%H:%M:%S"));
+    let date_str = format!("{}", today.format("%d-%m-%Y"));
+    let time_str = format!("{}", today.format("%H:%M"));
+
+    // from string to date
+    let today2 =
+        NaiveDateTime::parse_from_str(&today_str, "%Y-%m-%d**%H:%M:%S").expect("Error parse");
+    let hour = today.hour();
+    let minute = today.minute();
+    let day = today.day();
+    let month = today.month();
+    let year = today.year();
+
+    // weekday
+    let weekday = today.weekday();
+
+    let tomorrow = today + Duration::days(1);
+    let tomorrow_str = format!("{}", tomorrow.format("%d-%m-%Y"));
+
+    // difference between dates
+    let next_week = today + Duration::days(7);
+    let delta_w = next_week.signed_duration_since(today).num_days();
+    let next_year = today + Duration::days(366);
+    let nyear = next_year.year();
+    let delta_y = nyear - year;
+    println!("{:?}", today);
+    println!("{}", today_str);
+    println!("{}-{}-{} {}:{}", day, month, year, hour, minute);
+    println!("{}", date_str);
+    println!("{}", time_str);
+    println!("{}", today2);
+    println!("{}", weekday);
+    println!("{}", tomorrow_str);
+    println!("{}", delta_w);
+    println!("{}", delta_y);
+}
+```
