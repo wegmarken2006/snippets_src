@@ -1,5 +1,95 @@
 # Video Capture
 
+## Flutter
+```dart
+
+//dependencies:
+//  camera: ^0.5.7+3
+import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
+import 'dart:async';
+
+List<CameraDescription> cameras;
+
+Future<void> main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+// can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
+
+  cameras = await availableCameras();
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _CameraAppState createState() => _CameraAppState();
+}
+
+class _CameraAppState extends State<MyApp> {
+  CameraController _controller;
+  //var _imageBytes;
+  static const double WIDTH = 224;
+  static const double HEIGHT = 224;
+
+  @override
+  void initState() {
+    super.initState();
+    // To display the current output from the camera,
+    // create a CameraController.
+    _controller = CameraController(
+      // Get a specific camera from the list of available cameras.
+      cameras[0],
+      // Define the resolution to use.
+      ResolutionPreset.medium,
+    );
+
+    // Next, initialize the controller. This returns a Future.
+    _controller.initialize().then((_) {
+      _controller.startImageStream((CameraImage img) {
+        //_imageBytes = img.planes[0].bytes;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.only(top: 10),
+        child: Stack(
+          alignment: Alignment.centerRight,
+          children: <Widget>[
+            OverflowBox(
+              maxHeight: WIDTH,
+              maxWidth: HEIGHT,
+              child: CameraPreview(_controller),
+            ),
+            Positioned(
+              left: 100,
+              top: 100,
+              width: 20,
+              height: 30,
+              child: Container(
+                padding: EdgeInsets.only(top: 5.0, left: 5.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color.fromRGBO(37, 213, 253, 1.0),
+                    width: 3.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
+}
+```
+
 ## Python
 ```python
 
