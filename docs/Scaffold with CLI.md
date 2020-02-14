@@ -24,6 +24,9 @@ cd hello
 flutter create .
 flutter pub get
 flutter run
+
+flutter build apk
+flutter install
 ```
 
 ## Rust

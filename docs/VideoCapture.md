@@ -17,7 +17,6 @@ Future<void> main() async {
   // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
 
-  sbHeight = await FlutterStatusbar.height;
   cameras = await availableCameras();
   runApp(MyApp());
 }
@@ -60,7 +59,7 @@ class _CameraAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var appBar = AppBar(title: Text('Cam') );
+    var appBar = AppBar(title: Text('Cam - draw') );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
