@@ -1,4 +1,4 @@
-# Video Capture
+# Face Detection
 
 ## Python
 ```python
