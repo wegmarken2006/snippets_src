@@ -1,7 +1,7 @@
 site_name: Runnable Snippets
 nav:
   - Home: index.md
-  - Tools, Tips, Trick:
+  - Tools, Tips, Tricks:
     - Playground links.md
     - Scaffold with CLI.md
     - Packages.md
