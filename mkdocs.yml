@@ -28,6 +28,7 @@ nav:
   - File:
     - Write & Read lines.md
     - CSV.md
+    - Serialization.md
   - Frameworks:
     - Flutter.md
   - GUI:
