@@ -21,7 +21,7 @@ nav:
     - String.md
     - Structure or Class.md
     - Union.md
-    - Execution time.md
+  - Execution time.md
   - FFI:
     - C Callable.md
     - C Call.md
@@ -33,8 +33,10 @@ nav:
     - Flutter.md
   - GUI:
     - GTK.md
+  - Science:
+    - Charts.md
     - Numeric.md
-    - System command.md
+  - System command.md
   - Video:
     - VideoCapture.md
     - FaceDetect.md
