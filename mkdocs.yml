@@ -20,6 +20,7 @@ nav:
     - List.md
     - String.md
     - Structure or Class.md
+    - Tuples.md
     - Union.md
   - Execution time.md
   - FFI:
