@@ -9,7 +9,7 @@ use plotters::prelude::*;
 
 fn main() {
     let root =
-        BitMapBackend::new("C:/Work/RsProj/playground/0.png", (640, 480)).into_drawing_area();
+        BitMapBackend::new("tmp0.png", (640, 480)).into_drawing_area();
     root.fill(&WHITE).unwrap();
     let mut chart = ChartBuilder::on(&root)
         .caption("y=sin2(x)", ("sans-serif", 50).into_font())
