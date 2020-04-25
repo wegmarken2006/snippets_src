@@ -37,6 +37,7 @@ nav:
   - Science:
     - Charts.md
     - Numeric.md
+    - Excel Read.md
   - System command.md
   - Video:
     - VideoCapture.md
