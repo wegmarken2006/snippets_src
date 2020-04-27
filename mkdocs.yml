@@ -52,7 +52,7 @@ theme:
   #  - tabs
   icon:
     logo: material/database
-  favicon: material/database
+  favicon: images/database.svg
 markdown_extensions:
   - codehilite:
       guess_lang: false    
