@@ -51,9 +51,8 @@ theme:
   #feature:
   #  - tabs
   icon:
-    logo: material/attachment
-  #favicon: 
-  #  icon: 'language'
+    logo: material/database
+  favicon: material/database
 markdown_extensions:
   - codehilite:
       guess_lang: false    
