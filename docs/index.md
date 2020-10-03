@@ -12,7 +12,7 @@ Languages:
 * Nim 1.0
 * Python 3.7.1
 * Rust 1.38.0
-* Typescript 3.5.3
+* Typescript 4.0.3
 
 
 Still updating.

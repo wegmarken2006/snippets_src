@@ -200,3 +200,24 @@ fn main() {
     println!("{:?}", &words_v);   
 }
 ```
+
+## Typescript
+```typescript
+
+let wordList: string[] = [ "glass", "chair", "table", "chair"];
+let words: Map<string, number> = new Map();
+for (var item of wordList) {
+    if (words.has(item) ) {
+        words.set(item, words.get(item) + 1);
+    }
+    else {
+        words.set(item, 1);
+    }
+}
+console.log(words);
+
+let sorted = new Map(Array.from(words.entries()).sort((a, b) => 
+    {return (Array.from(a.values())[0] > Array.from(b.values())[0] ?  -1 : 1)}));
+
+console.log(sorted);
+```

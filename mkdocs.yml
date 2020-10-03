@@ -5,7 +5,7 @@ nav:
     - Playground links.md
     - Scaffold with CLI.md
     - Packages.md
-    - Installation tricks.md
+    - Installation hints.md
     - Cross.md
     - Android.md
   - Concurrency:
