@@ -40,3 +40,44 @@ fn main() {
 }
 
 ```
+
+## Typescript
+```typescript
+
+//npm install --save plotly.js
+//npm install --save @types/plotly.js-dist
+//browserify hello.js -o hello2.js
+import * as Plotly from 'plotly.js-dist';
+
+function range(start, end, step) {
+    var ans = [];
+    for (let i = start; i <= end; i = i + step) {
+        ans.push(i);
+    }
+    return ans;
+}
+let x = range(-314, 314, 10);
+let y = x.map((x) => Math.sin(x / 100.));
+var trace1: Partial<Plotly.PlotData> = {
+    x: x,
+    y: y,
+    name: 'Sine',
+    type: ''
+};
+
+var data: Partial<Plotly.PlotData>[] = [trace1];
+var layout: Partial<Plotly.Layout> = { yaxis: { 'title': 'sin(x)' } };
+
+Plotly.newPlot('myDiv', data, layout);
+```
+```html
+<!-- hello2.html -->
+<head>
+    <meta charset="utf-8">
+ </head>
+
+<body>
+    <div id="myDiv"></div>
+</body>
+<script src="hello2.js"></script>
+```

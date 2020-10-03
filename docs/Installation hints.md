@@ -12,6 +12,7 @@
 ```
 npm install -g typescript
 npm install -g ts-node
+npm install -g browserify
 ```
 - put in the project folder a tsconfig.json: 
 ```
