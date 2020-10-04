@@ -44,8 +44,8 @@ fn main() {
 ## Typescript
 ```typescript
 
-//npm install --save plotly.js
-//npm install --save @types/plotly.js-dist
+//npm install --save plotly.js-dist
+//npm install --save @types/plotly.js
 //browserify hello.js -o hello2.js
 import * as Plotly from 'plotly.js-dist';
 
