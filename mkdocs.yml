@@ -17,6 +17,7 @@ nav:
   - Data types:
     - DateTime.md
     - Dict.md
+    - Globals.md
     - List.md
     - String.md
     - Structure or Class.md
