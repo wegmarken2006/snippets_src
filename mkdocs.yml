@@ -11,6 +11,7 @@ nav:
   - Concurrency:
     - Async.md
     - Channels.md
+    - Share.md
   - Constructs:
     - For Enumerate.md
     - For Range.md
