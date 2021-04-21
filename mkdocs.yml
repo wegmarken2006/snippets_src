@@ -32,6 +32,7 @@ nav:
     - Write & Read lines.md
     - CSV.md
     - Serialization.md
+    - TOML.md
   - Frameworks:
     - Flutter.md
   - GUI:
