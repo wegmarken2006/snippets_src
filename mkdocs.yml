@@ -36,6 +36,7 @@ nav:
   - Frameworks:
     - Flutter.md
   - GUI:
+    - Fltk.md
     - GTK.md
   - Science:
     - Charts.md
