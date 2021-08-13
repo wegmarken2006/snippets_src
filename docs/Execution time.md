@@ -249,6 +249,57 @@ fn find_proper_divisors(n: i32) -> Vec<i32> {
 }
 ```
 
+## Sing
+```rust
+
+requires "sio";
+requires "sys";
+
+public fn singmain(argv [*]string) i32
+{
+    
+    let now = sys.clock(); //START MEASURE
+    var perfects = *classify_perfect(20001);
+    let  new_now = sys.clock();  //END MEASURE
+    let diff = sys.clocksDiff(now, new_now); //microseconds
+
+    sio.print("\n\r");
+    for (i in 0:perfects.size()) {
+        sio.print(string(perfects[i]) + ", ");
+    }
+    sio.print("\n\rElapsed: " + string(diff) + " us");
+
+    return(0);
+}
+
+fn classify_perfect(num i32)  *[*]i32 {
+    var perfects [*]i32;
+    for (n in 1:num) {
+        var divisors = *find_proper_divisors(n);
+
+        // list_sum
+        var sum = 0;
+        for (j in 0:divisors.size()) {
+            sum = sum + divisors[j]; 
+        }
+        if (sum == n) {
+            perfects.push_back(n);
+        }
+    }
+    return (&perfects);
+}
+
+fn find_proper_divisors(n i32) *[*]i32 {
+    var divisors [*]i32;
+    for (i in 1:((n / 2) + 1)) {
+        if ((n % i) == 0) {
+            divisors.push_back(i);
+        }
+    }
+    return (&divisors);
+}
+```
+
 ## TypeScript
 ```typescript
 

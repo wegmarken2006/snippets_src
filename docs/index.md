@@ -12,6 +12,7 @@ Languages:
 * Nim 1.0
 * Python 3.7.1
 * Rust 1.38.0
+* Sing 1.0 [Singlang website](https://mdegirolami.wixsite.com/singlang)
 * Typescript 4.0.3
 
 
