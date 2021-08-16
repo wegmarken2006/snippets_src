@@ -350,6 +350,75 @@ fn main() {
 
 ```
 
+## Sing
+```rust
+
+requires "sio";
+requires "str";
+
+public fn singmain(argv [*]string) i32
+{
+    // new empty list
+    var lst1 [*]string;
+
+    // new initialize dlist
+    var lst2 [*]string = {"str20", "str21"};
+
+    // append element
+    lst1.push_back("str10");
+
+    // append list
+    lst1.append(lst2);
+
+    // add head element
+    lst1.insert(0, 1, "str00"); 
+
+    // reverse
+    var rev [*]string;
+    let l_size = lst1.size();
+    for (i in 0:l_size) {
+        rev.push_back(lst1[l_size -i -1]);
+    }
+    lst1 = rev;
+    
+    //access elem out of bounds
+    let  elem = lst1[100];
+    if (str.len(elem) == 0) {
+        sio.print("\n\r Elem not found");
+    }
+    else {
+        sio.print("\n\r" + elem);
+    }
+
+    // sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+    var lst3 = lst1;
+    lst3.erase(0,1);
+    
+    for (elem2 in lst3) {
+        sio.print("\n\r" + elem2);
+    }
+
+    //map and filter
+    var lst4 [*]string;
+    for (elem2 in lst1) {
+        lst4.push_back(str.toupper(elem2));
+    }
+    var lst5 [*]string;
+    for (elem2 in lst4) {
+        if (elem2 != "STR00") {
+            lst5.push_back(elem2);
+        }
+    }
+
+    sio.print("\n\r");
+    for (elem2 in lst5) {
+        sio.print("\n\r" + elem2);
+    }
+
+    return(0);
+}
+```
+
 ## TypeScript
 ``` typescript
 
