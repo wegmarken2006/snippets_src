@@ -201,6 +201,59 @@ fn main() {
 }
 ```
 
+## Sing
+```rust
+
+requires "sio";
+requires "sort";
+
+public fn singmain(argv [*]string) i32
+{
+    //count words
+
+    let word_list [*]string = {"glass", "chair","glass", "table", "chair", "chair"};
+    var words map(string)i32;
+    
+    for (elem in word_list) {
+        var value = words.get_safe(elem, -1);
+        if (value == -1) {
+            value = 1;
+        }
+        else {
+            value = value + 1;
+        }
+        words.insert(elem, value);
+    }
+    //get specified value
+    let value = words.get("chair");
+    sio.print("\n\r chair: " + string(value));    
+
+    //sort by descending value
+
+    var sort_index [*]i32;
+    var sort_keys [*]i32;
+    var map_keys [*]string;
+    sort.indexInit(sort_index, words.size());
+    for (i in 0:words.size()) {
+        map_keys.push_back(words.key_at(i));
+        sort_keys.push_back(words.value_at(i));
+    }
+    sort.ksort_i32(sort_index, sort_keys);
+    
+    var rev_index [*]i32;     // reverse sort_index
+    let i_size = sort_index.size();
+    for (i in 0:i_size) {
+        rev_index.push_back(sort_index[i_size -i -1]);
+    }
+
+    sio.print("\n\r");  
+    for (i in rev_index) {
+        sio.print("\n\r" + map_keys[i]);  
+    }
+    return(0);
+}
+```
+
 ## Typescript
 ```typescript
 
