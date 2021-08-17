@@ -313,6 +313,54 @@ fn main() {
 }
 ```
 
+## Sing
+```rust
+
+requires "sio";
+requires "mod1";
+
+
+public fn singmain(argv [*]string) i32
+{
+    var c1 mod1.Customer;
+    c1.person.first_name = "Mark";
+
+    sio.print("\n\r" + c1.person.first_name + ", " + c1.person.second_name);
+
+    c1.add_to_balance(100.0);
+    c1.add_to_balance(10.0);
+
+    sio.print("\n\rNew Balance: " + string(c1.get_balance()));
+    return(0);
+}
+
+//in a different file named mod1.sing:
+public class Person {
+    public:
+    //members with default
+    var first_name string = "John";
+    var second_name string = "Doe";
+}
+
+public class Customer {
+    public:
+    var person Person;
+    fn mut add_to_balance(sum f64) void;
+    fn get_balance() f64;
+    private:
+    var balance f64;
+}
+
+public fn Customer.add_to_balance(sum f64) void
+{
+    this.balance = this.balance + sum;
+}
+
+public fn Customer.get_balance() f64
+{
+    return (this.balance);
+}
+```
 ## TypeScript
 ``` typescript
 
