@@ -295,7 +295,7 @@ fn c_type(item IComposite) void {
             sio.print("\n\rCInt " + string(ref.value));
         }
         default: {
-            sio.print("\n\rUNrecognized type");
+            sio.print("\n\rUnrecognized type");
         }
     }
 }
