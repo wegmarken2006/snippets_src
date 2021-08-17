@@ -247,6 +247,60 @@ fn main() {
 }
 ```
 
+## Sing
+```rust
+
+requires "sio";
+
+interface IComposite {
+    fn isComposite() bool;
+}
+
+class Person : IComposite {
+    public:
+    var firstName string;
+    var secondName string;
+}
+public fn Person.isComposite() bool {
+    return (true);
+}
+
+class  CInt : IComposite {
+    public:
+    var value i32;
+}
+public fn CInt.isComposite() bool {
+    return (true);
+} 
+
+public fn singmain(argv [*]string) i32
+{
+    var p1 Person;
+    var c1 CInt;
+    p1.firstName = "John";
+    c1.value = 12;
+    
+    c_type(p1);
+    c_type(c1);
+    
+    return(0);
+}
+
+fn c_type(item IComposite) void {
+    typeswitch (ref = item) {
+        case Person:{
+            sio.print("\n\rPerson " + ref.firstName);
+        }
+        case CInt:{
+            sio.print("\n\rCInt " + string(ref.value));
+        }
+        default: {
+            sio.print("\n\rUNrecognized type");
+        }
+    }
+}
+```
+
 ## TypeScript
 ``` typescript
 
