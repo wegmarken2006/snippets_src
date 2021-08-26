@@ -24,6 +24,7 @@ cd hello
 flutter create .
 flutter pub get
 flutter run
+flutter run --release
 
 flutter build apk
 flutter install

@@ -587,3 +587,139 @@ class _HomePageState extends State<HomePage> {
   }
 }
 ```
+
+## Isolate, RSS Feed
+```dart
+
+//dependencies:
+//   http: ^0.13.3
+//   webfeed: ^0.7.0
+//   url_launcher: ^6.0.9
+//add in AndroidManifest.xml
+//    <queries>
+//      <!-- If your app opens https URLs -->
+//      <intent>
+//      <action android:name="android.intent.action.VIEW" />
+//      <data android:scheme="https" />
+//      </intent>
+//    </queries>
+//    <uses-permission android:name="android.permission.INTERNET"/>
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'dart:isolate';
+import 'package:http/http.dart' as http;
+import 'package:webfeed/webfeed.dart';
+import 'package:url_launcher/url_launcher.dart' as launch;
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  static const int MAX_LIST_LENGTH = 30;
+  late ReceivePort _receivePort;
+  late Isolate _isolate;
+  List<String> _titleLst = [];
+  List<String> _linkLst = [];
+  static bool _running = false;
+
+  void _start() async {
+    _receivePort = ReceivePort();
+    _isolate = await Isolate.spawn(_checkTimer, _receivePort.sendPort);
+    _running = true;
+    _receivePort.listen(_handleMessage, onDone: () {});
+  }
+
+  void _handleMessage(dynamic tuple) {
+    setState(() {
+      _titleLst.add(tuple[0]);
+      _linkLst.add(tuple[1]);
+      if (_titleLst.length > MAX_LIST_LENGTH) {
+        _titleLst.removeLast();
+      }
+    });
+  }
+
+  static void _checkTimer(SendPort sendPort) async {
+    var period = 10;
+    Timer.periodic(new Duration(seconds: period), (Timer t) {
+      var feedUrl = "https://hnrss.org/frontpage";
+      http.read(Uri.parse(feedUrl)).then((text) {
+        var channel = RssFeed.parse(text);
+        if (channel.items != null) {
+          //force channel.itens non null with '!'
+          for (var item in channel.items!) {
+            sendPort.send([item.title, item.link]);
+          }
+        }
+      });
+    });
+  }
+
+  void _stop() {
+    setState(() {
+      _running = false;
+    });
+    _receivePort.close();
+    _isolate.kill(priority: Isolate.immediate);
+  }
+
+  @override
+  void initState() {
+    _start();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    try {
+      _isolate.kill();
+    } catch (e) {}
+
+    super.dispose();
+  }
+
+  ListView _listBuild(List lst, List links) {
+    return ListView.builder(
+      itemCount: lst.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.lightGreenAccent,
+            child: Text('${index + 1}'),
+          ),
+          title: Text('${lst[index]}'),
+          onTap: () {
+            print(links[index]);
+            launch.launch(links[index]);
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Welcome to Flutter',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('HN Front Page'),
+        ),
+        body: _listBuild(_titleLst, _linkLst),
+        floatingActionButton: new FloatingActionButton(
+          onPressed: _running ? _stop : _start,
+          child: _running ? new Icon(Icons.stop) : new Icon(Icons.play_arrow),
+        ),
+      ),
+    );
+  }
+}
+```
