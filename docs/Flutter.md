@@ -588,7 +588,7 @@ class _HomePageState extends State<HomePage> {
 }
 ```
 
-## Isolate, RSS Feed
+## Isolate, RSS Feed, Nullable values
 ```dart
 
 //dependencies:
@@ -653,6 +653,7 @@ class _MyAppState extends State<MyApp> {
       var feedUrl = "https://hnrss.org/frontpage";
       http.read(Uri.parse(feedUrl)).then((text) {
         var channel = RssFeed.parse(text);
+        //nullable values handling in Flutter 2.6.0
         if (channel.items != null) {
           //force channel.itens non null with '!'
           for (var item in channel.items!) {
