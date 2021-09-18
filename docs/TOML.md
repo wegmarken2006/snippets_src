@@ -1,5 +1,55 @@
 # TOML
 
+## Go
+```go
+
+package main
+
+import (
+	. "fmt"
+	"os"
+
+	toml "github.com/pelletier/go-toml"
+)
+
+// all fields must be Public (Capitalized)!
+type Person struct {
+	Name string `toml:"name"`
+	Val  int    `toml:"val"`
+}
+
+type TomlConfig struct {
+	Person Person `toml:"person"`
+}
+
+const CONF_TOML_PATH = "conf.toml"
+
+func main() {
+
+	cfg := TomlConfig{Person{Name: "Joe", Val: 10}}
+	Println(cfg)
+	b, err := toml.Marshal(cfg)
+
+	if err != nil {
+		panic(err)
+	}
+	Println(string(b))
+	file, err := os.Create(CONF_TOML_PATH)
+	if err != nil {
+		panic(err)
+	}
+	file.Write(b)
+	file.Close()
+
+	var cfg2 TomlConfig
+	b2, err := os.ReadFile(CONF_TOML_PATH)
+	err = toml.Unmarshal(b2, &cfg2)
+	if err != nil {
+		panic(err)
+	}
+	Println(cfg2)
+}
+```
 
 ## Rust
 ```rust

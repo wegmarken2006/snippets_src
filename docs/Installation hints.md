@@ -8,6 +8,11 @@
 - Unpack the sources in ***Rust installation path****\lib\rustlib\src\rust\src*
 - To debug in vscode, adjust the path for stdlib sources with "sourceFileMap" in *launch.json*.
 
+### Change default paths
+Set before running the rustup-init:
+CARGO_HOME
+RUSTUP_HOME
+
 ## Typescript
 ```
 npm install -g typescript
