@@ -102,7 +102,13 @@ main(List<String> args) {
 ```
 ## Go
 ```go
+//file src/moda/go.mod
+//generated  by "go mod init moda"
+module moda
 
+go 1.17
+```
+```go
 //file src/moda/moda.go -> package moda
 package moda
 
@@ -145,7 +151,18 @@ func (customer *Customer) GetBalance() float64 {
 }
 ```
 ```go
+//file src/go.mod
+//generated  by "go mod init main"
+//then manually modified
+module main
 
+require moda v1.0.0
+replace moda => ./moda
+
+go 1.17
+```
+```go
+//file src/main.go
 package main
 
 import (
