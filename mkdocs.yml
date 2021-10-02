@@ -38,6 +38,7 @@ nav:
     - Flutter.md
   - GUI:
     - Fltk.md
+    - Fyne.md
     - GTK.md
   - Science:
     - Charts.md
