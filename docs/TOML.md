@@ -2,7 +2,8 @@
 
 ## Go
 ```go
-
+//go.mod
+//require github.com/pelletier/go-toml v1.9.4
 package main
 
 import (

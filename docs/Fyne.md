@@ -3,7 +3,8 @@
 
 ## Go
 ```go
-
+//go.mod
+//require fyne.io/fyne/v2 v2.1.0
 package main
 
 import (
