@@ -149,3 +149,56 @@ fn main() {
     }
 }
 ```
+
+## Rust (with serialization)
+```rust
+//[dependencies]
+//csv = "1.1.2"
+//serde = "1.0.125"
+//serde_derive = "1.0.125"
+
+use csv::{ReaderBuilder, WriterBuilder};
+use serde_derive::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Record {
+    FirstName: String,
+    SecondName: String,
+}
+fn main() {
+    const CSV_PATH: &str = "tmp001.csv";
+
+    let mut wtr = WriterBuilder::new()
+        .delimiter(b'\t')
+        .quote_style(csv::QuoteStyle::NonNumeric)
+        .from_path(CSV_PATH)
+        .expect("Error opening");
+
+    //write Header
+    wtr.write_record(&["FirstName", "SecondName"])
+        .expect("Error writing header");
+
+    let rec1 = Record {
+        FirstName: "John".to_string(),
+        SecondName: "Doe".to_string(),
+    };
+    wtr.serialize(rec1).expect("Error writing record");
+    let rec2 = Record {
+        FirstName: "Mark".to_string(),
+        SecondName: "Smith".to_string(),
+    };
+    wtr.serialize(rec2).expect("Error writing record");
+    wtr.flush().expect("Error flushing");
+
+    let mut rdr = ReaderBuilder::new()
+        .delimiter(b'\t')
+        .has_headers(true)
+        .from_path(CSV_PATH)
+        .expect("Error reading CSV");
+    for result in rdr.deserialize() {
+        let record: Record = result.expect("No record");
+
+        println!("{:?}", record);
+    }
+}
+```
