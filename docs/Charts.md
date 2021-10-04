@@ -1,5 +1,58 @@
 # Charts
 
+## Go
+```go
+
+//go.mode
+//require github.com/go-echarts/go-echarts/v2 v2.2.4
+package main
+
+import (
+	"fmt"
+	"math"
+	"os"
+
+	"github.com/go-echarts/go-echarts/v2/charts"
+	"github.com/go-echarts/go-echarts/v2/opts"
+)
+
+func main() {
+	var yLineVals []opts.LineData
+	var yBarVals []opts.BarData
+	var xVals []string
+
+	//prepare data
+	for ind := -314; ind <= 314; ind += 10 {
+		xVals = append(xVals, fmt.Sprintf("%d", ind))
+		yLineVals = append(yLineVals, opts.LineData{Value: math.Sin(float64(ind) / 100.)})
+		yBarVals = append(yBarVals, opts.BarData{Value: math.Sin(float64(ind) / 100.)})
+	}
+
+	line := charts.NewLine()
+	line.SetGlobalOptions(
+		charts.WithXAxisOpts(opts.XAxis{Name: "X"}),
+		charts.WithYAxisOpts(opts.YAxis{Name: "Sin(x)"}),
+
+		charts.WithTitleOpts(opts.Title{
+			Title:    "Sin(x)",
+			Subtitle: "",
+		}))
+	line.SetXAxis(xVals).AddSeries("Sin(x)", yLineVals)
+	f, _ := os.Create("line.html")
+	line.Render(f)
+
+	bar := charts.NewBar()
+	bar.SetGlobalOptions(
+		charts.WithTitleOpts(opts.Title{
+			Title:    "Sin(x)",
+			Subtitle: "",
+		}))
+	bar.SetXAxis(xVals).AddSeries("Sin(x)", yBarVals)
+	g, _ := os.Create("bar.html")
+	bar.Render(g)
+}
+```
+
 ## Rust
 ```rust
 
