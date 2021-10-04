@@ -106,6 +106,14 @@ func main() {
 	str2 := fmt.Sprintf("four decimals %.4f, hex for %d: 0x%x \n", 1.23456, 16, 16)
 	fmt.Print(str2)
 
+   	//extract nth character
+	chn2 := str2[2]
+	fmt.Printf("char: %c\n", chn2)
+
+	//substring
+	subs := str2[0:3]
+	fmt.Println("subs: ", subs)
+
 	elems := strings.Split(str2, " ")
 	var num float64
 	for _, item := range elems {
@@ -209,6 +217,17 @@ fn main() {
     //float, hex
     let str2 = &format!("four decimals: {:.4}, hex for {}: 0x{:X}", 0.123456, 16, 16);
     println!("{}", str2);
+
+    //extract nth character
+    let mut chn2 = str2.chars().nth(2).unwrap();
+    println!("char: {}", chn2);
+    //alternative
+    let chn2 = &str2[2..3];
+    println!("char: {}", chn2);
+
+    //substring
+    let subs = &str2[0..3];
+    println!("subs: {}", subs);
 
     // Parse string for numbers
     let elems: Vec<&str> = str2.split(" ").collect();
