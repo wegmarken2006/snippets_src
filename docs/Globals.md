@@ -41,6 +41,8 @@ fn main() {
     println!("{} {}", sm.x, sm.s);
     sm.x = 11;
     println!("{} {}", sm.x, sm.s);
+    //unlock
+    std::mem::drop(sm);
 
     unsafe {
         GLOBAL_MUT.push(20);
