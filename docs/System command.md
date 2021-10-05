@@ -54,6 +54,11 @@ func main() {
 	out, _ := exec.Command("go", "version").Output()
 	output := string(out)
 	fmt.Printf("\n%s", output)
+
+    //windows only
+	out, _ = exec.Command("cmd", "/C", "dir").Output()
+	output = string(out)
+	fmt.Printf("\n%s", output)
 }
 ```
 
@@ -79,5 +84,13 @@ fn main() {
         .expect("failed to execute process");
 
     println!("stdout: {}", String::from_utf8_lossy(&output.stdout));
+
+    //windows only
+    let output2 = Command::new("cmd")
+        .args(&["/C", "dir"])
+        .output()
+        .expect("failed to execute process");
+
+    println!("stdout: {}", String::from_utf8_lossy(&output2.stdout));
 }
 ```
