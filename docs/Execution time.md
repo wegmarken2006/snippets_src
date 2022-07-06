@@ -251,21 +251,22 @@ fn find_proper_divisors(n: i32) -> Vec<i32> {
 
 ## Sing
 ```rust
-
 requires "sio";
 requires "sys";
 
 public fn singmain(argv [*]string) i32
 {
-    
+
     let now = sys.clock(); //START MEASURE
-    var perfects = *classify_perfect(20001);
+    let perfects = classify_perfect(20001);
     let  new_now = sys.clock();  //END MEASURE
     let diff = sys.clocksDiff(now, new_now); //microseconds
 
     sio.print("\n\r");
-    for (i in 0:perfects.size()) {
-        sio.print(string(perfects[i]) + ", ");
+    if (perfects != null) {
+        for (i in 0:perfects.size()) {
+            sio.print(string((*perfects)[i]) + ", ");
+        }
     }
     sio.print("\n\rElapsed: " + string(diff) + " us");
 
@@ -275,15 +276,18 @@ public fn singmain(argv [*]string) i32
 fn classify_perfect(num i32)  *[*]i32 {
     var perfects [*]i32;
     for (n in 1:num) {
-        var divisors = *find_proper_divisors(n);
+        let divisors = find_proper_divisors(n);
 
         // list_sum
-        var sum = 0;
-        for (j in 0:divisors.size()) {
-            sum = sum + divisors[j]; 
-        }
-        if (sum == n) {
-            perfects.push_back(n);
+        //      mandatory pointer check
+        if (divisors != null) {
+            var sum = 0;
+            for (j in 0:divisors.size()) {
+                sum = sum + (*divisors)[j]; 
+            }
+            if (sum == n) {
+                perfects.push_back(n);
+            }
         }
     }
     return (&perfects);
@@ -332,5 +336,46 @@ function findProperDivisor(n: number) {
         }
     }
     return divisors;
+}
+```
+
+## V
+```Go
+import time
+
+fn main () {
+	start := time.ticks()
+	perfects := classify_perfect(20001)
+	finish := time.ticks()
+    println("$perfects")
+	println('Execution time ${finish - start} ms')
+}
+
+fn classify_perfect(nnum int) []int {
+	mut perfects := []int{}
+
+	for n := 1; n < nnum; n++ {
+        divisors := find_proper_divisor(n)
+        mut sum := 0
+        for i := 0; i < divisors.len; i++ {
+            sum += divisors[i]
+        }
+
+        if sum == n {
+            perfects << n
+        }
+    }
+	return perfects
+}
+
+fn find_proper_divisor(n int) []int {
+    mut divisors := []int{}
+    endloop := int(n/2) + 1
+    for i := 1; i < endloop; i++ {
+        if n%i == 0 {
+            divisors << i
+        }
+    }
+    return divisors
 }
 ```

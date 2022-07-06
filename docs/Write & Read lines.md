@@ -176,3 +176,19 @@ fn main() {
 }
 
 ```
+
+## V
+```Go
+import os
+
+fn main() {
+	file_name := "tmp0.txt"
+	mut f1 := os.create(file_name) or {panic("cannot create $file_name")}
+	to_write := ("This is\n\na text\nfile").bytes()
+	f1.write(to_write) or {panic("cannot write $file_name")}
+	f1.close()
+
+	lines := os.read_lines(file_name) or {panic("cannot read $file_name")}
+	println('$lines')
+}
+```

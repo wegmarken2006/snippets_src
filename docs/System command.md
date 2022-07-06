@@ -46,19 +46,22 @@ main(List<String> arguments) {
 package main
 
 import (
-	"fmt"
+	. "fmt"
 	"os/exec"
+	"runtime"
 )
 
 func main() {
-	out, _ := exec.Command("go", "version").Output()
-	output := string(out)
-	fmt.Printf("\n%s", output)
-
-    //windows only
-	out, _ = exec.Command("cmd", "/C", "dir").Output()
-	output = string(out)
-	fmt.Printf("\n%s", output)
+	if runtime.GOOS == "linux" {
+		out, _ := exec.Command("/bin/sh", "-c", "ls").Output()
+		output := string(out)
+		Printf("\n%s", output)
+	} else {
+		//windows
+		out, _ := exec.Command("cmd", "/C", "dir").Output()
+		output := string(out)
+		Printf("\n%s", output)
+	}
 }
 ```
 

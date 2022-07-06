@@ -202,3 +202,39 @@ fn main() {
     }
 }
 ```
+
+## V
+``` Go
+import encoding.csv
+import os
+
+fn main() {
+	records := [["FirstName", "SecondName"], ["John", "Doe"], 
+		["Mark", "Smith"]]	
+
+	file_name := "tmp0.txt"
+	mut f1 := os.create(file_name) or {panic("cannot create $file_name")}
+	
+	mut writer := csv.new_writer()
+	for record in records {
+		writer.write(record) or {}
+		to_write := writer.str()
+		f1.write(to_write.bytes()) or {panic("cannot write $file_name")}
+	}
+	f1.close()
+
+	lines := os.read_lines(file_name) or {panic("cannot read $file_name")}
+
+	for ind, line in lines {
+		//skip header
+		if ind == 0 {
+			continue
+		} 
+		line_nl := "$line\n"
+		mut parser := csv.new_reader(line_nl)
+    	items := parser.read() or { break }
+    	println("First: ${items[0]}, Second: ${items[1]}")
+	}
+
+}
+```

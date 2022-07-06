@@ -453,3 +453,38 @@ var lst5 = lst4.filter((x) => x != "STR00");
 console.log(`${lst5}`);
 ```
 
+## V
+``` Go
+fn main() {
+	//new empty list
+	mut lst1 := []string{}
+
+	//new initialized list
+	lst2 := ["str20", "str21"]
+
+	//append element
+	lst1  << "str10"
+	
+	//append list
+	lst1 << lst2
+
+	//add head element
+	lst1.insert(0, "str00")
+
+	//reverse
+	lst1.reverse_in_place()
+
+    //access elem with out of bounds check
+	elem := lst1[100] or {"elem not found"}
+	println('$elem')
+
+	// sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+	lst3 := lst1[1..]
+	println('$lst3')
+
+	//map and filter
+	lst4 := lst3.map(it.to_upper())
+	lst5 := lst4.filter(it != "STR00")
+	println('$lst5')
+}
+```
