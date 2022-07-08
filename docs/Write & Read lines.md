@@ -177,7 +177,7 @@ fn main() {
 
 ```
 
-## V
+## V (vlang)
 ```Go
 import os
 

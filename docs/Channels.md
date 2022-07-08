@@ -121,3 +121,52 @@ fn sum_page_sizes() {
 }
 
 ```
+
+## V (vlang)
+``` Go
+
+import net.http
+
+fn main() {
+	sizes := sum_page_sizes()
+    print("\n$sizes")
+}
+
+fn sum_page_sizes() int {
+    mut urls := []string{}
+	urls = [
+        "https://wegmarken2006.github.io/snippets/",
+        "https://wegmarken2006.github.io/snippets/Cross/",
+        "https://wegmarken2006.github.io/snippets/Dict/",
+        "https://wegmarken2006.github.io/snippets/Execution%20time/",
+	]
+
+    ch := chan int{}
+
+    for _, url in urls {
+        go get_text_len(url, ch)
+    }
+
+    mut total := 0
+    mut resp_count := 0
+    for {
+        select {
+        ln := <-ch {
+            resp_count++
+            total = total + ln
+            if resp_count == urls.len {
+                return total
+            }
+		}
+        }
+    }
+	return total
+}
+
+fn get_text_len(url string, ch chan int) {
+	resp := http.get(url) or {panic("get error $err")}
+
+	//close?
+    ch <- resp.body.len
+}
+```

@@ -339,7 +339,7 @@ function findProperDivisor(n: number) {
 }
 ```
 
-## V
+## V (vlang)
 ```Go
 import time
 

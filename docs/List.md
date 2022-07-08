@@ -453,7 +453,7 @@ var lst5 = lst4.filter((x) => x != "STR00");
 console.log(`${lst5}`);
 ```
 
-## V
+## V (vlang)
 ``` Go
 fn main() {
 	//new empty list
