@@ -419,3 +419,46 @@ var balance = c1.getBalance();
 
 console.log(`New ${pname} balance: ${balance}`);
 ```
+
+## V (vlang)
+``` Go
+// src/moda/moda.v
+
+module moda
+
+pub struct Person {
+pub mut:
+    first_name  string
+    second_name string
+}
+
+pub struct Customer {
+mut:
+	balance f64
+pub mut:
+    person Person
+}
+
+pub fn (mut customer Customer) add_to_balance(sum f64) {
+	customer.balance += sum
+}
+
+pub fn (customer Customer) get_balance() f64 {
+	return customer.balance
+}
+```
+``` Go
+// src/
+import moda as md
+
+fn main() {
+	p1 := md.Person{"Mark", "Smith"}
+	mut c1 := md.Customer{0, p1}
+
+	c1.add_to_balance(100.0)
+	c1.add_to_balance(10.0)
+
+	balance := c1.get_balance()
+	println("$p1.first_name balance: $balance")
+}
+```
