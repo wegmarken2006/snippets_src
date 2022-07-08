@@ -274,3 +274,37 @@ let sorted = new Map(Array.from(words.entries()).sort((a, b) =>
 
 console.log(sorted);
 ```
+
+## V (vlang)
+```Go
+fn main() {
+    //count words
+
+	word_list := ["glass", "table", "chair", "chair"]
+    mut words := map[string]int{}
+
+    for _, item in  word_list {
+        words[item]++
+    }
+    print("\n$words")
+
+    //sort by descending value
+	map_sorted :=  map_sort(words)
+    print("\n$map_sorted")
+}
+
+fn map_sort(map_in map[string]int) []KeyVal {
+    //map to array
+    mut map_s := []KeyVal{}
+    for k, v in  map_in {
+        map_s << KeyVal{k, v}
+    }
+	map_s.sort(a.val > b.val)
+    return map_s
+}
+
+struct KeyVal {
+    key string
+    val int
+}
+```
