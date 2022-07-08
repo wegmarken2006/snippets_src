@@ -197,3 +197,54 @@ fn main() {
     println!("{}", delta_y);
 }
 ```
+
+## V (vlang)
+``` Go
+import time
+
+fn main() {
+	today := time.now()
+	year := today.year
+	month := today.month
+	day := today.day
+	hour := today.hour
+	minute := today.minute
+	second := today.second
+
+	// from date to string
+	today_str := "$year-${month:02}-${day:02} ${hour:02}:${minute:02}:${second:02}"
+	date_str := today.get_fmt_date_str(time.FormatDelimiter.hyphen,
+	            time.FormatDate.yyyymmdd)
+	time_str := today.get_fmt_time_str(time.FormatTime.hhmmss24)
+	
+	// from string to date
+	today2 := time.parse(today_str) or {panic("Parse error $err")}
+	today2_str := today2.str()
+	
+	weekday_str := today.weekday_str()
+
+	tomorrow := today.add_days(1)
+	tomorrow_str := tomorrow.str()
+
+	// difference between dates
+	next_week := today.add_days(7)
+	delta_w := next_week - today
+	delta_d := delta_w.hours() / 24.0
+	mut days_per_year := 365
+	if time.is_leap_year(year) {
+		days_per_year = 366
+	}
+	next_year := today.add_days(days_per_year)
+	n_year := next_year.year
+	delta_y := n_year - year
+
+	println(today_str)
+	println(date_str)
+	println(time_str)
+	println(today2_str)
+	println(weekday_str)
+	println(tomorrow_str)
+	println(delta_d)
+	println(delta_y)
+}
+```
