@@ -331,3 +331,33 @@ cType(p1);
 cType(12);
 
 ```
+
+## V (vlang)
+```Go
+struct Person {
+    first_name  string
+    second_name string
+}
+struct CInt {
+    value int
+}
+
+type CompositeType = Person | CInt
+fn main() {
+	p1 := Person{"John", "Doe"}
+	c1 := CInt{12}
+	c_type(p1)
+	c_type(c1)
+}
+
+fn c_type(c CompositeType) {
+	match c {
+		Person {
+			println("Person: $c.first_name")
+		}
+		CInt {
+			println("Number: $c.value")
+		}
+	}
+}
+```
