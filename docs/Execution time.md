@@ -141,6 +141,42 @@ func findProperDivisor(n int) []int {
 }
 ```
 
+## Julia
+```julia
+#import Pkg; Pkg.add("BenchmarkTools")
+using BenchmarkTools
+
+function find_proper_divisor(n)
+    divisors = Int64[]
+    endloop = n/2 + 1
+    for i in 1:endloop
+        if n%i == 0 
+            append!(divisors, i)
+        end            
+    end
+    return divisors
+end
+
+function classify_perfect(nnum)
+    perfects = Int64[]
+    for n in 2:nnum 
+        divisors = find_proper_divisor(n)
+        sum = 0
+        for i in 1:lastindex(divisors)
+            sum += divisors[i]
+        end
+
+        if sum == n 
+            append!(perfects, n)
+        end
+    end
+    return perfects
+end
+
+@btime perfects = classify_perfect(20001)
+println(perfects)
+```
+
 ## Nim
 ```nim
 
@@ -341,22 +377,25 @@ function findProperDivisor(n: number) {
 
 ## V (vlang)
 ```Go
+// note: int seems to be a i32 also on a 64bit machine
+// so used i64 instead of int
 import time
 
-fn main () {
-	start := time.ticks()
-	perfects := classify_perfect(20001)
-	finish := time.ticks()
-    println("$perfects")
-	println('Execution time ${finish - start} ms')
+fn main() {
+    stopwatch := time.new_stopwatch() //START MEASURE
+    perfects := classify_perfect(20001)
+    duration := stopwatch.elapsed() //END MEASURE
+
+    println("\n$perfects")
+    println("\nElapsed: $duration")
 }
 
-fn classify_perfect(nnum int) []int {
-	mut perfects := []int{}
 
-	for n := 1; n < nnum; n++ {
-        divisors := find_proper_divisor(n)
-        mut sum := 0
+fn classify_perfect(nnum i64) []i64 {
+    mut perfects := []i64{}
+    for n := 1; n < nnum; n++ {
+        mut divisors := find_proper_divisor(n)
+        mut sum := i64(0)
         for i := 0; i < divisors.len; i++ {
             sum += divisors[i]
         }
@@ -365,12 +404,12 @@ fn classify_perfect(nnum int) []int {
             perfects << n
         }
     }
-	return perfects
+    return perfects
 }
 
-fn find_proper_divisor(n int) []int {
-    mut divisors := []int{}
-    endloop := int(n/2) + 1
+fn find_proper_divisor(n i64) []i64 {
+    mut divisors := []i64{}
+    endloop := i64(n/2) + 1
     for i := 1; i < endloop; i++ {
         if n%i == 0 {
             divisors << i

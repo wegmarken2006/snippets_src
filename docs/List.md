@@ -175,6 +175,45 @@ func recoverList() {
 }
 ```
 
+## Julia
+```julia
+# new empty list
+lst1 = String[]
+
+# new initialized list
+lst2 = String["str20", "str21"]
+
+# apppend element
+push!(lst1, "str10")
+
+# append list
+append!(lst1, lst2)
+
+# add head element
+pushfirst!(lst1, "str00")
+
+# reverse
+lst1 = reverse(lst1)
+
+# trap out of bounds access
+local elem = String
+try
+    elem = lst1[100]
+catch
+    println("Out of bounds")
+end
+
+# sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+# list length
+lst3 = lst1[2:length(lst1)]
+println(lst3)
+
+# map and filter
+lst4 = map(x -> uppercase(x), lst1)
+lst5 = filter(x -> x != "STR00", lst4)
+println(lst5)
+```
+
 ## Kotlin
 ```kotlin
 
