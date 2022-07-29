@@ -1,5 +1,28 @@
 # Tuples
 
+## Julia
+```julia
+using Printf
+
+t1 = (1, 10, "hello");
+@printf "%d %d %s\n" t1[1] t1[2] t1[3]
+
+# delete an element
+(a, b, c) = t1;
+t2 = (a, c);
+println(t2);
+
+# tuple to list
+lst = collect((1, 2, 3))
+println(lst)
+
+#  add an element
+v3 = collect(t1)
+insert!(v3, 2, 2)
+t3 = Tuple(v3)
+println(t3)
+```
+
 ## Python
 ```python
 

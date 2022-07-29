@@ -104,6 +104,28 @@ func main() {
 }
 ```
 
+## Julia
+```julia
+using Printf
+
+filename = "tmp01.txt"
+try
+    fwr = open(filename, "w")
+    print(fwr, "This is\n\na text\nfile")
+    close(fwr)        
+catch
+    @printf "cannot open %s\n" filename
+end
+
+try
+    fwr = open(filename, "r")
+    lines = readlines(fwr)
+    println(lines)    
+catch
+    @printf "cannot read %s\n" filename
+end
+```
+
 ## Nim
 ```nim
 

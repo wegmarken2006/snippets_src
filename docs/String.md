@@ -125,6 +125,40 @@ func main() {
 	}
 }
 ```
+## Julia
+```julia
+using Printf
+using Dates
+
+name = "john"
+age = 21
+t = Dates.now()
+
+# string interpolation
+str1 = @sprintf "%s age is %d, weekday is %s, %d:%d\n" name age Dates.dayname(t) Dates.hour(t) Dates.minute(t)
+println(str1)
+
+str2 = @sprintf "four decimals %.4f, hex for %d: 0x%x \n" 1.23456 16 16
+println(str2)
+
+# extract nth character
+chn2 = str2[2]
+@printf "char: %c\n" chn2
+
+# substring
+subs = str2[1:2]
+@printf "subs %s\n" subs
+
+elems = split(str2," ")
+for el in elems
+    el = strip(el, [',', ':'])   
+    try
+        num = parse(Float64, el)
+        @printf "found float %s in \"%s\"\n" num el      
+    catch
+    end
+end
+```
 
 ## Nim
 ```nim

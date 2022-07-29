@@ -174,7 +174,6 @@ function classify_perfect(nnum)
 end
 
 @btime perfects = classify_perfect(20001)
-println(perfects)
 ```
 
 ## Nim

@@ -53,6 +53,24 @@ func main() {
 }
 ```
 
+## Julia
+```julia
+#import Pkg; Pkg.add("Plots")
+using Plots
+
+xi = range(-314,314,100)
+x = Float64[]
+y = Float64[]
+for ind in 1:lastindex(xi)
+    xf = xi[ind]/100.0
+    push!(x, xf)
+    push!(y, sin(xf))
+end
+
+ylabel!("y = sin(x)")
+plot(x, y, title = "y=sin(x)", label = "y = sin(x)")
+```
+
 ## Rust
 ```rust
 

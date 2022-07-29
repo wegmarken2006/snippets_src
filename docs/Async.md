@@ -75,6 +75,33 @@ main() async {
 }
 ```
 
+## Julia
+```julia
+#import Pkg; Pkg.add("HTTP")
+ using HTTP
+ using Printf
+ 
+ urls = [
+    "https://wegmarken2006.github.io/snippets/",
+    "https://wegmarken2006.github.io/snippets/Cross/",
+    "https://wegmarken2006.github.io/snippets/Dict/",
+    "https://wegmarken2006.github.io/snippets/Execution%20time/",
+]
+
+mutable struct Atomic{Int64}; @atomic x::Int64; end
+
+tot = Atomic(0)
+
+@sync for url in urls
+    @async begin
+        resp = HTTP.get(url)        
+        @atomicreplace tot.x  (@atomic tot.x + length(String(resp.body)))
+    end
+end
+
+@printf "Size: %s\n" @atomic tot.x
+```
+
 ## Nim
 ```nim
 

@@ -161,6 +161,38 @@ func main() {
 }
 ```
 
+## Julia
+```julia
+using Printf
+
+abstract type CompType end
+
+struct Person <: CompType
+    firstname::String
+    secondName::String
+end
+
+struct CInt <: CompType
+    value::Int
+end
+
+
+p1 = Person("John", "Doe")
+c1 = CInt(12)
+
+function cType(c::CompType)
+    if typeof(c) == Person
+        @printf "\nPerson %s" c.firstname
+    elseif typeof(c) == CInt
+        @printf "\nNumber %d" c.value
+    end 
+
+end
+
+cType(p1)
+cType(c1)
+```
+
 ## Nim
 ```nim
 

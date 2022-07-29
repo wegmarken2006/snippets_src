@@ -125,6 +125,37 @@ func (p keyValList) Less(i, j int) bool { return p[i].val < p[j].val }
 func (p keyValList) Swap(i, j int){ p[i], p[j] = p[j], p[i] }
 ```
 
+## Julia
+```julia
+wordList = String["glass", "table", "chair", "chair"]
+words = Dict()
+
+for word in wordList
+    try
+        words[word] += 1    
+    catch
+        words[word] = 1
+    end    
+end
+println(words)
+
+# sort by descending value
+function mapSort(mapIn)
+    ks = collect(keys(mapIn))
+    vs = collect(values(mapIn))
+    kv = Tuple{String,Int64}[]
+
+    for ind in 1:lastindex(ks) 
+        tup = (ks[ind], vs[ind])
+        push!(kv, tup)        
+    end
+    kv = sort(kv, by = x -> x[2],  rev=true)
+    return kv
+end
+
+println(mapSort(words))
+```
+
 ## Nim
 ```nim
 
