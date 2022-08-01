@@ -125,6 +125,49 @@ func f64Max(v []float64) float64 {
 }
 ```
 
+## Julia
+```julia
+using Statistics
+using LinearAlgebra
+using Dates
+
+tstart = Dates.now()
+a = [1. 2. 3.;3. 4. 5.;0. 5. 6.]
+
+# mean by columns
+am0 = mean(a, dims=1)
+
+# std dev by columns
+as0 = std(a, corrected=false, dims=1)
+
+# max by columns
+amax0 = maximum(a, dims=1)
+
+at = transpose(a)
+
+# matrix multiplication
+b = a * at
+
+#determinant
+dt = det(a)
+
+#inverse
+try
+    i = inv(a)
+catch    
+end
+tend = Dates.now()
+
+println(am0)
+println(as0)
+println(amax0)
+println(at)
+println(b)
+println(dt)
+println(i)    
+println(tend-tstart)
+```
+
 ## Python 
 ```python
 

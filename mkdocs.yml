@@ -42,6 +42,7 @@ nav:
     - GTK.md
   - Science:
     - Charts.md
+    - Dataframe.md
     - Numeric.md
     - Excel Read.md
   - System command.md

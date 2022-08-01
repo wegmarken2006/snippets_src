@@ -84,6 +84,22 @@ func main() {
 }
 ```
 
+## Julia
+```julia
+#import Pkg; Pkg.add("CSV"); Pkg.add("DataFrames")
+using CSV, DataFrames
+
+filename = "tmp001.csv"
+touch(filename)
+df = DataFrame(FirstName=["John", "Mark"], SecondName=["Doe", "Smith"])
+CSV.write(filename, df)
+
+csv_reader = CSV.File(filename)
+for row in csv_reader
+    println("First: $(row.FirstName), Second: $(row.SecondName)")
+end
+```
+
 ## Python
 ```python
 

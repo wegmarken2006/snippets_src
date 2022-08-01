@@ -125,6 +125,7 @@ func main() {
 	}
 }
 ```
+
 ## Julia
 ```julia
 using Printf
@@ -135,8 +136,7 @@ age = 21
 t = Dates.now()
 
 # string interpolation
-str1 = @sprintf "%s age is %d, weekday is %s, %d:%d\n" name age Dates.dayname(t) Dates.hour(t) Dates.minute(t)
-println(str1)
+println("$(name) age is $(age), weekday is $(Dates.dayname(t)), $(Dates.hour(t)):$(Dates.minute(t))\n")
 
 str2 = @sprintf "four decimals %.4f, hex for %d: 0x%x \n" 1.23456 16 16
 println(str2)
