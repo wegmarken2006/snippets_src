@@ -52,6 +52,38 @@ func main() {
 }
 ```
 
+## Julia
+```julia
+using TOML
+
+struct Person
+    name::String
+    val::Int64
+end
+const CONF_TOML_PATH = "conf.toml"
+
+# form struct to TOML
+p = Person("Joe", 10)
+
+function struct_to_dict(s)
+    return Dict(key => getfield(s, key) for key in propertynames(s))
+end
+
+p_dict = Dict("Person" => struct_to_dict(p))
+open(CONF_TOML_PATH, "w") do io
+    TOML.print(io, p_dict)
+end
+
+# from TOML ro struct
+parsed = TOML.parsefile(CONF_TOML_PATH)
+
+function dict_to_person(d)
+    local p = Person(d["Person"]["name"], d["Person"]["val"])
+end
+
+println(dict_to_person(parsed))
+```
+
 ## Rust
 ```rust
 

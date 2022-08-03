@@ -71,4 +71,22 @@ println(df3)
 
 ## Python 
 ```python
+import pandas as pd
+import urllib.request
+
+dataname = "iris.data"
+url = "http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+
+urllib.request.urlretrieve(url, dataname)
+
+col_names = ['Sepal_Length','Sepal_Width','Petal_Length','Petal_Width','Class']
+df =  pd.read_csv(dataname, names = col_names)
+
+# select rows
+df1 = df[(df['Sepal_Length'] > 5.4) & (df['Petal_Width'] <= 0.2)]
+print(df1)
+
+# select columns
+df2 = df1[['Sepal_Length','Petal_Width','Class']]
+print(df2)
 ```

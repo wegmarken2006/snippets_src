@@ -182,8 +182,69 @@ func main() {
 	//property
 	fmt.Printf("\nNew %v balance: %v", c1.Person.FirstName, balance) 
 }
+```
+
+## Julia
+```julia
+# file moda.jl
+module Moda 
+
+export Person
+export Customer
+export add_to_balance
+
+struct Person 
+    firstname::String
+    secondName::String
+end
+
+mutable struct Customer
+    person::Person
+    balance::Float64
+end
+
+function add_to_balance(c::Customer, val)
+    c.balance = c.balance + val
+end
+
+function local_func()
+    println("local_func called")
+end
+
+end
+```
+```julia
+# main file
+# with "import" whole module visible
+include("moda.jl")
+
+import   .Moda as md
+
+p = md.Person("John", "Doe")
+c = md.Customer(p, 0)
+md.add_to_balance(c, 10)
+md.add_to_balance(c, 100)
+println(c)
+md.local_func()
+```
+```julia
+# main file
+# with "using" only exports are visibile
+include("moda.jl")
+
+using .Moda
+p = Person("Mark", "Smith")
+c = Customer(p, 0)
+add_to_balance(c, 12)
+println(c)
+try
+    local_func()
+catch
+    println("access to not exported function")
+end
 
 ```
+
 
 ## Nim
 ```nim
