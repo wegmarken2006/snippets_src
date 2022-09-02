@@ -62,7 +62,6 @@ func getTextLen(url string, ch chan int) {
 
 ## Rust
 ```rust
-
 //[dependencies]
 //ureq = "0.11.2"
 
@@ -119,7 +118,67 @@ fn sum_page_sizes() {
 
     println!("{}", total);
 }
+```
+```rust
+//channel receiver shared between threads
+//using std::thread::scope and crossbeam_channel
+//[dependencies]
+//ureq = "2.5.0"
+//crossbeam-channel = "0.5.6"
 
+use std::io::Read;
+
+fn main() {
+    std::thread::scope(|s| {
+        let urls = vec![
+            "https://wegmarken2006.github.io/snippets/",
+            "https://wegmarken2006.github.io/snippets/Cross/",
+            "https://wegmarken2006.github.io/snippets/Dict/",
+            "https://wegmarken2006.github.io/snippets/Execution%20time/",
+        ];
+        let (tx, rx)= crossbeam_channel::unbounded();
+        let mut children = Vec::new();
+        let urls_len = urls.len();
+
+        for url in urls {
+            let tx_chan = tx.clone();
+
+            let child = s.spawn(move || {
+                let r_resp = ureq::get(url).call();
+                let resp = r_resp.expect("Error url");
+                let status = resp.status();
+                if status != 500 {
+                    let mut buffer = String::new();
+                    resp.into_reader()
+                        .read_to_string(&mut buffer)
+                        .expect("Reading error");
+                    let ln = buffer.len();
+                    tx_chan.send(ln).expect("Transmitting error");
+                } else {
+                    tx_chan.send(0).expect("Transmitting error");
+                }
+            });
+            children.push(child);
+        }
+
+        //Receive messages
+        let receiver = s.spawn(move || {
+            let mut sum = 0;
+            for _ in 0..urls_len {
+                sum = sum + rx.recv().expect("Receiving error");
+            }
+            sum
+        });
+
+        // Wait for the threads to complete any remaining work
+        for child in children {
+            child.join().expect("Join error");
+        }
+        let total = receiver.join().expect("Join error");
+
+        println!("{}", total);
+    });
+}
 ```
 
 ## V (vlang)
