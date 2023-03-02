@@ -104,6 +104,50 @@ func main() {
 }
 ```
 
+## Julia
+```julia
+using Dates
+
+today = Dates.now()
+year = Dates.year(today)
+month = Dates.month(today)
+day = Dates.day(today)
+hour = Dates.hour(today)
+minute = Dates.minute(today)
+second = Dates.second(today)
+
+# from date to string
+today_str = "$(year)-$(month)-$(day)**$(hour):$(minute):$(second)"
+date_str = Dates.format(today,"yyyy-mm-dd")
+time_str = Dates.format(today,"H:M:S")
+
+# from string to date
+df = Dates.dateformat"y-m-d**H:M:S"
+str = "2020-05-01**13:32:02"
+today2 = Dates.DateTime(str, df)
+
+# weekday
+weekday = Dates.dayname(today)
+
+tomorrow = today + Dates.Day(1)
+
+# difference between dates
+next_week = today + Dates.Day(7)
+delta_w = Dates.Date(next_week) - Dates.Date(today)
+next_year = today + Dates.Year(1)
+delta_y = Dates.Date(next_year) - Dates.Date(today)
+
+println(today)
+println(today_str)
+println(date_str)
+println(time_str)
+println(today2)
+println(weekday)
+println(tomorrow)
+println(delta_w)
+println(delta_y)
+```
+
 ## Python
 ```python
 
