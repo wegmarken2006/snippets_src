@@ -34,6 +34,7 @@ nav:
     - CSV.md
     - Serialization.md
     - TOML.md
+    - File Walk.md
   - Frameworks:
     - Flutter.md
   - GUI:
