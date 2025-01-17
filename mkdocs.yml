@@ -52,7 +52,9 @@ nav:
     - FaceDetect.md
 
 theme:
-  name: 'material'
+  #name: terminal
+  #name: dracula
+  name: material
   palette:
     primary: 'lime'
     accent: 'lime'
@@ -61,9 +63,19 @@ theme:
   icon:
     logo: material/database
   favicon: images/database.svg
-markdown_extensions:
-  - codehilite:
-      guess_lang: false    
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/dart.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/julia.min.js
+  - https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.js
+  - https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.css
+  - add_hljs_highlight.js
+
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/a11y-light.min.css
+#markdown_extensions:
+#  - codehilite:
+#      guess_lang: false
 #extra:
 #   version: 2.0
 dev_addr: '127.0.0.1:8081'
