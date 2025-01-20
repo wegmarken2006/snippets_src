@@ -101,28 +101,19 @@ func main() {
 	fmt.Printf("\n%v", words)
 
 	//sort by descending value
-	fmt.Printf("\n%v", mapSort(words))
-}
+	keys := make([]string, 0, len(words))
 
-func mapSort(mapIn map[string]int) keyValList {
-	//dict to slice
-	mapS := keyValList{}
-	for k, v := range mapIn {
-		mapS = append(mapS, keyVal{k, v})
+	for key := range words {
+		keys = append(keys, key)
 	}
-	sort.Sort(sort.Reverse(mapS))
-	return mapS
-}
+	sort.Slice(keys, func(i, j int) bool {
+		return words[keys[i]] > words[keys[j]]
+	})
 
-type keyVal struct {
-	key string
-	val int
+	for i := 0; i < len(words); i++ {
+		fmt.Println(keys[i], words[keys[i]])
+	}
 }
-type keyValList []keyVal
-
-func (p keyValList) Len() int { return len(p) }
-func (p keyValList) Less(i, j int) bool { return p[i].val < p[j].val }
-func (p keyValList) Swap(i, j int){ p[i], p[j] = p[j], p[i] }
 ```
 
 ## Julia
