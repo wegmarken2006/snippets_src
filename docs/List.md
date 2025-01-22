@@ -106,65 +106,65 @@ String getElemAt(List<String> lst, int index) {
 
 ## Go
 ```go
-
 package main
 
 import (
-    "fmt"
-    "sort"
-    "strings"
+	"fmt"
+	"slices"
+	"strings"
 )
 
 func main() {
 
-    //new empty list
-    lst1 := stringList{}
+	//new empty list
+	lst1 := []string{}
 
-    //new initialized list
-    lst2 := stringList{"str20", "str21"}
+	//new initialized list
+	lst2 := []string{"str20", "str21"}
 
-    //append element
-    lst1 = append(lst1, "str10")
+	//append element
+	lst1 = append(lst1, "str10")
 
-    //append list
-    lst1 = append(lst1, lst2...)
+	//append list
+	lst1 = append(lst1, lst2...)
 
-    //add head element
-    lst1 = append([]string{"str00"}, lst1...)
+	//add head element
+	lst1 = append([]string{"str00"}, lst1...)
 
-    //reverse
-	sort.Sort(sort.Reverse(lst1))
-	
+	//reverse
+	slices.Reverse(lst1)
+
 	//trap out of bounds access
 	elem := getElemAt(lst1, 100)
 	fmt.Printf("\nElem *%v*", elem)
 
-    //sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
-    //list length
-    lst3 := lst1[1:len(lst1)]
-    fmt.Printf("\n%v", lst3)
+	//sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+	//list length
+	lst3 := lst1[1:]
+	fmt.Printf("\n%v", lst3)
 
-    //map and filter
-    lst4 := stringList{}
-    for _, elem := range lst1 {
-        lst4 = append(lst4, strings.ToUpper(elem))
-    }
-    lst5 := stringList{}
-    for _, elem := range lst4 {
-        if elem != "STR00" {
-            lst5 = append(lst5, elem)
-        }
-    }
-    fmt.Printf("\n%v", lst5)
+	//contains
+	if slices.Contains(lst1, "str00") {
+		//index of element
+		ind := slices.Index(lst1, "str00")
+		fmt.Printf("\nIndex %d", ind)
+	}
+
+	//map and filter
+	var lst4 []string
+	for _, elem := range lst1 {
+		lst4 = append(lst4, strings.ToUpper(elem))
+	}
+	var lst5 []string
+	for _, elem := range lst4 {
+		if elem != "STR00" {
+			lst5 = append(lst5, elem)
+		}
+	}
+	fmt.Printf("\n%v\n", lst5)
 }
 
-type stringList []string
-
-func (p stringList) Len() int           { return len(p) }
-func (p stringList) Less(i, j int) bool { return p[i] < p[j] }
-func (p stringList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
-
-func getElemAt(lst stringList, index int) string {
+func getElemAt(lst []string, index int) string {
 	defer recoverList()
 	elem := lst[index]
 	return elem
@@ -173,6 +173,7 @@ func getElemAt(lst stringList, index int) string {
 func recoverList() {
 	recover()
 }
+
 ```
 
 ## Julia
