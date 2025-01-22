@@ -347,7 +347,6 @@ print(lst5)
 
 ## Rust
 ```rust
-
 fn main() {
     // new empty list
     let mut lst1: Vec<&str> = vec![];
@@ -370,16 +369,21 @@ fn main() {
     //access elem with out of bounds check
     let elem = match lst1.get(100) {
         None => "not found",
-        Some(x) => x
+        Some(x) => x,
     };
     println!("Elem {}", elem);
-
 
     // sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
     // list length
     let lst3: Vec<&str> = lst1[1..lst1.len()].to_vec();
 
     println!("{:?}", &lst3);
+
+    //contains
+    if lst3.contains(&"str00") {
+        let index = lst3.iter().position(|&i| i == "str00").unwrap();
+        println!("Index {:?}", index);
+    }
 
     // map and filter
     let lst4: Vec<_> = lst3.into_iter().map(|x| x.to_uppercase()).collect();
