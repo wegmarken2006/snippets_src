@@ -41,6 +41,8 @@ nav:
     - Fltk.md
     - Fyne.md
     - GTK.md
+  - Net:
+    - Websockets.md
   - Science:
     - Charts.md
     - Dataframe.md
