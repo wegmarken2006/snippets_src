@@ -1,4 +1,4 @@
-# WEBSOCKETS
+# Websockets
 
 ## Go
 ```go
