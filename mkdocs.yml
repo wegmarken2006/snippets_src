@@ -42,6 +42,7 @@ nav:
     - Fyne.md
     - GTK.md
   - Net:
+    - Webserver.md
     - Websockets.md
   - Science:
     - Charts.md
