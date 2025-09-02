@@ -1,5 +1,80 @@
 # Conversions
 
+## Dart
+```dart
+
+import 'dart:convert';
+import 'dart:typed_data';
+
+void main() {
+  // i32 <-> bytes
+  var v1 = i32ToBytes(112);
+  var i1 = bytesToI32(v1);
+  print(i1);
+
+  // str <-> bytes
+  var v2 = strToBytes("113.45");
+  var s2 = bytesToStr(v2);
+  print(s2);
+
+  // i32 <-> str
+  var s3 = i32ToStr(114);
+  var i3 = strToI32(s3);
+  print(i3);
+
+  // f32 <-> bytes
+  var v4 = f32ToBytes(115.67);
+  var f4 = bytesToF32(v4);
+  print(f4);
+}
+
+// Converts int (i32) to bytes (big endian)
+List<int> i32ToBytes(int num) {
+  var b = ByteData(4);
+  b.setInt32(0, num, Endian.big);
+  return b.buffer.asUint8List();
+}
+
+// Converts bytes (big endian) to int (i32)
+int bytesToI32(List<int> buf) {
+  var b = ByteData.sublistView(Uint8List.fromList(buf));
+  return b.getInt32(0, Endian.big);
+}
+
+// Converts float (f32) to bytes (big endian)
+List<int> f32ToBytes(double num) {
+  var b = ByteData(4);
+  b.setFloat32(0, num, Endian.big);
+  return b.buffer.asUint8List();
+}
+
+// Converts bytes (big endian) to float (f32)
+double bytesToF32(List<int> buf) {
+  var b = ByteData.sublistView(Uint8List.fromList(buf));
+  return b.getFloat32(0, Endian.big);
+}
+
+// Converts String to bytes (UTF-8)
+List<int> strToBytes(String str1) {
+  return utf8.encode(str1);
+}
+
+// Converts bytes to String (UTF-8)
+String bytesToStr(List<int> buf) {
+  return utf8.decode(buf);
+}
+
+// Converts String to int (i32)
+int strToI32(String str1) {
+  return int.parse(str1);
+}
+
+// Converts int (i32) to String
+String i32ToStr(int num) {
+  return num.toString();
+}
+```
+
 ## Go
 ``` go
 package main
