@@ -20,7 +20,7 @@ public class Program
 ## Dart
 ```dart
 
-main() async {
+void main() {
   for (var idx = 0; idx < 10; idx++) {
     print("Index $idx");
   }

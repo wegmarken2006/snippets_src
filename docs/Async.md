@@ -58,8 +58,8 @@ public class Program
 
 import 'package:http/http.dart' as http;
 
-main() async {
-  
+void main() async {
+
   var urls = [
     "https://wegmarken2006.github.io/snippets/",
     "https://wegmarken2006.github.io/snippets/Cross/",
@@ -68,11 +68,12 @@ main() async {
   ];
   var total = 0;
   for (var url in urls) {
-    var text = await http.read(url);
+    var text = await http.read(Uri.parse(url));
     total = total + text.length;
   }
   print("$total");
 }
+
 ```
 
 ## Julia

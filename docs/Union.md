@@ -61,6 +61,7 @@ public class Program
 ## Dart
 ```dart
 
+
 // interface to represent union
 class IComposite {
   bool isComposite() {return true;}
@@ -71,6 +72,7 @@ class Person implements IComposite {
   String secondName;
   Person([this.firstName = "John", this.secondName = "Doe"]);
 
+  @override
   bool isComposite() {
     return true;
   }
@@ -80,19 +82,20 @@ class CInt implements IComposite {
   int value;
   CInt(this.value);
 
+  @override
   bool isComposite() {
     return true;
   }
 }
 
-main(List<String> args) {
+void main(List<String> args) {
   var p1 = Person();
 
   cType(p1);
   cType(CInt(12)); //int needs to be enveloped in CInt
 }
 
-cType(IComposite c) {
+void cType(IComposite c) {
   if (c is CInt) {
     //cast to the actual type
     var c1 = c as CInt;

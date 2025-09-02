@@ -61,7 +61,7 @@ public class Program
 
 main(List<String> arguments) {  
   // new empty list
-  var lst1 = List<String>();  
+  List<String> lst1 = [];  
 
   //new initialized list
   var lst2 = ["str20", "str21"];

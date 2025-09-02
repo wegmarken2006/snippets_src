@@ -4,21 +4,22 @@
 ## Dart
 ```dart
 
+
 //dependencies:
-//  intl: ^0.16.1
+//  intl: ^0.20.2
 
 import 'package:intl/intl.dart';
 
-main() async {
+void main() {
   var today = DateTime.now();
 
   // from date to string
-  var today_str = DateFormat('yyyy-MM-dd**kk:mm:ss').format(today);
-  var date_str = DateFormat('dd-MM-yyyy').format(today);
-  var time_str = DateFormat('kk:mm').format(today);
+  var todayStr = DateFormat('yyyy-MM-dd**kk:mm:ss').format(today);
+  var dateStr = DateFormat('dd-MM-yyyy').format(today);
+  var timeStr = DateFormat('kk:mm').format(today);
 
   // from string to date
-  var today2 = DateFormat('yyyy-MM-dd**kk:mm:ss').parse(today_str);
+  var today2 = DateFormat('yyyy-MM-dd**kk:mm:ss').parse(todayStr);
 
   var hour = today.hour;
   var minute = today.minute;
@@ -29,7 +30,7 @@ main() async {
   // weekday
   var days_of_week = ["sun", "mon", "tue", "wed", "thu", "fry", "sat"];
   var weekday = days_of_week[today.weekday];
-  
+
   var tomorrow = today.add(Duration(days: 1));
 
   // difference between dates
@@ -38,12 +39,12 @@ main() async {
   var next_year = today.add(Duration(days: 366));
   var n_year = next_year.year;
   var delta_y = n_year - year;
-    
+
   print(today);
-  print(today_str);
+  print(todayStr);
   print ('$day-$month-$year  $hour:$minute');
-  print(date_str);
-  print(time_str);
+  print(dateStr);
+  print(timeStr);
   print(today2);
   print(weekday);
   print(tomorrow);

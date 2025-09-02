@@ -53,7 +53,8 @@ public class Program
 ## Dart
 ```dart
 
-main(List<String> arguments) {
+
+void main(List<String> arguments) {
   var stopwatch = Stopwatch();
 
   stopwatch.start(); //START MEASURE
@@ -61,13 +62,13 @@ main(List<String> arguments) {
   stopwatch.stop(); //END MEASURE
 
   var elapsed = stopwatch.elapsedMilliseconds;
-  
+
   print('$perfects');
   print('Elapsed: $elapsed ms');
 }
 
 List<int> classifyPerfect(int nnum) {
-  var perfects = List<int>();
+  List<int> perfects = [];
   for (var n = 1; n < nnum; n++) {
     var divisors = findProperDivisor(n);
     var sum = 0;
@@ -82,7 +83,7 @@ List<int> classifyPerfect(int nnum) {
 }
 
 List<int> findProperDivisor(int n) {
-  var divisors = List<int>();
+  List<int> divisors = [];
   var endloop = n ~/ 2 + 1;
   for (var i = 1; i < endloop; i++) {
     if (n % i == 0) {

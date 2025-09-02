@@ -9,12 +9,9 @@ dotnet run
 
 ## Dart
 ```
-pub global activate stagehand
-mkdir hello
+dart create -t cli hello
 cd hello
-stagehand console-full
-pub get
-dart bin/main.dart
+dart run bin\hello.dart
 ```
 
 ## flutter

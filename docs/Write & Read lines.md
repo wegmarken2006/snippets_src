@@ -41,9 +41,8 @@ public class Program
 ```dart
 
 import 'dart:io';
-import 'dart:convert';
 
-main() async {
+void main() async {
   var fileName = "tmp01.txt";
   var f = File(fileName);
   var sink = f.openWrite();
@@ -51,12 +50,11 @@ main() async {
   sink.close();
 
   var fRead = File(fileName);
-  Stream<List<int>> inputStream = fRead.openRead();
-
-  var lines = utf8.decoder.bind(inputStream).transform(LineSplitter());
+  var lines = await fRead.readAsLines();
+  
   try {
-    await for (var line in lines) {
-      print('$line');
+    for (var line in lines) {
+      print(line);
     }
   } catch (e) {
     print("Cannot find $fileName");

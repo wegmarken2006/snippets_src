@@ -73,18 +73,18 @@ class Customer {
   Customer(this.person, [this._balance = 0.0]);
 
   void addToBalance(double sum) {
-    this._balance += sum;
+    _balance += sum;
   }
 
   double getBalance() {
-    return this._balance;
+    return _balance;
   }
 }
 ```
 ```dart
 import 'moda.dart';
 
-main(List<String> args) {
+void main(List<String> args) {
   var p1 = Person("Mark");
   var c1 = Customer(p1);
   c1.person = p1;

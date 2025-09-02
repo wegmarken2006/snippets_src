@@ -3,25 +3,22 @@
 ## Dart
 ```dart
 
-//dependencies:
-//  csv: ^4.0.3
-
 import 'package:csv/csv.dart';
 import 'dart:io';
 import 'dart:convert';
 
-main() async {
-  const CSV_PATH = 'tmp001.csv' ;
-  
+Future<void> main() async {
+  const csvPath = 'tmp001.csv' ;
+
   var llWrite = [['FirstName', 'SecondName'], ['John', 'Doe'], ['Mark', 'Smith']];
   String csv = const ListToCsvConverter(fieldDelimiter: '\t').convert(llWrite);
 
-  var f = File(CSV_PATH);
+  var f = File(csvPath);
   var sink = f.openWrite();
   sink.write(csv);
   await sink.close();
 
-  var input = File(CSV_PATH).openRead();
+  var input = File(csvPath).openRead();
   var llRead = await input
     .transform(utf8.decoder)
     .transform(CsvToListConverter(fieldDelimiter: '\t'))

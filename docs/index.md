@@ -5,7 +5,7 @@
 Languages:
 
 * C# 8.0
-* Dart 2.5.0
+* Dart 3.9.0
 * Flutter 2.5.0
 * Go 1.17
 * Julia 1.7

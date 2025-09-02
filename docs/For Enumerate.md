@@ -24,7 +24,7 @@ public class Program
 ## Dart
 ```dart
 
-main() async {
+void main() {
   var lst = [10, 20, 30];
   var ilist = lst.asMap();
   ilist.forEach((index, value) =>

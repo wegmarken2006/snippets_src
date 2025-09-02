@@ -48,11 +48,11 @@ class Program
 ```dart
 
 // dependencies:
-//  sprintf: ^4.0.2
+//  sprintf: ^7.0.0
 
 import 'package:sprintf/sprintf.dart';
 
-main(List<String> arguments) {
+void main(List<String> arguments) {
   var name = "John";
   var age = 21;
   var date = DateTime.now();

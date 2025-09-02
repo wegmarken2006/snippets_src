@@ -33,7 +33,7 @@ public class Program
 
 import "dart:io";
 
-main(List<String> arguments) {
+void main(List<String> arguments) {
   Process.run('cargo', ['version']).then((ProcessResult result) {
     print(result.stdout);
   });

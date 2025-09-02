@@ -49,7 +49,7 @@ public class Program
 
 import 'dart:collection';
 
-main(List<String> arguments) {
+void main(List<String> arguments) {
 
   //count words
 
