@@ -211,6 +211,53 @@ echo perfects
 echo endt - start
 ``` 
 
+## Odin
+```go
+
+package main
+
+import "core:fmt"
+import "core:time"
+
+main :: proc() {
+	start := time.now() // START MEASURE
+	perfects := classify_perfect(20001)
+	duration := time.since(start) // END MEASURE
+
+	fmt.println("\n", perfects)
+	fmt.println("\nElapsed: ", duration)
+
+	delete(perfects)
+}
+
+classify_perfect :: proc(nnum: int) -> [dynamic]int {
+	perfects := [dynamic]int{}
+	for n in 1 ..< nnum {
+		divisors := find_proper_divisor(n)
+		defer delete(divisors)
+		sum := 0
+		for d in divisors {
+			sum += d
+		}
+		if sum == n {
+			append(&perfects, n)
+		}
+	}
+	return perfects
+}
+
+find_proper_divisor :: proc(n: int) -> [dynamic]int {
+	divisors := [dynamic]int{}
+	endloop := n / 2 + 1
+	for i in 1 ..< endloop {
+		if n % i == 0 {
+			append(&divisors, i)
+		}
+	}
+	return divisors
+}
+```
+
 ## Python
 ```python
 

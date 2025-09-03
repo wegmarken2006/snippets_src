@@ -97,6 +97,49 @@ for row in csv_reader
 end
 ```
 
+## Odin
+```go
+
+#+feature dynamic-literals
+package main
+
+import "core:encoding/csv"
+import "core:fmt"
+import "core:os"
+
+main :: proc() {
+	ll_words := [dynamic][]string{{"FirstName", "SecondName"}, {"John", "Doe"}, {"Mark", "Smith"}}
+	defer delete(ll_words)
+
+	file_name := "tmp001.csv"
+	f, err := os.open(file_name, (os.O_CREATE | os.O_RDWR), 0o644)
+	if err != nil {
+		fmt.println(err)
+	}
+
+	w: csv.Writer
+	csv.writer_init(&w, os.stream_from_handle(f))
+
+	for str_vec in ll_words {
+		csv.write(&w, str_vec)
+	}
+	os.close(f)
+
+	fr, err2 := os.open(file_name, (os.O_RDWR), 0o644)
+	if err2 != nil {
+		fmt.println(err2)
+	}
+	defer os.close(fr)
+
+	r: csv.Reader
+	csv.reader_init(&r, os.stream_from_handle(fr))
+	defer csv.reader_destroy(&r)
+	records, _ := csv.read_all(&r)
+
+	fmt.println(records)
+}
+```
+
 ## Python
 ```python
 
