@@ -64,7 +64,57 @@ func allFiles(startingDir string, extension string) {
 		return nil
 	})
 }
+```
+## Odin
+```go
 
+package main
+
+import "core:fmt"
+import "core:os"
+import "core:path/filepath"
+import "core:strings"
+
+main :: proc() {
+	outr := [dynamic]string{}
+	all_files("/", ".xml", &outr)
+	fmt.println(outr)
+	delete(outr)
+}
+
+all_files :: proc(starting_dir: string, extension: string, outr: ^[dynamic]string) {
+	// no closures, must concentrate all parameters in a single struct
+	// to pass as rawptr
+	Params :: struct {
+		extension: string,
+		outr:      ^[dynamic]string,
+	}
+	params := Params{extension, outr}
+
+	filepath.walk(
+		starting_dir,
+		proc(info: os.File_Info, err: os.Error, params: rawptr) -> (os.Error, bool) {
+			fpath := info.fullpath
+			if err != nil {
+				fmt.println(err)
+				return nil, false
+			}
+			if !info.is_dir {
+				extension := (^Params)(params).extension
+				outr := (^Params)(params).outr
+				if strings.has_suffix(fpath, extension) {
+					fmt.println(fpath)
+					ret, _ := append(outr, fpath)
+					if ret <= 0 {
+						fmt.println("no append")
+					}
+				}
+			}
+			return nil, false
+		},
+		&params,
+	)
+}
 ```
 
 ## Python

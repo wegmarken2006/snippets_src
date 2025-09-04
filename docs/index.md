@@ -13,7 +13,7 @@ Languages:
 * Nim 1.0
 * Odin dev-2025-08
 * Python 3.7.1
-* Rust 1.63.0
+* Rust 1.89.0
 * Sing 0.41.0 [ Singlang website](https://mdegirolami.wixsite.com/singlang)
 * Typescript 4.0.3
 * V 0.3

@@ -194,6 +194,65 @@ for item in elems:
         discard
 ```
 
+## Odin
+```go
+
+package main
+
+import "core:c/libc"
+import "core:fmt"
+import "core:strconv"
+import "core:strings"
+//import "core:time"
+//import "core:time/datetime"
+
+
+main :: proc() {
+	name := "John"
+	age := 21
+
+	// resort to libc as core:time doesn't automatically handle localtime
+	t := libc.time(nil)
+	// Get the localtime
+	local := libc.localtime(&t)
+	hour := local.tm_hour
+	minute := local.tm_min
+	weekday := local.tm_wday
+
+	/*
+	date := time.now()
+	buf: [time.MIN_HMS_LEN]u8
+	hms := time.to_string_hms(date, buf[:])
+	*/
+
+	// String interpolation
+	str1 := fmt.tprintf("%s age is %d, weekday is %d, %d:%d\n", name, age, weekday, hour, minute)
+	fmt.print(str1)
+
+	str2 := fmt.tprintf("four decimals %.4f, hex for %d: 0x%x \n", 1.23456, 16, 16)
+	fmt.print(str2)
+
+	// Extract nth character
+	chn2 := str2[2]
+	fmt.printf("char: %c\n", chn2)
+
+	// Substring
+	subs := str2[0:3]
+	fmt.println("subs: ", subs)
+
+	elems := strings.split(str2, " ")
+	defer delete(elems)
+
+	for item in elems {
+		titem := strings.trim(item, ",:")
+		num, ok := strconv.parse_f32(titem)
+		if ok {
+			fmt.printf("Found float %f in \"%s\"\n", num, titem)
+		}
+	}
+}
+```
+
 ## Python
 ```python
 

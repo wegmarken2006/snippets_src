@@ -6,47 +6,41 @@
 //Copy test_ffi.dll into the project root
 
 //dependencies:
-//  ffi: ^0.1.3
-import 'dart:ffi' as ffi;
+//  ffi: ^2.1.4
+import 'dart:ffi';
+import 'dart:typed_data';
 import 'package:ffi/ffi.dart';
 
-import 'dart:typed_data';
+typedef NativeDoubleFunction = Double Function(Double);
+typedef DartDoubleFunction = double Function(double);
 
-typedef NativeDoubleFunction = ffi.Double Function(ffi.Double);
-typedef NativeOpFunction = double Function(double);
+typedef NativeIncFunction = Void Function(Pointer<Void>, Int32);
+typedef DartIncFunction = void Function(Pointer<Void>, int);
 
-typedef NativeFunction2 = ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Int32);
-typedef NativeOpFunction2 = void Function(ffi.Pointer<ffi.Void>, int);
+void main() {
+  final dylib = DynamicLibrary.open('test_ffi.dll');
 
-main() {
-  var dl = ffi.DynamicLibrary.open("test_ffi.dll");
-  NativeOpFunction test_ffi = dl
-    .lookup<ffi.NativeFunction<NativeDoubleFunction>>('mul_2')
-    .asFunction();
-  
-  var res = test_ffi(3.0);
-  print('$res');
+  final mul2 = dylib
+      .lookupFunction<NativeDoubleFunction, DartDoubleFunction>('mul_2');
 
-  NativeOpFunction2 test_ffi2 = dl
-    .lookup<ffi.NativeFunction<NativeFunction2>>('inc_u8_vec')
-    .asFunction();
-  
-  Uint8List a8 = Uint8List.fromList([1, 2, 3, 4]);
-  print('$a8');  
+  final result = mul2(3.0);
+  print('Result of mul_2: $result');
 
-  var pointer = allocate<ffi.Uint8>(count: a8.length);
-  for(int i = 0; i < a8.length; i++){
-    pointer[i] = a8[i];
-  }
-  final voidP = pointer.cast<ffi.Void>();
+  final incU8Vec = dylib
+      .lookupFunction<NativeIncFunction, DartIncFunction>('inc_u8_vec');
 
-  test_ffi2(voidP, a8.length);
-  for(int i = 0; i < a8.length; i++){
-    a8[i] = pointer[i];
-  }
-  print('$a8');
+  final data = Uint8List.fromList([1, 2, 3, 4]);
+  print('Original data: $data');
 
-  free(pointer); 
+  final pointer = calloc<Uint8>(data.length);
+  pointer.asTypedList(data.length).setAll(0, data);
+
+  incU8Vec(pointer.cast<Void>(), data.length);
+
+  final updatedData = pointer.asTypedList(data.length);
+  print('Updated data: $updatedData');
+
+  calloc.free(pointer);
 }
 ```
 

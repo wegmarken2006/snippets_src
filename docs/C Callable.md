@@ -3,7 +3,6 @@
 ## Rust
 ```rust
 
-
 //[lib]
 //name = "test_ffi"
 //crate-type = ["cdylib"] #dynamic library
@@ -11,12 +10,12 @@ use std::os::raw::c_double;
 use std::os::raw::{c_uchar, c_int};
 use std::slice;
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn mul_2(val: c_double) -> c_double {
     val * 2.0
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn inc_u8_vec(in_vec: *mut c_uchar, len: c_int) {
     assert!(!in_vec.is_null(), "Null pointer in function");
 

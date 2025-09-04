@@ -295,9 +295,58 @@ c1.addToBalance(10.0)
 
 # property, reading only through getter
 echo sf.fmt"New {c1.person.first_name} balance: {c1.balance}"
+```
+## Odin
+```go
+//file moda.odin, same directory, same package
 
+package main
+
+Person :: struct {
+	first_name:  string,
+	second_name: string,
+}
+
+Customer :: struct {
+	person:  Person,
+	balance: f64,
+}
+
+add_to_balance :: proc(c: ^Customer, sum: f64) {
+	c.balance += sum
+}
+
+get_balance :: proc(c: ^Customer) -> f64 {
+	return c.balance
+}
 ```
 
+```go
+
+package main
+
+import "core:fmt"
+
+main :: proc() {
+	p1 := new_person("Mark")
+	c1 := new_customer(p1)
+
+	add_to_balance(&c1, 100.0)
+	add_to_balance(&c1, 10.0)
+	balance := get_balance(&c1)
+
+	//property
+	fmt.printf("\nNew %v balance: %v\n", c1.person.first_name, c1.balance)
+}
+
+new_person :: proc(f_name := "John", s_name := "Doe") -> Person {
+	return Person{f_name, s_name}
+}
+
+new_customer :: proc(person: Person, balance := 0.0) -> Customer {
+	return Customer{person, balance}
+}
+```
 
 ## Python
 ```python
