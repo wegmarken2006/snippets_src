@@ -44,6 +44,31 @@ void main() {
 }
 ```
 
+## Odin
+```go
+
+//copy test_ffi.dll, test_ffi.dll.lib
+
+package main
+
+import "core:fmt"
+
+foreign import test_ffi "test_ffi.dll.lib"
+
+foreign test_ffi {
+	mul_2 :: proc "c" (f64) -> f64 ---
+	inc_u8_vec :: proc "c" (^[]int, int) ---
+}
+
+main :: proc() {
+	fmt.println(mul_2(3.0))
+	in_vec := []int{1, 2, 3, 4}
+	fmt.println(in_vec)
+	inc_u8_vec(&in_vec, 4)
+	fmt.println(in_vec)
+}
+```
+
 ## Python
 ```python
 
