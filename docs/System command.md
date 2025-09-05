@@ -73,7 +73,6 @@ package main
 import "core:c/libc"
 
 main :: proc() {
-
 	//without output capture
 	if ODIN_OS == .Windows {
 		libc.system("cmd.exe /C dir")
@@ -81,6 +80,43 @@ main :: proc() {
 	if ODIN_OS == .Linux {
 		libc.system("/bin/sh -c ls")
 	}
+
+    // with output capture
+	outp: []string
+	if ODIN_OS == .Windows {
+		outp = system_command("cmd.exe /C dir")
+	}
+	if ODIN_OS == .Linux {
+		outp = system_command("/bin/sh -c ls")
+	}
+	for elem in outp {
+		fmt.print(elem)
+	}
+}
+
+system_command :: proc(cmd: string) -> []string {
+	outp: [dynamic]string
+
+	fp := posix.popen(strings.clone_to_cstring(cmd), "r")
+	if fp == nil {
+		fmt.println("open error")
+	}
+
+	buffer: [4096]u8
+	// Read the output line by line
+	for {
+		out := posix.fgets(raw_data(buffer[:]), size_of(buffer), fp)
+		if out == nil {
+			break
+		}
+		out_cs := cstring(out)
+		out_s := strings.clone_from_cstring(out_cs)
+		if out_s != "\n" {
+			append(&outp, out_s)
+		}
+		//fmt.println(string(out_s))
+	}
+	return outp[:]
 }
 ```
 
