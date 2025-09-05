@@ -134,6 +134,59 @@ func bytes_to_f32(b1 []byte) float32 {
 }
 ```
 
+## Odin
+```go
+
+package main
+
+import "core:fmt"
+import "core:strconv"
+import "core:c/libc"
+import "core:strings"
+
+main :: proc() {
+	// int <-> bytes
+	b1 := i128_to_bytes(112)
+    i1 := bytes_to_i128(b1)
+    fmt.println(i1)
+
+	// str <-> bytes
+	v2 := str_to_bytes("113.45")
+	s2 := bytes_to_str(v2)
+	fmt.println(s2)
+
+	//int <-> string
+    s3 := fmt.tprintf("%d", 114)
+    i3: int
+    libc.sscanf(strings.clone_to_cstring(s3), "%d", &i3)
+    fmt.println(i3)
+}
+
+i128_to_bytes :: proc(num: i128) -> []u8 {
+	buf: [16]u8 
+	str := strconv.itoa(buf[:], int(num))
+	out: []u8 //stack
+	out = transmute([]u8)str
+	out2: [dynamic]u8 //context.allocator
+	for elem in out {
+		append(&out2, elem)
+	}
+	return out2[:]
+}
+
+bytes_to_i128 :: proc(bs: []u8) -> i128 {
+	return i128(strconv.atoi(string(bs)))
+}
+
+str_to_bytes :: proc(str: string) -> []u8 {
+	return transmute([]u8)str
+}
+
+bytes_to_str :: proc(bs: []u8) -> string {
+	return string(bs)
+}
+```
+
 ## Rust
 ```rust
 
