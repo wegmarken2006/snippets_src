@@ -139,31 +139,36 @@ func bytes_to_f32(b1 []byte) float32 {
 
 package main
 
+import "core:c/libc"
 import "core:fmt"
 import "core:strconv"
-import "core:c/libc"
 import "core:strings"
 
 main :: proc() {
 	// int <-> bytes
 	b1 := i128_to_bytes(112)
-    i1 := bytes_to_i128(b1)
-    fmt.println(i1)
+	i1 := bytes_to_i128(b1)
+	fmt.println(i1)
 
 	// str <-> bytes
 	v2 := str_to_bytes("113.45")
 	s2 := bytes_to_str(v2)
 	fmt.println(s2)
 
-	//int <-> string
-    s3 := fmt.tprintf("%d", 114)
-    i3: int
-    libc.sscanf(strings.clone_to_cstring(s3), "%d", &i3)
-    fmt.println(i3)
+	// int <-> string
+	s3 := fmt.tprintf("%d", 114)
+	i3: int
+	libc.sscanf(strings.clone_to_cstring(s3), "%d", &i3)
+	fmt.println(i3)
+
+	// [^]u8 <-> string
+	mp1 := string_to_multip("hello")
+	str1 := multip_to_string(mp1)
+	fmt.println(str1)
 }
 
 i128_to_bytes :: proc(num: i128) -> []u8 {
-	buf: [16]u8 
+	buf: [16]u8
 	str := strconv.itoa(buf[:], int(num))
 	out: []u8 //stack
 	out = transmute([]u8)str
@@ -185,6 +190,17 @@ str_to_bytes :: proc(str: string) -> []u8 {
 bytes_to_str :: proc(bs: []u8) -> string {
 	return string(bs)
 }
+
+multip_to_string :: proc(mp: [^]u8) -> string {
+	cs := cstring(mp)
+	str := strings.clone_from_cstring(cs)
+	return str
+}
+
+string_to_multip :: proc(str: string) -> [^]u8 {
+	return raw_data(str)
+}
+
 ```
 
 ## Rust

@@ -73,7 +73,7 @@ package main
 import "core:c/libc"
 
 main :: proc() {
-	//without output capture
+	// without output capture
 	if ODIN_OS == .Windows {
 		libc.system("cmd.exe /C dir")
 	}
