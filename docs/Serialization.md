@@ -1,32 +1,5 @@
 # Serialization
 
-## Dart
-```dart
-
-import 'dart:io';
-import 'dart:convert';
-
-void main() {
-  var map = {
-    "first": [1, 2, 3, 4],
-    "second": [10, 20, 30, 40]
-  };
-
-  print('$map?');
-
-  var fileName = "tmp01.txt";
-  var f = File(fileName);
-  var encodeMap = jsonEncode(map);
-  f.writeAsString(encodeMap);
-
-  var map2 = Map();
-  f.readAsString().then((str1) {
-    map2 = jsonDecode(str1);
-    print('$map2');
-  });
-}
-```
-
 ## Python
 ```python
 
