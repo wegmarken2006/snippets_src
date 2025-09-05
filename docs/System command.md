@@ -65,6 +65,25 @@ func main() {
 }
 ```
 
+## Odin
+```go
+
+package main
+
+import "core:c/libc"
+
+main :: proc() {
+
+	//without output capture
+	if ODIN_OS == .Windows {
+		libc.system("cmd.exe /C dir")
+	}
+	if ODIN_OS == .Linux {
+		libc.system("/bin/sh -c ls")
+	}
+}
+```
+
 ## Python
 ```python
 
