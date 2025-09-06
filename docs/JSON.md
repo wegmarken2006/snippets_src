@@ -44,3 +44,52 @@ void main() {
   });
 }
 ```
+
+## Odin
+```go
+
+```
+
+## Rust
+```rust
+// serde =  { version = "1.0.143", features = ["derive"] }
+// serde_json = "1.0.143"
+
+use std::{
+    fs::File,
+    io::{Error, Read, Write},
+};
+
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
+struct Config {
+    description: String,
+    i_list: Vec<i32>,
+    s_list: Vec<String>,
+}
+
+fn main() -> Result<(), Error> {
+    // Create a Config instance
+    let conf = Config {
+        description: "Description".to_string(),
+        i_list: vec![1, 2, 3, 4],
+        s_list: vec!["AAA".to_string(), "BBB".to_string(), "CCC".to_string()],
+    };
+
+    // Serialize to JSON and write to file
+    let json_str = serde_json::to_string_pretty(&conf)?;
+    let file_name = "tmp01.json";
+    let mut f = File::create(file_name)?;
+    f.write(json_str.as_bytes())?;
+
+    // Read JSON from file and deserialize
+    let mut f = File::open(file_name)?;
+    let mut contents = "".to_string();
+    f.read_to_string(&mut contents)?;
+    let decoded: Config = serde_json::from_str(&contents)?;
+
+    // Print the deserialized struct
+    println!("{:?}", decoded);
+
+    Ok(())
+}
+```

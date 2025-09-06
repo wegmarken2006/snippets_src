@@ -31,10 +31,10 @@ nav:
     - C Call.md
   - File:
     - Write & Read lines.md
-    - CSV.md
-    - JSON.md
-    - Serialization.md
-    - TOML.md
+    - Serialization:
+      - CSV.md
+      - JSON.md
+      - TOML.md
     - File Walk.md
   - Frameworks:
     - Flutter.md
