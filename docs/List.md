@@ -302,6 +302,59 @@ var lst5 = filter(lst4, proc (x: string): bool = x != "STR00")
 echo lst5
 ```
 
+## Odin
+```go
+#+feature dynamic-literals
+package main
+
+import "core:fmt"
+import "core:slice"
+import "core:strings"
+
+
+main :: proc() {
+
+	// new empty
+	lst1: [dynamic]string
+
+	//new initialized list
+	lst2 := [dynamic]string{"str20", "str21"}
+
+	//append element
+	append(&lst1, "str10")
+
+	//append list
+	append_elems(&lst1, ..lst2[:])
+
+	//add head element
+	inject_at_elem(&lst1, 0, "str00")
+
+	//reverse
+	slice.reverse(lst1[:])
+
+	fmt.println(lst1)
+
+	//trap out of bounds access
+	//elem := lst1[100] will panic, how to trap?
+
+	//sublist["str21", "str20", "str10", "str00"]->["str20", "str10", "str00"]
+	//list length
+	lst3 := lst1[1:]
+	fmt.printf("%v, Length %d\n", lst3, len(lst3))
+
+	//contains
+	if slice.contains(lst1[:], "str10") {
+		//index of element
+	}
+
+	//map and filter
+	lst4 := slice.mapper(lst1[:], proc(elem: string) -> string {return strings.to_upper(elem)})
+
+	lst5 := slice.filter(lst4[:], proc(elem: string) -> bool {return elem != "STR00"})
+	fmt.println(lst5)
+}
+```
+
 ## Python
 ```python
 
