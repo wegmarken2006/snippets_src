@@ -172,6 +172,48 @@ words.sort(proc (x, y: (string, int)): int = x[1] - y[1], order = al.SortOrder.D
 echo words
 ```
 
+## Odin
+```go
+
+#+feature dynamic-literals
+package main
+
+import "core:fmt"
+import "core:slice"
+
+main :: proc() {
+
+    // count words
+    word_list := []string{"glass", "table", "chair", "chair"}
+    words := make(map[string]int)
+
+    for item in word_list {
+        words[item] += 1
+    }
+    fmt.println(words)
+
+    // sort by descending value
+
+	Words_struct :: struct {
+		key: string,
+		value: int
+	}
+	ws_arr: [dynamic]Words_struct
+
+    for key in words {
+		append(&ws_arr, Words_struct{key, words[key]})
+    }
+
+    slice.sort_by(ws_arr[:], proc(ws1: Words_struct, ws2: Words_struct) -> bool {
+        return ws1.key > ws2.key
+    })
+	
+    for i := 0; i < len(words); i += 1 {
+        fmt.println(ws_arr[i].key, words[ws_arr[i].key])
+    }
+}
+```
+
 ## Python
 ```python
 
