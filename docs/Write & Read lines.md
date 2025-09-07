@@ -142,6 +142,55 @@ if not isNil(strmRead):
 strmRead.close()
 ```
 
+## Odin
+
+```Go
+package main
+
+import "core:fmt"
+import "core:os"
+import "core:strings"
+
+main :: proc() {
+	file_name := "tmp01.txt"
+
+	// Create and write to the file
+	file, err := os.open(file_name, os.O_CREATE | os.O_WRONLY | os.O_TRUNC, 0666)
+	if err != nil {
+		fmt.printf("Can't create %s\n", file_name)
+		os.exit(0)
+	}
+
+	to_write := "This is\n\na text\nfile"
+	_, err = os.write_string(file, to_write)
+	if err != nil {
+		fmt.println("Write error:", err)
+		os.exit(0)
+	}
+	os.close(file)
+
+	// Open and read the file
+	file, err = os.open(file_name, os.O_RDONLY, 0666)
+	if err != nil {
+		fmt.printf("Can't open %s\n", file_name)
+		os.exit(0)
+	}
+	defer os.close(file)
+
+	data, success := os.read_entire_file_from_handle(file)
+	if !success {
+		fmt.println("Read error:", err)
+		os.exit(0)
+	}
+
+	// Split by newline and print each line
+	lines := strings.split(string(data), "\n")
+	for line in lines {
+		fmt.println(line)
+	}
+}
+```
+
 ## Python
 ```python
 

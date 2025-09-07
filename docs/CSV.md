@@ -108,7 +108,10 @@ import "core:fmt"
 import "core:os"
 
 main :: proc() {
-	ll_words := [dynamic][]string{{"FirstName", "SecondName"}, {"John", "Doe"}, {"Mark", "Smith"}}
+	ll_words := [dynamic][]string{
+        {"FirstName", "SecondName"}, 
+        {"John", "Doe"}, 
+        {"Mark", "Smith"}}
 	defer delete(ll_words)
 
 	file_name := "tmp001.csv"
