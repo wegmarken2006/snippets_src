@@ -61,6 +61,22 @@ for index, value in lst:
   echo &"index {index} value {value}"
 ```
 
+## Odin
+```go
+
+package main
+
+import "core:fmt"
+
+main :: proc() {
+
+	lst := []int{10, 20, 30}    
+    for value, index in lst {
+        fmt.printf("\nIndex %d, value %d", index, value)
+    }
+}
+```
+
 ## Python
 ```python
 

@@ -53,6 +53,21 @@ for idx in countup(0, 9, 1):
   echo &"Index {idx}"
 ```
 
+## Odin
+```go
+
+package main
+
+import "core:fmt"
+
+main :: proc() {
+
+    for index in 0..<10 {
+        fmt.printf("\nIndex %d", index)
+    }
+}
+```
+
 ## Python
 ```python
 
