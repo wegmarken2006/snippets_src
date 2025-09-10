@@ -16,9 +16,9 @@ nav:
     - For Enumerate.md
     - For Range.md
   - Data types:
+    - Conversions.md
     - DateTime.md
     - Dict.md
-    - Conversions.md
     - Globals.md
     - List.md
     - String.md
@@ -42,6 +42,7 @@ nav:
     - Fltk.md
     - Fyne.md
     - GTK.md
+    - Raygui.md
   - Net:
     - Webserver.md
     - Websockets.md
