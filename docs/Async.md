@@ -59,21 +59,29 @@ public class Program
 import 'package:http/http.dart' as http;
 
 void main() async {
-
   var urls = [
     "https://wegmarken2006.github.io/snippets/",
     "https://wegmarken2006.github.io/snippets/Cross/",
     "https://wegmarken2006.github.io/snippets/Dict/",
     "https://wegmarken2006.github.io/snippets/Execution%20time/"
   ];
-  var total = 0;
-  for (var url in urls) {
-    var text = await http.read(Uri.parse(url));
-    total = total + text.length;
-  }
-  print("$total");
-}
 
+  var futures = urls.map((url) async {
+    try {
+      final response = await http.read(Uri.parse(url));
+      //print(url);
+      return response.length;
+    } catch (e) {
+      print("Failed to fetch $url: $e");
+      return 0; 
+    }
+  }).toList();
+
+  final results = await Future.wait(futures);
+  final total = results.fold(0, (sum, len) => sum + len);
+
+  print("Total size: $total bytes");
+}
 ```
 
 ## Julia
