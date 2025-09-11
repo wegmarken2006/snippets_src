@@ -60,6 +60,110 @@ func getTextLen(url string, ch chan int) {
 }
 ```
 
+## Odin
+```go
+// git clone https://github.com/laytan/odin-http.git
+// in this same folder
+
+package main
+
+import "core:fmt"
+import "core:sync/chan"
+import "core:thread"
+import "odin-http/client"
+
+
+main :: proc() {
+	urls := []string {
+		"https://wegmarken2006.github.io/snippets/",
+		"https://wegmarken2006.github.io/snippets/Cross/",
+		"https://wegmarken2006.github.io/snippets/Dict/",
+		"https://wegmarken2006.github.io/snippets/Execution%20time/",
+	}
+
+	ch, err1 := chan.create(chan.Chan(int), context.allocator)
+	assert(err1 == .None)
+	res_ch, err2 := chan.create(chan.Chan(int), context.allocator)
+	assert(err2 == .None)
+
+	defer chan.destroy(ch)
+	defer chan.destroy(res_ch)
+	loops := len(urls)
+	th_res := thread.create_and_start_with_poly_data3(
+		chan.as_recv(ch),
+		chan.as_send(res_ch),
+		loops,
+		receiver,
+	)
+	defer thread.destroy(th_res)
+
+	threads: [dynamic]^thread.Thread
+	defer delete(threads)
+
+	for url in urls {
+		th := thread.create_and_start_with_poly_data2(url, chan.as_send(ch), get_text_len)
+		//defer thread.destroy(th) //NOOO, it makes threads sequential
+		append(&threads, th)
+	}
+
+	thread.join_multiple(..threads[:])
+	for th in threads {
+		thread.destroy(th)
+	}
+
+	total, _ := chan.recv(res_ch)
+	fmt.println("Total: ", total)
+}
+
+get_text_len :: proc(url: string, ch: chan.Chan(int, .Send)) {
+	resp, err := get(url)
+	//fmt.println(url)
+	if !err {
+		success := chan.send(ch, len(resp))
+
+		if !success {
+			fmt.println("Failed to send")
+			return
+		}
+	} else {
+		chan.send(ch, 0)
+	}
+}
+
+receiver :: proc(ch: chan.Chan(int, .Recv), res_ch: chan.Chan(int, .Send), num: int) {
+	total := 0
+	for i in 0 ..< num {
+		value, ok := chan.recv(ch)
+		if !ok {
+			break
+		}
+		total = total + value
+		//fmt.println("[receiver] Received:", value, total)
+	}
+	//fmt.println("[receiver] exit:", total)
+	chan.send(res_ch, total)
+}
+
+get :: proc(url: string) -> (string, bool) {
+	res, err := client.get(url)
+	if err != nil {
+		fmt.printf("Request failed: %s\n", err)
+		return "", true
+	}
+	defer client.response_destroy(&res)
+
+	body, allocation, berr := client.response_body(&res)
+	if berr != nil {
+		fmt.printf("Error retrieving response body: %s\n", berr)
+		return "", true
+	}
+	resp := body.(client.Body_Plain)
+	defer client.body_destroy(body, allocation)
+
+	return body.(client.Body_Plain), false
+}
+```
+
 ## Rust
 ```rust
 //[dependencies]

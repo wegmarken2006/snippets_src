@@ -47,7 +47,6 @@ main :: proc() {
 		label_len: f32 = 100
 		label_x := (f32(rl.GetScreenWidth() - i32(len(c_str))) - label_len)/2
 
-		fmt.println(rl.GetScreenWidth(), len(c_str), label_x)
 		rl.GuiLabel(rl.Rectangle{label_x, 200, label_len, 60}, c_str)
 
 		rl.EndDrawing()
