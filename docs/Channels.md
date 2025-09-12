@@ -11,7 +11,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 )
@@ -35,17 +35,11 @@ func sumPageSizes() int {
 	}
 
 	total := 0
-	respCount := 0
-	for {
-		select {
-		case ln := <-ch:
-			respCount++
-			total = total + ln
-			if respCount == len(urls) {
-				return total
-			}
-		}
+	for range urls {
+		ln := <-ch
+		total = total + ln
 	}
+	return total
 }
 
 func getTextLen(url string, ch chan int) {
@@ -55,7 +49,7 @@ func getTextLen(url string, ch chan int) {
 		log.Fatal(err)
 	}
 	defer resp.Body.Close()
-	bodyBytes, _ := ioutil.ReadAll(resp.Body)
+	bodyBytes, _ := io.ReadAll(resp.Body)
 	ch <- len(bodyBytes)
 }
 ```
