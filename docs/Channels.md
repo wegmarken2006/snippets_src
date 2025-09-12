@@ -56,7 +56,6 @@ func getTextLen(url string, ch chan int) {
 
 ## Odin
 ```go
-
 // git clone https://github.com/laytan/odin-http.git
 // in this same folder
 
@@ -69,78 +68,77 @@ import "odin-http/client"
 
 
 main :: proc() {
-    urls := []string {
-        "https://wegmarken2006.github.io/snippets/",
-        "https://wegmarken2006.github.io/snippets/Cross/",
-        "https://wegmarken2006.github.io/snippets/Dict/",
-        "https://wegmarken2006.github.io/snippets/Execution%20time/",
-    }
+	urls := []string {
+		"https://wegmarken2006.github.io/snippets/",
+		"https://wegmarken2006.github.io/snippets/Cross/",
+		"https://wegmarken2006.github.io/snippets/Dict/",
+		"https://wegmarken2006.github.io/snippets/Execution%20time/",
+	}
 
-    ch, err1 := chan.create(chan.Chan(int), context.allocator)
-    assert(err1 == .None)
+	ch, err1 := chan.create(chan.Chan(int), 1, context.allocator)
+	assert(err1 == .None)
 
-    defer chan.destroy(ch)
+	defer chan.destroy(ch)
 
-    threads: [dynamic]^thread.Thread
-    defer delete(threads)
+	threads: [dynamic]^thread.Thread
+	defer delete(threads)
 
-    for url in urls {
-        th := thread.create_and_start_with_poly_data2(url, chan.as_send(ch), get_text_len)
-        //defer thread.destroy(th) //NOOO, it makes threads sequential
-        append(&threads, th)
-    }
+	for url in urls {
+		th := thread.create_and_start_with_poly_data2(url, chan.as_send(ch), get_text_len)
+		//defer thread.destroy(th) //NOOO, it makes threads sequential
+		append(&threads, th)
+	}
 
-    total := 0
-    for i in 0 ..< len(urls) {
-        value, ok := chan.recv(ch)
-        if !ok {
-            break
-        }
-        total = total + value
-        fmt.println("Received:", value, total)
-    }
+	total := 0
+	for i in 0 ..< len(urls) {
+		value, ok := chan.recv(ch)
+		if !ok {
+			break
+		}
+		total = total + value
+		fmt.println("Received:", value, total)
+	}
 
-    thread.join_multiple(..threads[:])
+	thread.join_multiple(..threads[:])
 
-    for th in threads {
-        thread.destroy(th)
-    }
+	for th in threads {
+		thread.destroy(th)
+	}
 
-    fmt.println("Total: ", total)
+	fmt.println("Total: ", total)
 }
 
 get_text_len :: proc(url: string, ch: chan.Chan(int, .Send)) {
-    resp, err := get(url)
-    //fmt.println(url)
-    if !err {
-        success := chan.send(ch, len(resp))
+	to_send := 0
 
-        if !success {
-            fmt.println("Failed to send")
-            return
-        }
-    } else {
-        chan.send(ch, 0)
-    }
+    resp, err := get(url)
+	if !err {
+		to_send = len(resp)
+	}
+
+	success := chan.send(ch, to_send)
+	if !success {
+		fmt.println("Failed to send")
+	}
 }
 
 get :: proc(url: string) -> (string, bool) {
-    res, err := client.get(url)
-    if err != nil {
-        fmt.printf("Request failed: %s\n", err)
-        return "", true
-    }
-    defer client.response_destroy(&res)
+	res, err := client.get(url)
+	if err != nil {
+		fmt.printf("Request failed: %s\n", err)
+		return "", true
+	}
+	defer client.response_destroy(&res)
 
-    body, allocation, berr := client.response_body(&res)
-    if berr != nil {
-        fmt.printf("Error retrieving response body: %s\n", berr)
-        return "", true
-    }
-    resp := body.(client.Body_Plain)
-    defer client.body_destroy(body, allocation)
-    //fmt.println("[get] ", url)
-    return body.(client.Body_Plain), false
+	body, allocation, berr := client.response_body(&res)
+	if berr != nil {
+		fmt.printf("Error retrieving response body: %s\n", berr)
+		return "", true
+	}
+	resp := body.(client.Body_Plain)
+	defer client.body_destroy(body, allocation)
+	//fmt.println("[get] ", url)
+	return body.(client.Body_Plain), false
 }
 ```
 
