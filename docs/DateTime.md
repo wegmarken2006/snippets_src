@@ -149,6 +149,44 @@ println(delta_w)
 println(delta_y)
 ```
 
+## Odin
+```go
+
+package main
+
+import "core:time/datetime"
+import "core:fmt"
+import "core:time"
+import "core:time/timezone"
+import "core:c/libc"
+
+main :: proc() {
+
+    l_date := local_date()
+    weekday := datetime.day_of_week(i64(l_date.day))
+
+    tomorrow, _ := datetime.add_days_to_date(l_date, 1)
+
+    // difference between dates
+    next_week, _ := datetime.add_days_to_date(l_date, 7)
+    delta_w, _ := datetime.subtract_dates(next_week, l_date)
+
+    fmt.println(l_date)
+    fmt.println(weekday)
+    fmt.println(tomorrow)
+    fmt.println(delta_w.days)
+}
+
+local_date :: proc() -> datetime.DateTime {
+    t := libc.time(nil)
+    local := libc.localtime(&t)
+
+    l_now := datetime.Time{hour=i8(local.tm_hour), minute=i8(local.tm_min), second=i8(local.tm_sec)}
+    l_date := datetime.DateTime{day= i8(local.tm_mday),year=i64(local.tm_year)+1900, month=i8(local.tm_mon)+1, time=l_now}
+    return l_date
+}
+```
+
 ## Python
 ```python
 
@@ -292,4 +330,5 @@ fn main() {
 	println(delta_d)
 	println(delta_y)
 }
+
 ```
