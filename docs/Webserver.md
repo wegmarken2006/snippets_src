@@ -1,5 +1,111 @@
 # Webserver
 
+## Odin
+```go
+
+package main
+
+import "core:c/libc"
+import "core:fmt"
+import "core:net"
+import "core:os"
+import "core:strings"
+import "core:thread"
+
+main :: proc() {
+	// the system will choose the port
+	endp_0 := net.Endpoint{net.IP4_Loopback, 0}
+	socket, err := net.listen_tcp(endp_0)
+	if err != nil {
+		fmt.panicf("Cannot create socket listener %s", err)
+	}
+
+	// Read the address with the chosen port
+	endp, _ := net.bound_endpoint(socket)
+	addr_str := fmt.tprintf("http://%s:%d\n", net.address_to_string(endp.address), endp.port)
+	fmt.printf("Server listening at %s", addr_str)
+
+	th := thread.create_and_start_with_poly_data(socket, proc(socket: net.TCP_Socket) {
+		for {
+			conn, _, err := net.accept_tcp(socket)
+			if err != nil {
+				fmt.println("accept error", err)
+				continue
+			}
+			handle_connection(conn)
+		}
+	})
+
+	fmt.println("\nPress a key and ENTER to quit\n")
+	libc.getchar()
+
+	thread.terminate(th, 0)
+	net.close(socket)
+	thread.destroy(th)
+}
+
+handle_connection :: proc(conn: net.TCP_Socket) {
+	buffer := [4096]byte{}
+	content_type := "Content-Type: text/html\r\n"
+
+	_, err := net.recv_tcp(conn, buffer[:])
+	request := string(buffer[:])
+	//fmt.println("Received request:\n", request)
+
+	lines := strings.split(request, "\n")
+	for line in lines {
+		if strings.has_prefix(line, "GET") {
+			parts := strings.split(line, " ")
+			//fmt.println(line)
+			if len(parts[1]) > 1 {
+				path := parts[1][1:] // eliminate initial /
+				//fmt.println(path)
+				if strings.has_suffix(path, ".js") {
+					content_type = "Content-Type: text/javascript\r\n"
+				}
+
+				file_buf, err := os.read_entire_file_from_filename_or_err(path)
+				if err != nil {
+					//fmt.printf("Cannot read file  *%s*, %s\n", path, err)
+					continue
+				}
+				request_body := file_buf[:]
+				response := fmt.tprintf(
+					"HTTP/1.1 200 OK\r\n" +
+					"%s" +
+					"Content-Length: %d\r\n" +
+					"Connection: close\r\n" +
+					"\r\n%s",
+					content_type,
+					len(request_body),
+					request_body,
+				)
+				net.send_tcp(conn, transmute([]byte)response)
+			}
+		}
+	}
+	html_buf, err2 := os.read_entire_file_from_filename_or_err("index.html")
+	if err2 != nil {
+		fmt.printf("Cannot read index.html, %s\n", err2)
+		return
+	}
+	request_body := html_buf[:]
+	response := fmt.tprintf(
+		"HTTP/1.1 200 OK\r\n" +
+		"%s" +
+		"Content-Length: %d\r\n" +
+		"Connection: close\r\n" +
+		"\r\n%s",
+		content_type,
+		len(request_body),
+		request_body,
+	)
+	net.send_tcp(conn, transmute([]byte)response)
+
+	net.close(conn)
+}
+```
+
 ## Rust
 ```rust
 use std::io::{BufRead, BufReader, Write, Read};
