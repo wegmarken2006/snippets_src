@@ -4,6 +4,54 @@
 ```c#
 ```
 
+## Dart
+```dart
+
+import 'dart:io';
+import 'dart:isolate';
+
+import 'package:http/http.dart' as http;
+
+void main() async {
+  var urls = [
+    "https://wegmarken2006.github.io/snippets/",
+    "https://wegmarken2006.github.io/snippets/Cross/",
+    "https://wegmarken2006.github.io/snippets/Dict/",
+    "https://wegmarken2006.github.io/snippets/Execution%20time/",
+  ];
+
+  var receiverPort = ReceivePort();
+  var isolates = urls.map((url) async {
+    await Isolate.spawn((List<dynamic> args) async {
+      var url = args[0];
+      var sendPort = args[1];
+      try {
+        final response = await http.read(Uri.parse(url));
+        //print(url);
+        sendPort.send(response.length);
+      } catch (e) {
+        print("Failed to fetch $url: $e");
+        sendPort.send(0);
+      }
+    }, [url, receiverPort.sendPort]);
+  });
+
+  // join like 
+  await Future.wait(isolates);
+
+  num total = 0;
+  int count = 0;
+  receiverPort.listen((respLen) {
+    count = count + 1;
+    total = total + respLen;
+    if (count == urls.length) {
+      print("Total size: $total bytes");
+      exit(0);
+    }
+  });
+}
+```
+
 ## Go
 ```go
 
