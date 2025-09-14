@@ -61,8 +61,8 @@ theme:
   #name: dracula
   name: material
   palette:
-    primary: 'lime'
-    accent: 'lime'
+    primary: 'indigo'
+    accent: 'indigo'
   #feature:
   #  - tabs
   icon:
