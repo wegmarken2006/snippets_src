@@ -1,5 +1,65 @@
 # Webserver
 
+## Dart
+```dart
+
+import 'dart:io';
+import 'dart:isolate';
+
+Future<void> main() async {
+  var receivePort = ReceivePort();
+
+  var isolate = await Isolate.spawn((SendPort sendPort) async {
+    
+    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    var address = server.address.address;
+    var port = server.port;
+    sendPort.send("http://$address:$port");
+
+    await for (HttpRequest request in server) {
+      var path = request.uri.path;
+      if (path == "/") {
+        var indexH = File("index.html");
+        try {
+          var content = await indexH.readAsString();
+          request.response.headers.contentType = ContentType.html;
+          request.response.write(content);
+        } catch (e) {
+          print(e);
+        }
+      } else {
+        path = path.replaceFirst('/', '');
+        if (path.endsWith(".js")) {
+          request.response.headers.contentType = ContentType.parse(
+            "text/javascript",
+          );
+        } else {
+          request.response.headers.contentType = ContentType.html;
+        }
+        var file = File(path);
+        try {
+          var content = await file.readAsString();
+          request.response.write(content);
+        } catch (e) {
+          print(e);
+        }
+      }
+      await request.response.close();
+    }
+    await server.close(force: true);
+  }, receivePort.sendPort);
+
+  receivePort.listen((message) {
+    print("Serving on $message");
+
+    print('\nPress any key and Enter to quit');
+    stdin.readLineSync();
+    isolate.kill();
+    exit(0);
+  });
+}
+```
+
 ## Odin
 ```go
 
