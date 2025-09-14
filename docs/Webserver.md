@@ -46,7 +46,7 @@ main :: proc() {
 
 handle_connection :: proc(conn: net.TCP_Socket) {
 	buffer := [4096]byte{}
-	content_type := "Content-Type: text/html\r\n"
+	content_type: string
 
 	_, err := net.recv_tcp(conn, buffer[:])
 	request := string(buffer[:])
@@ -56,52 +56,44 @@ handle_connection :: proc(conn: net.TCP_Socket) {
 	for line in lines {
 		if strings.has_prefix(line, "GET") {
 			parts := strings.split(line, " ")
-			//fmt.println(line)
-			if len(parts[1]) > 1 {
+			file_buf: []byte
+			err: os.Error
+			if parts[1] == "/" {
+				file_buf, err = os.read_entire_file_from_filename_or_err("index.html")
+				if err != nil {
+					fmt.printf("Cannot read index.html, %s\n", err)
+					continue
+				}
+				content_type = "Content-Type: text/html\r\n"
+			} else {
 				path := parts[1][1:] // eliminate initial /
 				//fmt.println(path)
 				if strings.has_suffix(path, ".js") {
 					content_type = "Content-Type: text/javascript\r\n"
+				} else {
+					content_type = "Content-Type: text/html\r\n"
 				}
 
-				file_buf, err := os.read_entire_file_from_filename_or_err(path)
+				file_buf, err = os.read_entire_file_from_filename_or_err(path)
 				if err != nil {
-					//fmt.printf("Cannot read file  *%s*, %s\n", path, err)
+					fmt.printf("Cannot read file  *%s*, %s\n", path, err)
 					continue
 				}
-				request_body := file_buf[:]
-				response := fmt.tprintf(
-					"HTTP/1.1 200 OK\r\n" +
-					"%s" +
-					"Content-Length: %d\r\n" +
-					"Connection: close\r\n" +
-					"\r\n%s",
-					content_type,
-					len(request_body),
-					request_body,
-				)
-				net.send_tcp(conn, transmute([]byte)response)
 			}
+			request_body := file_buf[:]
+			response := fmt.tprintf(
+				"HTTP/1.1 200 OK\r\n" +
+				"%s" +
+				"Content-Length: %d\r\n" +
+				"Connection: close\r\n" +
+				"\r\n%s",
+				content_type,
+				len(request_body),
+				request_body,
+			)
+			net.send_tcp(conn, transmute([]byte)response)
 		}
 	}
-	html_buf, err2 := os.read_entire_file_from_filename_or_err("index.html")
-	if err2 != nil {
-		fmt.printf("Cannot read index.html, %s\n", err2)
-		return
-	}
-	request_body := html_buf[:]
-	response := fmt.tprintf(
-		"HTTP/1.1 200 OK\r\n" +
-		"%s" +
-		"Content-Length: %d\r\n" +
-		"Connection: close\r\n" +
-		"\r\n%s",
-		content_type,
-		len(request_body),
-		request_body,
-	)
-	net.send_tcp(conn, transmute([]byte)response)
-
 	net.close(conn)
 }
 ```
