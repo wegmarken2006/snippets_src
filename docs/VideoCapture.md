@@ -116,6 +116,75 @@ class _CameraAppState extends State<MyApp> {
 }
 ```
 
+## Odin
+```go
+
+package main
+// get c bindings from https://github.com/friolator/OpenCV-C
+// may need to change opencv version
+// Linux: install opencv, put libOpenCVC.so where the .odin file is
+// Windows: put OpenCVC.lib, OpenCVC.dll and the opencv dll (like opencv_world452.dll)
+// where the .odin file is
+
+import "core:dynlib"
+import "core:fmt"
+import "core:c/libc"
+import "core:c"
+
+when ODIN_OS == .Linux {
+	foreign import cv "libOpenCVC.so"
+} else when ODIN_OS == .Windows {
+	foreign import cv "OpenCVC.lib"
+}
+
+ColorConversionCodes :: enum {
+	CVC_COLOR_RGB2GRAY = 7,
+}
+
+@(default_calling_convention = "c", link_prefix = "CVC")
+foreign cv {
+	imshow :: proc (windowName: cstring, image: rawptr) ---
+	waitKey :: proc (delay: i32) -> i32 ---
+	destroyAllWindows :: proc () ---
+	MatFree :: proc (mat: rawptr) ---
+	imread :: proc (filename: cstring, flags: i32) -> rawptr ---
+	VideoCaptureCreateWithIndex :: proc "c" (index: i32) -> rawptr ---
+	MatCreate :: proc () -> rawptr ---
+	VideoCaptureRead :: proc (video_capture: rawptr, image: rawptr) -> bool ---
+	cvtColor :: proc (src: rawptr, dst: rawptr, code: i32, dstCn: i32) ---
+}
+
+main :: proc() {
+	library_path: string
+	if ODIN_OS == .Linux {
+		library_path = "libs/libOpenCVC.so"
+	
+		library, ok := dynlib.load_library(library_path)
+		if !ok {
+			fmt.eprintln(dynlib.last_error())
+			return
+		}
+	}
+	video_stream := VideoCaptureCreateWithIndex(0)
+
+	for {
+		frame := MatCreate()
+		if VideoCaptureRead(video_stream, frame) {
+			gray := MatCreate()
+			cvtColor(frame, gray, i32(ColorConversionCodes.CVC_COLOR_RGB2GRAY), 0)
+			imshow("Camera", frame)
+			ch := waitKey(10)
+			MatFree(gray)
+			if ch != -1 {
+				break
+			}
+		}
+		MatFree(frame)
+	}
+	destroyAllWindows()
+}
+```
+
 ## Python
 ```python
 
