@@ -125,61 +125,104 @@ package main
 // Linux: install opencv, put libOpenCVC.so where the .odin file is
 // Windows: put OpenCVC.lib, OpenCVC.dll and the opencv dll (like opencv_world452.dll)
 // where the .odin file is
-
 import "core:dynlib"
 import "core:fmt"
-import "core:c/libc"
-import "core:c"
+import rl "vendor:raylib"
 
 when ODIN_OS == .Linux {
-	foreign import cv "libOpenCVC.so"
+    foreign import cv "libOpenCVC.so"
 } else when ODIN_OS == .Windows {
-	foreign import cv "OpenCVC.lib"
+    foreign import cv "OpenCVC.lib"
 }
 
 ColorConversionCodes :: enum {
+    CVC_COLOR_BGR2RGB = 4,
 	CVC_COLOR_RGB2GRAY = 7,
+}
+
+VideoCaptureProperties :: enum {
+CV_CAP_PROP_FRAME_WIDTH    = 3,
+CV_CAP_PROP_FRAME_HEIGHT   = 4,
 }
 
 @(default_calling_convention = "c", link_prefix = "CVC")
 foreign cv {
 	imshow :: proc (windowName: cstring, image: rawptr) ---
 	waitKey :: proc (delay: i32) -> i32 ---
-	destroyAllWindows :: proc () ---
+	destroyAllWindows :: proc "c" () ---
 	MatFree :: proc (mat: rawptr) ---
 	imread :: proc (filename: cstring, flags: i32) -> rawptr ---
-	VideoCaptureCreateWithIndex :: proc "c" (index: i32) -> rawptr ---
+	VideoCaptureCreateWithIndex :: proc (index: i32) -> rawptr ---
 	MatCreate :: proc () -> rawptr ---
 	VideoCaptureRead :: proc (video_capture: rawptr, image: rawptr) -> bool ---
 	cvtColor :: proc (src: rawptr, dst: rawptr, code: i32, dstCn: i32) ---
+	VideoCaptureSetInt :: proc (videoCapture: rawptr, propId: i32, value: i64) -> bool ---
+	MatDataPtr :: proc (mat: rawptr) -> rawptr ---
 }
 
-main :: proc() {
-	library_path: string
-	if ODIN_OS == .Linux {
-		library_path = "libs/libOpenCVC.so"
-	
-		library, ok := dynlib.load_library(library_path)
-		if !ok {
-			fmt.eprintln(dynlib.last_error())
-			return
-		}
-	}
-	video_stream := VideoCaptureCreateWithIndex(0)
+WIDTH :: 640
+HEIGHT :: 480
 
-	for {
+main :: proc() {
+	fmt.println("start")
+
+	if ODIN_OS == .Linux {
+        _, ok := dynlib.load_library("libOpenCVC.so")
+        if !ok {
+            fmt.eprintln(dynlib.last_error())
+            return
+        }
+    }
+
+	video_stream := VideoCaptureCreateWithIndex(0)
+	VideoCaptureSetInt(video_stream, i32(VideoCaptureProperties.CV_CAP_PROP_FRAME_WIDTH), i64(WIDTH))
+	VideoCaptureSetInt(video_stream, i32(VideoCaptureProperties.CV_CAP_PROP_FRAME_HEIGHT), i64(HEIGHT))
+
+	rl.InitWindow(WIDTH, HEIGHT, "raygui")
+	rl.SetTargetFPS(60)
+	txt: rl.Texture
+
+	for !rl.WindowShouldClose() {
 		frame := MatCreate()
 		if VideoCaptureRead(video_stream, frame) {
-			gray := MatCreate()
-			cvtColor(frame, gray, i32(ColorConversionCodes.CVC_COLOR_RGB2GRAY), 0)
-			imshow("Camera", frame)
+
+			rl.BeginDrawing()
+			rl.ClearBackground(
+				rl.GetColor(
+					u32(rl.GuiGetStyle(.DEFAULT, i32(rl.GuiDefaultProperty.BACKGROUND_COLOR))),
+				),
+			)
+			imshow("OpenCV", frame)
 			ch := waitKey(10)
-			MatFree(gray)
 			if ch != -1 {
 				break
 			}
+
+			converted_frame := MatCreate()
+			cvtColor(frame, converted_frame, i32(ColorConversionCodes.CVC_COLOR_BGR2RGB), 0)
+
+			data := MatDataPtr(converted_frame)
+			img: rl.Image
+			img.data = (rawptr)(data)
+			img.width =  WIDTH
+			img.height = HEIGHT
+			img.format = .UNCOMPRESSED_R8G8B8 //.UNCOMPRESSED_R5G6B5   //.UNCOMPRESSED_GRAYSCALE
+			img.mipmaps = 1
+
+
+			rl.UnloadTexture(txt)
+            pmt := rl.LoadTextureFromImage(img)
+            //rl.UnloadImage(img)
+            txt = pmt
+
+            rl.DrawTexture(txt, 0, 0, rl.WHITE )
+
+            MatFree(converted_frame)
+			//copy(&txt, &pmt, size_of(rl.Texture))
 		}
 		MatFree(frame)
+
+		rl.EndDrawing()
 	}
 	destroyAllWindows()
 }
@@ -278,4 +321,5 @@ fn main() {
             .expect("Error on update");
     }
 }
+
 ```
