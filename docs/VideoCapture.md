@@ -164,16 +164,6 @@ WIDTH :: 640
 HEIGHT :: 480
 
 main :: proc() {
-	fmt.println("start")
-
-	if ODIN_OS == .Linux {
-        _, ok := dynlib.load_library("libOpenCVC.so")
-        if !ok {
-            fmt.eprintln(dynlib.last_error())
-            return
-        }
-    }
-
 	video_stream := VideoCaptureCreateWithIndex(0)
 	VideoCaptureSetInt(video_stream, i32(VideoCaptureProperties.CV_CAP_PROP_FRAME_WIDTH), i64(WIDTH))
 	VideoCaptureSetInt(video_stream, i32(VideoCaptureProperties.CV_CAP_PROP_FRAME_HEIGHT), i64(HEIGHT))
