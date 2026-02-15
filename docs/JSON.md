@@ -63,12 +63,11 @@ main :: proc() {
     conf := Config{"Description", []int{1, 2, 3, 4}, []string{"AAA", "BBB", "CCC"}}
 
     file_name := "tmp001.json"
-    //f, err := os.open(file_name, (os.O_CREATE | os.O_RDWR), 0o644)
-	f, err := os.open(
-		file_name,
-		os.O_CREATE | os.O_RDWR | os.O_TRUNC,
-		os.Permissions_Read_Write_All,
-	)
+	  f, err := os.open(
+		  file_name,
+		  os.O_CREATE | os.O_RDWR | os.O_TRUNC,
+		  os.Permissions_Read_Write_All,
+	  )
     if err != nil {
         fmt.println(err)
     }
