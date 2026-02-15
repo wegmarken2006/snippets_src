@@ -47,7 +47,6 @@ void main() {
 
 ## Odin
 ```go
-
 package main
 
 import "core:encoding/json"
@@ -55,37 +54,43 @@ import "core:fmt"
 import "core:os"
 
 Config :: struct {
-	descr:  string,
-	i_list: []int,
-	s_list: []string,
+    descr:  string,
+    i_list: []int,
+    s_list: []string,
 }
 
 main :: proc() {
-	conf := Config{"Description", []int{1, 2, 3, 4}, []string{"AAA", "BBB", "CCC"}}
+    conf := Config{"Description", []int{1, 2, 3, 4}, []string{"AAA", "BBB", "CCC"}}
 
-	file_name := "tmp001.json"
-	f, err := os.open(file_name, (os.O_CREATE | os.O_RDWR), 0o644)
-	if err != nil {
-		fmt.println(err)
-	}
+    file_name := "tmp001.json"
+    //f, err := os.open(file_name, (os.O_CREATE | os.O_RDWR), 0o644)
+	f, err := os.open(
+		file_name,
+		os.O_CREATE | os.O_RDWR | os.O_TRUNC,
+		os.Permissions_Read_Write_All,
+	)
+    if err != nil {
+        fmt.println(err)
+    }
 
-	if json_data, err := json.marshal(conf); err == nil {
-		os.write(f, json_data)
-	} else {
-		fmt.println("Couldn't marshal struct!")
-	}
-	os.close(f)
+    if json_data, err := json.marshal(conf); err == nil {
+        os.write(f, json_data)
+    } else {
+        fmt.println("Couldn't marshal struct!")
+    }
+    os.close(f)
 
-	if  read_data, ok := os.read_entire_file(file_name); ok {
-		conf2: Config
-		if json.unmarshal(read_data[:], &conf2) == nil {
-			fmt.println(conf2)
-		} else {
-			fmt.println("Error unmarshaling")
-		}
-	} else {
-		fmt.println("Failed to read JSON file")
-	}
+    read_data, err2 := os.read_entire_file(file_name, context.allocator)
+	if err2 == os.ERROR_NONE {
+        conf2: Config
+        if json.unmarshal(read_data[:], &conf2) == nil {
+            fmt.println(conf2)
+        } else {
+            fmt.println("Error unmarshaling")
+        }
+    } else {
+        fmt.println("Failed to read JSON file")
+    }
 }
 ```
 

@@ -155,7 +155,11 @@ main :: proc() {
 	file_name := "tmp01.txt"
 
 	// Create and write to the file
-	file, err := os.open(file_name, os.O_CREATE | os.O_WRONLY | os.O_TRUNC, 0666)
+	file, err := os.open(
+		file_name,
+		os.O_CREATE | os.O_WRONLY | os.O_TRUNC,
+		os.Permissions_Read_Write_All,
+	)
 	if err != nil {
 		fmt.printf("Can't create %s\n", file_name)
 		os.exit(0)
@@ -170,15 +174,15 @@ main :: proc() {
 	os.close(file)
 
 	// Open and read the file
-	file, err = os.open(file_name, os.O_RDONLY, 0666)
+	file, err = os.open(file_name, os.O_RDONLY, os.Permissions_Read_Write_All)
 	if err != nil {
 		fmt.printf("Can't open %s\n", file_name)
 		os.exit(0)
 	}
 	defer os.close(file)
 
-	data, success := os.read_entire_file_from_handle(file)
-	if !success {
+	data, success := os.read_entire_file_from_file(file, context.allocator)
+	if success != os.ERROR_NONE {
 		fmt.println("Read error:", err)
 		os.exit(0)
 	}

@@ -67,53 +67,58 @@ func allFiles(startingDir string, extension string) {
 ```
 ## Odin
 ```go
-
 package main
 
 import "core:fmt"
 import "core:os"
-import "core:path/filepath"
 import "core:strings"
 
 main :: proc() {
-	outr := [dynamic]string{}
-	all_files("/", ".xml", &outr)
-	fmt.println(outr)
+	outr := all_files("./", ".pdf")
+	for elem in outr {
+		fmt.println(elem)
+	}
+	
 	delete(outr)
 }
 
-all_files :: proc(starting_dir: string, extension: string, outr: ^[dynamic]string) {
-	// no closures, must concentrate all parameters in a single struct
-	// to pass as rawptr
-	Params :: struct {
-		extension: string,
-		outr:      ^[dynamic]string,
-	}
-	params := Params{extension, outr}
+all_files :: proc(starting_dir: string, extension: string) -> [dynamic]string {
 
-	filepath.walk(
-		starting_dir,
-		proc(info: os.File_Info, err: os.Error, params: rawptr) -> (os.Error, bool) {
-			fpath := info.fullpath
-			if err != nil {
-				fmt.println(err)
-				return nil, false
+	outr: [dynamic]string
+
+	w := os.walker_create(starting_dir)
+	defer os.walker_destroy(&w)
+
+	for info in os.walker_walk(&w) {
+		// Optionally break on the first error:
+		// _ = walker_error(&w) or_break
+
+		// Or, handle error as we go:
+		if path, err := os.walker_error(&w); err != nil {
+			fmt.eprintfln("failed walking %s: %s", path, err)
+			continue
+		}
+
+		// Or, do not handle errors during iteration, and just check the error at the end.
+
+		if info.type != os.File_Type.Directory {
+			if strings.has_suffix(info.fullpath, extension) {
+				//clone fullpath which has short life
+				f_path := fmt.tprintf("%s", info.fullpath)
+				append(&outr, f_path)
+				continue
 			}
-			if !info.is_dir {
-				extension := (^Params)(params).extension
-				outr := (^Params)(params).outr
-				if strings.has_suffix(fpath, extension) {
-					fmt.println(fpath)
-					ret, _ := append(outr, fpath)
-					if ret <= 0 {
-						fmt.println("no append")
-					}
-				}
-			}
-			return nil, false
-		},
-		&params,
-	)
+		}
+
+		//fmt.printfln("%#v", info)
+	}
+
+	// Handle error if one happened during iteration at the end:
+	if path, err := os.walker_error(&w); err != nil {
+		fmt.eprintfln("failed walking %s: %v", path, err)
+	}
+
+	return outr
 }
 ```
 
