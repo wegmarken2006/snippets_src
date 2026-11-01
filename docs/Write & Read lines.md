@@ -125,21 +125,31 @@ end
 ```
 
 ## Nim
-```nim
+```python
+import std/os
 
-import streams
+proc main() =
+  let fileName = "tmp01.txt"
 
-let fileName = "tmp01.txt"
-var strm = newFileStream(fileName, fmWrite)
-strm.write("This is\n\na text\nfile")
-strm.close()
+  var file: File
+  if not open(file, fileName, fmWrite):
+    quit("Can't create " & fileName)
 
-let strmRead = newFileStream(fileName, fmRead)
-var line = ""
-if not isNil(strmRead):
-    while strmRead.readLine(line):
+  let toWrite = "This is\n\na text\nfile"
+  file.write(toWrite)
+  file.close()
+
+  if not open(file, fileName, fmRead):
+    quit("Can't open " & fileName)
+  defer: file.close()
+
+  try:
+    for line in file.lines:
       echo line
-strmRead.close()
+  except IOError as e:
+    echo "Reading error: ", e.msg
+
+main()
 ```
 
 ## Odin

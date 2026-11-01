@@ -65,6 +65,32 @@ func allFiles(startingDir string, extension string) {
 	})
 }
 ```
+
+## Nim
+```python
+import std/[os, strutils]
+
+proc allFiles(startingDir: string, extension: string) =
+  try:
+    for kind, path in walkDir(startingDir, relative = false):
+      case kind
+      of pcFile:
+        if path.endsWith(extension):
+          echo path
+      of pcDir, pcLinkToDir:
+        allFiles(path, extension)
+      of pcLinkToFile:
+        if path.endsWith(extension):
+          echo path
+  except OSError as e:
+    echo e.msg
+
+proc main() =
+  allFiles("/", ".xml")
+
+main()
+```
+
 ## Odin
 ```go
 package main

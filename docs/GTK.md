@@ -53,7 +53,7 @@ func main() {
 ```
 
 ## Nim
-```nim
+```python
 
 # nimble install gintro
 import gintro/[gtk, gobject, gio]

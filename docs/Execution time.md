@@ -178,7 +178,7 @@ end
 ```
 
 ## Nim
-```nim
+```python
 
 # exe -> nim c -d:release  <filename>
 import times as ts

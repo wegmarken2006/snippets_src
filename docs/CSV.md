@@ -97,6 +97,42 @@ for row in csv_reader
 end
 ```
 
+## Nim
+```python
+import std/[parsecsv, strutils]
+
+proc main() =
+  let records = @[
+    @[ "FirstName", "SecondName" ],
+    @[ "John", "Doe" ],
+    @[ "Mark", "Smith" ]
+  ]
+  let fileName = "tmp001.csv"
+
+  try:
+    var file = open(fileName, fmWrite)
+    defer: file.close()
+
+    for record in records:
+      file.writeLine(record.join(","))
+  except IOError:
+    quit("Can't create " & fileName)
+
+  try:
+    var parser: CsvParser
+
+    parser.open(fileName)
+    defer: parser.close()
+
+    while parser.readRow():
+       if parser.row.len >= 2:
+        echo "First: ", parser.row[0], ", Second: ", parser.row[1]
+  except IOError:
+    quit("Record reading error")
+
+main()
+```
+
 ## Odin
 ```go
 #+feature dynamic-literals

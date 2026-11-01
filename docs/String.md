@@ -161,7 +161,7 @@ end
 ```
 
 ## Nim
-```nim
+```python
 import strformat
 import times
 import strutils

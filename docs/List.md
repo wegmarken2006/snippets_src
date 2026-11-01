@@ -256,7 +256,7 @@ fun main() {
 ```
 
 ## Nim
-```nim
+```python
 
 import sequtils as sq
 import algorithm as al

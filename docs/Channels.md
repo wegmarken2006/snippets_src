@@ -102,6 +102,51 @@ func getTextLen(url string, ch chan int) {
 }
 ```
 
+## Nim
+```python
+import std/[httpclient, os]
+
+proc getTextLen(param: tuple[url: string, ch: ptr Channel[int]]) {.thread.} =
+  var client = newHttpClient()
+  try:
+    let html = client.getContent(param.url)
+    param.ch[].send(html.len)
+  except CatchableError as e:
+    quit("Error fetching " & param.url & ": " & e.msg)
+  finally:
+    client.close()
+
+proc sumPageSizes(): int =
+  let urls = @[
+    "https://wegmarken2006.github.io/snippets/",
+    "https://wegmarken2006.github.io/snippets/Cross/",
+    "https://wegmarken2006.github.io/snippets/Dict/",
+    "https://wegmarken2006.github.io/snippets/Execution%20time/"
+  ]
+
+  var ch: Channel[int]
+  ch.open(urls.len)
+  defer: ch.close()
+
+  var thr: array[4, Thread[tuple[url: string, ch: ptr Channel[int]]]]
+
+  for i, url in urls:
+    createThread(thr[i], getTextLen, (url, addr ch))
+
+  var total = 0
+  for i in 0 ..< urls.len:
+    let ln = ch.recv()
+    total = total + ln
+
+  joinThreads(thr)
+  return total
+
+proc main() =
+  echo "\n", sumPageSizes()
+
+main()
+```
+
 ## Odin
 ```go
 // git clone https://github.com/laytan/odin-http.git

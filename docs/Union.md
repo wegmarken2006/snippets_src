@@ -197,7 +197,7 @@ cType(c1)
 ```
 
 ## Nim
-```nim
+```python
 
 import strformat
 

@@ -44,7 +44,7 @@ func main() {
 ```
 
 ## Nim
-```nim
+```python
 
 import strformat
 

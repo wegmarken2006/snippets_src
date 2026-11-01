@@ -149,9 +149,55 @@ println(delta_w)
 println(delta_y)
 ```
 
+## Nim
+```python
+import std/[times, strutils, strformat]
+
+proc main() =
+
+  let today = now()
+  let year = today.year
+  let month = today.month.int
+  let day = today.monthday
+  let hour = today.hour
+  let minute = today.minute
+  let second = today.second
+
+  # from date to string
+  let todayStr = today.format("yyyy-MM-dd'**'HH:mm:ss")
+  let dateStr = today.format("yyyy-MM-dd")
+  let timeStr = today.format("HH:mm:ss")
+
+  # from string to date
+  let today2 = parse(todayStr, "yyyy-MM-dd'**'HH:mm:ss")
+
+  let weekday = today.weekday
+
+  let tomorrow = today + 1.days
+
+  # difference between dates
+  let nextWeek = today + 7.days
+  let deltaW = nextWeek - today
+  let deltaWDays = deltaW.inHours.float / 24.0
+  let nextYear = today + 1.years
+  let nYear = nextYear.year
+  let deltaY = nYear - year
+
+  echo today
+  echo todayStr
+  echo dateStr
+  echo timeStr
+  echo today2
+  echo weekday
+  echo tomorrow
+  echo deltaWDays
+  echo deltaY
+
+main()
+```
+
 ## Odin
 ```go
-
 package main
 
 import "core:time/datetime"

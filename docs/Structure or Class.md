@@ -247,7 +247,7 @@ end
 
 
 ## Nim
-```nim
+```python
 
 # file moda.nim -> module moda
 type
@@ -281,7 +281,7 @@ proc addToBalance*(c: Customer, sum: float64) =
     c.balance = c.balance + sum
 
 ```
-```nim
+```python
 
 import moda
 import strformat as sf
